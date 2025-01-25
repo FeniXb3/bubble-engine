@@ -1,8 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://cbutk778cqf52"]
+[gd_scene load_steps=3 format=3 uid="uid://cbutk778cqf52"]
 
 [ext_resource type="Script" uid="uid://doul7wro0a34o" path="res://scripts/search_bar.gd" id="1_nw6hu"]
+[ext_resource type="Script" uid="uid://cssv6kle72cvy" path="res://control_flipper.gd" id="2_pbamf"]
 
-[node name="SearchBar" type="Control" node_paths=PackedStringArray("container", "query_field")]
+[node name="SearchBar" type="Control" node_paths=PackedStringArray("query_field", "input_timer")]
 custom_minimum_size = Vector2(0, 31)
 layout_mode = 3
 anchors_preset = 14
@@ -13,8 +14,8 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 script = ExtResource("1_nw6hu")
-container = NodePath("HBox")
 query_field = NodePath("HBox/LineEdit")
+input_timer = NodePath("Timer")
 
 [node name="HBox" type="HBoxContainer" parent="."]
 layout_mode = 1
@@ -39,3 +40,17 @@ caret_force_displayed = true
 [node name="Button" type="Button" parent="HBox"]
 layout_mode = 2
 text = "GO"
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.1
+
+[node name="ControlFlipper" type="Control" parent="." node_paths=PackedStringArray("to_flip", "container")]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("2_pbamf")
+to_flip = NodePath("../HBox")
+container = NodePath("..")
+metadata/_custom_type_script = ExtResource("2_pbamf")
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

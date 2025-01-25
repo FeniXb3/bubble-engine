@@ -23,8 +23,10 @@ func show_results() -> void:
 		available_results.add_item(r.title)
 		
 func _ready() -> void:
+	available_results.clear()
+	SignalBus.query_submitted.connect(show_results)
+	
 	current_human = data.humans.pick_random()
 	current_query = current_human.queries.pick_random()
 	
 	search_bar.show_query(current_query)
-	show_results()
