@@ -1,6 +1,6 @@
 @tool
 class_name ControlFlipper
-extends Control
+extends Node
 
 @export var to_flip: Control
 @export var container: Control
@@ -18,7 +18,7 @@ func _process(_delta: float) -> void:
 		return
 	
 	container.custom_minimum_size.y = abs(to_flip.get_rect().size.y)
-	to_flip.pivot_offset = to_flip.get_rect().size / 2
+	to_flip.pivot_offset = abs(to_flip.get_rect().size / 2)
 	to_flip.scale.x = -1 if flip else 1
 
 

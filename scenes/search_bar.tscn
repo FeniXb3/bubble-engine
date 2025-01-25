@@ -6,16 +6,18 @@
 [node name="SearchBar" type="Control" node_paths=PackedStringArray("query_field", "input_timer")]
 custom_minimum_size = Vector2(0, 31)
 layout_mode = 3
-anchors_preset = 14
-anchor_top = 0.5
+anchor_top = 0.47608
 anchor_right = 1.0
-anchor_bottom = 0.5
+anchor_bottom = 0.52392
+offset_top = 15.5
+offset_bottom = -15.5
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 script = ExtResource("1_nw6hu")
 query_field = NodePath("HBox/LineEdit")
 input_timer = NodePath("Timer")
+metadata/_edit_use_anchors_ = true
 
 [node name="HBox" type="HBoxContainer" parent="."]
 layout_mode = 1
@@ -24,8 +26,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(-1, 1)
-pivot_offset = Vector2(576, -15.5)
+pivot_offset = Vector2(576, 15.5)
 size_flags_horizontal = 4
 size_flags_vertical = 4
 alignment = 1
@@ -44,13 +45,11 @@ text = "GO"
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.1
 
-[node name="ControlFlipper" type="Control" parent="." node_paths=PackedStringArray("to_flip", "container")]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="ControlFlipper" type="Node" parent="." node_paths=PackedStringArray("to_flip", "container")]
 script = ExtResource("2_pbamf")
 to_flip = NodePath("../HBox")
 container = NodePath("..")
+flip = false
 metadata/_custom_type_script = ExtResource("2_pbamf")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

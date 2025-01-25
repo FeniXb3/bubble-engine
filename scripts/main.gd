@@ -29,4 +29,4 @@ func _ready() -> void:
 	current_human = data.humans.pick_random()
 	current_query = current_human.queries.pick_random()
 	
-	search_bar.show_query(current_query)
+	SignalBus.query_picked.emit(current_query)

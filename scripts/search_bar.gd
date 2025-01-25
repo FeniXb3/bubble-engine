@@ -10,6 +10,10 @@ extends Control
 @export var current_query: Query
 
 var text_length: int = 0
+
+func _ready() -> void:
+	SignalBus.query_picked.connect(show_query)
+
 #
 #func _process(_delta: float) -> void:
 	#custom_minimum_size.y = abs(container.get_rect().size.y)

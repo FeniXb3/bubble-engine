@@ -1,10 +1,10 @@
 [gd_scene load_steps=4 format=3 uid="uid://dvwpk5124o4es"]
 
 [ext_resource type="Script" uid="uid://bd400a1w377bh" path="res://scripts/main.gd" id="1_0wfyh"]
-[ext_resource type="PackedScene" uid="uid://cbutk778cqf52" path="res://scenes/search_bar.tscn" id="1_o5qli"]
 [ext_resource type="Resource" uid="uid://seg4sdlnbehf" path="res://resources/sample_data.tres" id="2_sugp2"]
+[ext_resource type="PackedScene" uid="uid://kogfwa2w7dnr" path="res://scenes/human_interface.tscn" id="4_jyhfs"]
 
-[node name="Main" type="Control" node_paths=PackedStringArray("available_results", "search_bar")]
+[node name="Main" type="Control" node_paths=PackedStringArray("available_results")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -14,7 +14,6 @@ grow_vertical = 2
 script = ExtResource("1_0wfyh")
 data = ExtResource("2_sugp2")
 available_results = NodePath("MainMarginContainer/HBoxContainer/BackendContainer/AvailableResults")
-search_bar = NodePath("MainMarginContainer/HBoxContainer/FrontendContainer/SearchBar")
 
 [node name="MainMarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -37,9 +36,10 @@ layout_mode = 2
 text = "ENGINE FRONTEND"
 horizontal_alignment = 1
 
-[node name="SearchBar" parent="MainMarginContainer/HBoxContainer/FrontendContainer" instance=ExtResource("1_o5qli")]
-custom_minimum_size = Vector2(0, 31)
+[node name="HumanInterface" parent="MainMarginContainer/HBoxContainer/FrontendContainer" instance=ExtResource("4_jyhfs")]
+custom_minimum_size = Vector2(0, 615)
 layout_mode = 2
+size_flags_vertical = 3
 
 [node name="BackendContainer" type="VBoxContainer" parent="MainMarginContainer/HBoxContainer"]
 layout_mode = 2
