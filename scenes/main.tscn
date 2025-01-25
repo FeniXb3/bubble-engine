@@ -60,6 +60,8 @@ item_count = 2
 item_0/text = "asdfgh"
 item_1/text = "sdfghgfgf"
 
-[node name="Button" type="Button" parent="MainMarginContainer/HBoxContainer/BackendContainer"]
+[node name="SubmitButton" type="Button" parent="MainMarginContainer/HBoxContainer/BackendContainer"]
 layout_mode = 2
 text = "SUBMIT"
+
+[connection signal="pressed" from="MainMarginContainer/HBoxContainer/BackendContainer/SubmitButton" to="." method="_on_submit_button_pressed"]

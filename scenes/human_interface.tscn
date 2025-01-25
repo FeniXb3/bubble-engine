@@ -1,9 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://kogfwa2w7dnr"]
+[gd_scene load_steps=4 format=3 uid="uid://kogfwa2w7dnr"]
 
 [ext_resource type="PackedScene" uid="uid://cbutk778cqf52" path="res://scenes/search_bar.tscn" id="1_f6fq2"]
+[ext_resource type="Script" uid="uid://buoleoq1f6u1l" path="res://scenes/human_interface.gd" id="1_vwbkh"]
 [ext_resource type="Script" uid="uid://cssv6kle72cvy" path="res://control_flipper.gd" id="2_stup5"]
 
-[node name="HumanInterface" type="Control"]
+[node name="HumanInterface" type="Control" node_paths=PackedStringArray("results_list")]
 custom_minimum_size = Vector2(0, 648)
 layout_mode = 3
 anchors_preset = 15
@@ -11,6 +12,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_vwbkh")
+results_list = NodePath("Panel/MarginContainer/VBoxContainer/ItemList")
 
 [node name="Panel" type="PanelContainer" parent="."]
 layout_mode = 1
@@ -31,6 +34,15 @@ layout_mode = 2
 [node name="SearchBar" parent="Panel/MarginContainer/VBoxContainer" instance=ExtResource("1_f6fq2")]
 custom_minimum_size = Vector2(0, 41)
 layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "RESULTS"
+horizontal_alignment = 1
+
+[node name="ItemList" type="ItemList" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
 
 [node name="ControlFlipper" type="Node" parent="." node_paths=PackedStringArray("to_flip", "container")]
 script = ExtResource("2_stup5")

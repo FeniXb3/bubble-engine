@@ -20,7 +20,8 @@ func show_results() -> void:
 	
 	available_results.clear()
 	for r in results:
-		available_results.add_item(r.title)
+		var index = available_results.add_item(r.title)
+		available_results.set_item_metadata(index, r)
 		
 func _ready() -> void:
 	available_results.clear()
@@ -30,3 +31,12 @@ func _ready() -> void:
 	current_query = current_human.queries.pick_random()
 	
 	SignalBus.query_picked.emit(current_query)
+
+
+func _on_submit_button_pressed() -> void:
+	var results_to_send: Array[Result] = []
+	var indicies := available_results.get_selected_items()
+	for index in indicies:
+		results_to_send.append(available_results.get_item_metadata(index))
+		
+	SignalBus.results_submitted.emit(results_to_send)
