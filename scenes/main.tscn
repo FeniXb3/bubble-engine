@@ -37,6 +37,7 @@ text = "ENGINE FRONTEND"
 horizontal_alignment = 1
 
 [node name="HumanInterface" parent="MainMarginContainer/HBoxContainer/FrontendContainer" instance=ExtResource("4_jyhfs")]
+modulate = Color(1, 1, 1, 0.517647)
 custom_minimum_size = Vector2(0, 615)
 layout_mode = 2
 size_flags_vertical = 3
