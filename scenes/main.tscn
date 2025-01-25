@@ -28,7 +28,7 @@ alignment = 1
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Label2" type="Label" parent="MainMarginContainer/HBoxContainer/FrontendContainer"]
+[node name="FrontendLabel" type="Label" parent="MainMarginContainer/HBoxContainer/FrontendContainer"]
 layout_mode = 2
 text = "ENGINE FRONTEND"
 horizontal_alignment = 1
@@ -42,12 +42,12 @@ size_flags_vertical = 1
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Label" type="Label" parent="MainMarginContainer/HBoxContainer/BackendContainer"]
+[node name="BackendLabel" type="Label" parent="MainMarginContainer/HBoxContainer/BackendContainer"]
 layout_mode = 2
 text = "ENGINE BACKEND"
 horizontal_alignment = 1
 
-[node name="ItemList" type="ItemList" parent="MainMarginContainer/HBoxContainer/BackendContainer"]
+[node name="AvailableResults" type="ItemList" parent="MainMarginContainer/HBoxContainer/BackendContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 item_count = 2
