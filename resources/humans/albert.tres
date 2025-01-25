@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="Human" load_steps=4 format=3 uid="uid://gca0ljnxiv84"]
+
+[ext_resource type="Script" uid="uid://b6f4d3ixd3l5n" path="res://scripts/resources/human.gd" id="1_hk3h7"]
+[ext_resource type="Script" uid="uid://bmyqsksr6337x" path="res://scripts/resources/query.gd" id="2_xgl4i"]
+
+[sub_resource type="Resource" id="Resource_hk3h7"]
+script = ExtResource("2_xgl4i")
+text = "Flat earth truth"
+positive_tags = Array[String](["flat earth"])
+negative_tags = Array[String]([])
+metadata/_custom_type_script = ExtResource("2_xgl4i")
+
+[resource]
+script = ExtResource("1_hk3h7")
+name = "Albert"
+queries = Array[ExtResource("2_xgl4i")]([SubResource("Resource_hk3h7")])
+positive_tags = Array[String](["flat earth"])
+negative_tags = Array[String]([])
+metadata/_custom_type_script = ExtResource("1_hk3h7")
