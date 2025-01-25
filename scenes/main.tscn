@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://cbutk778cqf52" path="res://scenes/search_bar.tscn" id="1_o5qli"]
 [ext_resource type="Resource" uid="uid://seg4sdlnbehf" path="res://resources/sample_data.tres" id="2_sugp2"]
 
-[node name="Main" type="Control" node_paths=PackedStringArray("available_results")]
+[node name="Main" type="Control" node_paths=PackedStringArray("available_results", "search_bar")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -14,6 +14,7 @@ grow_vertical = 2
 script = ExtResource("1_0wfyh")
 data = ExtResource("2_sugp2")
 available_results = NodePath("MainMarginContainer/HBoxContainer/BackendContainer/AvailableResults")
+search_bar = NodePath("MainMarginContainer/HBoxContainer/FrontendContainer/SearchBar")
 
 [node name="MainMarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
