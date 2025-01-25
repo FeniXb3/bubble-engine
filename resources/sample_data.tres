@@ -1,0 +1,51 @@
+[gd_resource type="Resource" script_class="GameData" load_steps=10 format=3 uid="uid://seg4sdlnbehf"]
+
+[ext_resource type="Script" uid="uid://b6f4d3ixd3l5n" path="res://scripts/resources/human.gd" id="1_eqmsu"]
+[ext_resource type="Script" uid="uid://bmyqsksr6337x" path="res://scripts/resources/query.gd" id="2_ou03s"]
+[ext_resource type="Script" uid="uid://c2nq8gq0i8mhb" path="res://scripts/resources/game_data.gd" id="2_xv1yj"]
+[ext_resource type="Script" uid="uid://ca27kkmccmd5k" path="res://scripts/resources/result.gd" id="3_ou03s"]
+
+[sub_resource type="Resource" id="Resource_xv1yj"]
+script = ExtResource("2_ou03s")
+text = "Flat earth truth"
+positive_tags = Array[String](["flat earth"])
+negative_tags = Array[String]([])
+metadata/_custom_type_script = ExtResource("2_ou03s")
+
+[sub_resource type="Resource" id="Resource_frgmt"]
+script = ExtResource("1_eqmsu")
+name = ""
+queries = Array[ExtResource("2_ou03s")]([SubResource("Resource_xv1yj")])
+positive_tags = Array[String]([])
+negative_tags = Array[String]([])
+metadata/_custom_type_script = ExtResource("1_eqmsu")
+
+[sub_resource type="Resource" id="Resource_j32xr"]
+script = ExtResource("3_ou03s")
+title = "Behind Copernicus lies"
+description = ""
+positive_tags = Array[String](["flat earth"])
+negative_tags = Array[String]([])
+metadata/_custom_type_script = ExtResource("3_ou03s")
+
+[sub_resource type="Resource" id="Resource_pc7no"]
+script = ExtResource("3_ou03s")
+title = "Earth is flat as their brains"
+description = ""
+positive_tags = Array[String]([])
+negative_tags = Array[String](["flat earth"])
+metadata/_custom_type_script = ExtResource("3_ou03s")
+
+[sub_resource type="Resource" id="Resource_ou03s"]
+script = ExtResource("3_ou03s")
+title = "News about nothing"
+description = ""
+positive_tags = Array[String](["nothingburger"])
+negative_tags = Array[String]([])
+metadata/_custom_type_script = ExtResource("3_ou03s")
+
+[resource]
+script = ExtResource("2_xv1yj")
+humans = Array[ExtResource("1_eqmsu")]([SubResource("Resource_frgmt")])
+results = Array[ExtResource("3_ou03s")]([SubResource("Resource_j32xr"), SubResource("Resource_pc7no"), SubResource("Resource_ou03s")])
+metadata/_custom_type_script = ExtResource("2_xv1yj")
