@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://doul7wro0a34o" path="res://scripts/search_bar.gd" id="1_nw6hu"]
 
 [node name="SearchBar" type="Control" node_paths=PackedStringArray("container", "query_field")]
-custom_minimum_size = Vector2(1152, -31)
+custom_minimum_size = Vector2(0, 31)
 layout_mode = 3
 anchors_preset = 14
 anchor_top = 0.5
@@ -12,18 +12,15 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
-size_flags_vertical = 3
 script = ExtResource("1_nw6hu")
 container = NodePath("HBox")
 query_field = NodePath("HBox/LineEdit")
 
 [node name="HBox" type="HBoxContainer" parent="."]
 layout_mode = 1
-anchors_preset = 14
-anchor_top = 0.5
+anchors_preset = 15
 anchor_right = 1.0
-anchor_bottom = 0.5
-offset_bottom = 31.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(-1, 1)

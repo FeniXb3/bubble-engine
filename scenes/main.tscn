@@ -38,13 +38,13 @@ text = "ENGINE FRONTEND"
 horizontal_alignment = 1
 
 [node name="SearchBar" parent="MainMarginContainer/HBoxContainer/FrontendContainer" instance=ExtResource("1_o5qli")]
-custom_minimum_size = Vector2(574, -31)
+custom_minimum_size = Vector2(0, 31)
 layout_mode = 2
-size_flags_vertical = 1
 
 [node name="BackendContainer" type="VBoxContainer" parent="MainMarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
 
 [node name="BackendLabel" type="Label" parent="MainMarginContainer/HBoxContainer/BackendContainer"]
 layout_mode = 2
