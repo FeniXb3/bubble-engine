@@ -1,9 +1,53 @@
-[gd_scene format=3 uid="uid://dvwpk5124o4es"]
+[gd_scene load_steps=2 format=3 uid="uid://dvwpk5124o4es"]
 
-[node name="Control" type="Control"]
+[ext_resource type="PackedScene" uid="uid://cbutk778cqf52" path="res://scenes/search_bar.tscn" id="1_o5qli"]
+
+[node name="Main" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="MainMarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainMarginContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="FrontendContainer" type="VBoxContainer" parent="MainMarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label2" type="Label" parent="MainMarginContainer/HBoxContainer/FrontendContainer"]
+layout_mode = 2
+text = "ENGINE FRONTEND"
+horizontal_alignment = 1
+
+[node name="SearchBar" parent="MainMarginContainer/HBoxContainer/FrontendContainer" instance=ExtResource("1_o5qli")]
+custom_minimum_size = Vector2(574, -31)
+layout_mode = 2
+size_flags_vertical = 1
+
+[node name="BackendContainer" type="VBoxContainer" parent="MainMarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="MainMarginContainer/HBoxContainer/BackendContainer"]
+layout_mode = 2
+text = "ENGINE BACKEND"
+horizontal_alignment = 1
+
+[node name="ItemList" type="ItemList" parent="MainMarginContainer/HBoxContainer/BackendContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+item_count = 2
+item_0/text = "asdfgh"
+item_1/text = "sdfghgfgf"
