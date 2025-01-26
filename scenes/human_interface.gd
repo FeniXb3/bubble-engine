@@ -3,6 +3,7 @@ extends Control
 @export var results_list: ItemList
 @export var reading_timer: Timer
 @export var face_update_timer: Timer
+@export var control_flipper: ControlFlipper
 
 @export var face: TextureRect
 @export var head: TextureRect
@@ -15,6 +16,10 @@ func _ready() -> void:
 	SignalBus.mood_calculated.connect(update_face)
 	SignalBus.ready_to_pick_query.connect(clean_results)
 	SignalBus.human_picked.connect(show_head)
+	SignalBus.flip_change_requested.connect(update_flip_state)
+	
+func update_flip_state(value: bool) -> void:
+	control_flipper.flip = value
 	
 func show_head(human: Human, index: int) -> void:
 	var head_shape := human_visuals.heads[index]

@@ -1,35 +1,13 @@
-[gd_scene load_steps=22 format=3 uid="uid://dvwpk5124o4es"]
+[gd_scene load_steps=19 format=3 uid="uid://dvwpk5124o4es"]
 
 [ext_resource type="Script" uid="uid://bd400a1w377bh" path="res://scripts/main.gd" id="1_0wfyh"]
 [ext_resource type="Resource" uid="uid://seg4sdlnbehf" path="res://resources/sample_data.tres" id="2_sugp2"]
 [ext_resource type="Resource" uid="uid://dcww28fkwrhvp" path="res://resources/humans/sample_visuals.tres" id="3_o6xl0"]
-[ext_resource type="Texture2D" uid="uid://owsh87g2rjud" path="res://graphics/kenney_shape-characters/PNG/Default/purple_body_circle.png" id="3_tbgi4"]
 [ext_resource type="PackedScene" uid="uid://kogfwa2w7dnr" path="res://scenes/human_interface.tscn" id="4_jyhfs"]
-[ext_resource type="Texture2D" uid="uid://caxkj1i0p3pci" path="res://graphics/kenney_shape-characters/PNG/Default/face_a.png" id="4_tefeu"]
-[ext_resource type="Texture2D" uid="uid://bnbvj4f6ekugk" path="res://graphics/kenney_shape-characters/PNG/Default/purple_hand_point.png" id="6_tefeu"]
 [ext_resource type="AudioStream" uid="uid://v4bqj5mumgon" path="res://sfx/hard_drive_on.mp3" id="8_85g3d"]
 [ext_resource type="AudioStream" uid="uid://b5pb0qrq2rrye" path="res://music/Thinking Out Loud.mp3" id="8_tipki"]
 [ext_resource type="AudioStream" uid="uid://djyeptxscbxmj" path="res://sfx/hard_drive_running.mp3" id="9_choun"]
 [ext_resource type="AudioStream" uid="uid://cxno8ky1v7g5k" path="res://sfx/hard_drive_off.mp3" id="10_ya4ey"]
-
-[sub_resource type="Animation" id="Animation_ya4ey"]
-resource_name = "start"
-length = 17.8525
-tracks/0/type = "audio"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"clips": [{
-"end_offset": 0.0,
-"start_offset": 0.0,
-"stream": ExtResource("8_85g3d")
-}],
-"times": PackedFloat32Array(0.133333)
-}
-tracks/0/use_blend = true
 
 [sub_resource type="Animation" id="Animation_eb6dy"]
 resource_name = "running"
@@ -48,6 +26,25 @@ tracks/0/keys = {
 "stream": ExtResource("9_choun")
 }],
 "times": PackedFloat32Array(0)
+}
+tracks/0/use_blend = true
+
+[sub_resource type="Animation" id="Animation_ya4ey"]
+resource_name = "start"
+length = 17.8525
+tracks/0/type = "audio"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("8_85g3d")
+}],
+"times": PackedFloat32Array(0.133333)
 }
 tracks/0/use_blend = true
 
@@ -87,45 +84,6 @@ gradient = SubResource("Gradient_tipki")
 fill_from = Vector2(0, 1)
 fill_to = Vector2(0, 0)
 
-[sub_resource type="Animation" id="Animation_tipki"]
-resource_name = "shut_down"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:texture:gradient:offsets")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(0.176777, 0.176777),
-"update": 0,
-"values": [PackedFloat32Array(-0.1, 0.5, 1.1), PackedFloat32Array(0.499, 0.5, 0.501)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:texture:gradient:colors")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.11),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [PackedColorArray(0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0), PackedColorArray(0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("../MusicPlayer:playing")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-
 [sub_resource type="Animation" id="Animation_85g3d"]
 length = 0.001
 tracks/0/type = "value"
@@ -151,6 +109,45 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [PackedColorArray(0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../MusicPlayer:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_tipki"]
+resource_name = "shut_down"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture:gradient:offsets")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.176777, 0.176777),
+"update": 0,
+"values": [PackedFloat32Array(-0.1, 0.5, 1.1), PackedFloat32Array(0.499, 0.5, 0.501)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:texture:gradient:colors")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.11),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [PackedColorArray(0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0), PackedColorArray(0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -265,6 +262,16 @@ layout_mode = 2
 text = "ENGINE BACKEND"
 horizontal_alignment = 1
 
+[node name="CheckBox" type="CheckBox" parent="MainMarginContainer/HBoxContainer/BackendContainer"]
+layout_mode = 2
+button_pressed = true
+text = "FLIP HUMAN INTERFACE"
+
+[node name="Label" type="Label" parent="MainMarginContainer/HBoxContainer/BackendContainer"]
+layout_mode = 2
+text = "RESULTS TO FILTER"
+horizontal_alignment = 1
+
 [node name="AvailableResults" type="ItemList" parent="MainMarginContainer/HBoxContainer/BackendContainer"]
 layout_mode = 2
 size_flags_vertical = 3
@@ -277,46 +284,6 @@ item_1/text = "sdfghgfgf"
 layout_mode = 2
 text = "SUBMIT"
 
-[node name="Head" type="TextureRect" parent="."]
-visible = false
-modulate = Color(1, 1, 1, 0.439216)
-layout_mode = 2
-offset_left = 156.0
-offset_top = 63.0
-offset_right = 236.0
-offset_bottom = 143.0
-size_flags_horizontal = 4
-texture = ExtResource("3_tbgi4")
-stretch_mode = 2
-metadata/_edit_group_ = true
-
-[node name="Face" type="TextureRect" parent="Head"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -25.0
-offset_top = -20.0
-offset_right = 25.0
-offset_bottom = 20.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("4_tefeu")
-stretch_mode = 2
-
-[node name="Hand" type="TextureRect" parent="Head"]
-visible = false
-layout_mode = 0
-offset_left = -38.0
-offset_top = 65.0
-offset_right = 2.0
-offset_bottom = 105.0
-texture = ExtResource("6_tefeu")
-flip_h = true
-flip_v = true
-
 [node name="Timer" type="Timer" parent="."]
 one_shot = true
 
@@ -327,6 +294,7 @@ popup_window = true
 dialog_autowrap = true
 
 [node name="BackgroundPlayer" type="AudioStreamPlayer" parent="."]
+volume_db = -10.0
 
 [node name="BGAnimationPlayer" type="AnimationPlayer" parent="BackgroundPlayer"]
 libraries = {
@@ -352,4 +320,5 @@ libraries = {
 &"": SubResource("AnimationLibrary_choun")
 }
 
+[connection signal="toggled" from="MainMarginContainer/HBoxContainer/BackendContainer/CheckBox" to="." method="_on_check_box_toggled"]
 [connection signal="pressed" from="MainMarginContainer/HBoxContainer/BackendContainer/SubmitButton" to="." method="_on_submit_button_pressed"]

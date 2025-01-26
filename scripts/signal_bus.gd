@@ -18,3 +18,5 @@ signal mood_calculated(mood: int)
 signal ready_to_pick_query
 @warning_ignore("unused_signal")
 signal human_picked(human: Human, index: int)
+@warning_ignore("unused_signal")
+signal flip_change_requested(toggled_on: bool)
