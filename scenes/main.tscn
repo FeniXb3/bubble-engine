@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://caxkj1i0p3pci" path="res://graphics/kenney_shape-characters/PNG/Default/face_a.png" id="4_tefeu"]
 [ext_resource type="Texture2D" uid="uid://bnbvj4f6ekugk" path="res://graphics/kenney_shape-characters/PNG/Default/purple_hand_point.png" id="6_tefeu"]
 
-[node name="Main" type="Control" node_paths=PackedStringArray("available_results")]
+[node name="Main" type="Control" node_paths=PackedStringArray("available_results", "timer")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -17,6 +17,7 @@ grow_vertical = 2
 script = ExtResource("1_0wfyh")
 data = ExtResource("2_sugp2")
 available_results = NodePath("MainMarginContainer/HBoxContainer/BackendContainer/AvailableResults")
+timer = NodePath("Timer")
 
 [node name="MainMarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -105,5 +106,8 @@ offset_bottom = 105.0
 texture = ExtResource("6_tefeu")
 flip_h = true
 flip_v = true
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
 
 [connection signal="pressed" from="MainMarginContainer/HBoxContainer/BackendContainer/SubmitButton" to="." method="_on_submit_button_pressed"]

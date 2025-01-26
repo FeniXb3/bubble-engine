@@ -2,7 +2,7 @@ extends Control
 @export var data: GameData
 
 @export var available_results: ItemList
-@export var search_bar: SearchBar
+@export var timer: Timer
 
 @export var current_human: Human
 @export var current_query: Query
@@ -54,6 +54,8 @@ func _on_submit_button_pressed() -> void:
 	SignalBus.results_submitted.emit(results_to_send)
 
 func calculte_reaction(r: Result) -> void:
+	timer.start()
+	await timer.timeout
 	var score: int = 0
 	score += count_overlapping_tag(r.positive_tags, current_human.positive_tags)
 	score += count_overlapping_tag(r.negative_tags, current_human.negative_tags)
@@ -61,11 +63,13 @@ func calculte_reaction(r: Result) -> void:
 	score -= count_overlapping_tag(r.negative_tags, current_human.positive_tags)
 	
 	current_total_reaction += score
-	
-	SignalBus.reaction_calculated.emit(score)
+	current_human.mood += score
+	#SignalBus.reaction_calculated.emit(score)
+	#SignalBus.reaction_calculated.emit(score + current_human.mood)
+	SignalBus.reaction_calculated.emit(current_human.mood)
 
-func calculate_mood(results: Array[Result]) -> void:
-	current_human.mood += current_total_reaction
+func calculate_mood(_results: Array[Result]) -> void:
+	#current_human.mood += current_total_reaction
 	SignalBus.mood_calculated.emit(current_human.mood)
 #func calculte_reaction(results: Array[Result]) -> void:
 	#var score: int = 0

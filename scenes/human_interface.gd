@@ -2,6 +2,8 @@ extends Control
 
 @export var results_list: ItemList
 @export var reading_timer: Timer
+@export var face_update_timer: Timer
+
 @export var face: TextureRect
 @export var human_visuals: HumanVisuals
 
@@ -23,7 +25,9 @@ func show_results(results) -> void:
 		results_list.set_item_metadata(index, r)
 		SignalBus.result_read.emit(r)
 		var response_mood: int = await SignalBus.reaction_calculated
-		
+		update_face(response_mood)
+		face_update_timer.start()
+		await face_update_timer.timeout
 		var t = human_visuals.faces.get(response_mood)
 		results_list.set_item_icon(index, t)
 		
