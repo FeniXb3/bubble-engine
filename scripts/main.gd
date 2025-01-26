@@ -6,6 +6,8 @@ extends Control
 @export var timer: Timer
 @export var accept_dialog: AcceptDialog
 @export var animation_player: AnimationPlayer
+@export var bg_animation_player: AnimationPlayer
+@export var music_player: AudioStreamPlayer
 
 @export var current_human: Human
 @export var current_query: Query
@@ -65,6 +67,8 @@ func _ready() -> void:
 	
 	
 func start() -> void:
+	
+	bg_animation_player.play("start", 0.01)
 	animation_player.play("turn_on")
 	await animation_player.animation_finished
 	failed = false
@@ -85,6 +89,9 @@ func show_dialog(text: String, handler: Callable) -> void:
 	accept_dialog.canceled.connect(handler)
 
 func pick_human() -> void:
+	if not music_player.playing:
+		music_player.play()
+	
 	if available_humans.is_empty():
 		available_humans = data.humans.duplicate()
 		
@@ -150,7 +157,9 @@ func calculate_mood(_results: Array[Result]) -> void:
 
 func reset() -> void:
 	animation_player.play("shut_down")
-	await animation_player.animation_finished
+	bg_animation_player.play("stop")
+	#await animation_player.animation_finished
+	await bg_animation_player.animation_finished
 	algo_number += 1
 	available_results.clear()
 	start()

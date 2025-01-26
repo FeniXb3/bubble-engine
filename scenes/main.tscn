@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://dvwpk5124o4es"]
+[gd_scene load_steps=22 format=3 uid="uid://dvwpk5124o4es"]
 
 [ext_resource type="Script" uid="uid://bd400a1w377bh" path="res://scripts/main.gd" id="1_0wfyh"]
 [ext_resource type="Resource" uid="uid://seg4sdlnbehf" path="res://resources/sample_data.tres" id="2_sugp2"]
@@ -7,7 +7,75 @@
 [ext_resource type="PackedScene" uid="uid://kogfwa2w7dnr" path="res://scenes/human_interface.tscn" id="4_jyhfs"]
 [ext_resource type="Texture2D" uid="uid://caxkj1i0p3pci" path="res://graphics/kenney_shape-characters/PNG/Default/face_a.png" id="4_tefeu"]
 [ext_resource type="Texture2D" uid="uid://bnbvj4f6ekugk" path="res://graphics/kenney_shape-characters/PNG/Default/purple_hand_point.png" id="6_tefeu"]
+[ext_resource type="AudioStream" uid="uid://v4bqj5mumgon" path="res://sfx/hard_drive_on.mp3" id="8_85g3d"]
 [ext_resource type="AudioStream" uid="uid://b5pb0qrq2rrye" path="res://music/Thinking Out Loud.mp3" id="8_tipki"]
+[ext_resource type="AudioStream" uid="uid://djyeptxscbxmj" path="res://sfx/hard_drive_running.mp3" id="9_choun"]
+[ext_resource type="AudioStream" uid="uid://cxno8ky1v7g5k" path="res://sfx/hard_drive_off.mp3" id="10_ya4ey"]
+
+[sub_resource type="Animation" id="Animation_ya4ey"]
+resource_name = "start"
+length = 17.8525
+tracks/0/type = "audio"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("8_85g3d")
+}],
+"times": PackedFloat32Array(0.133333)
+}
+tracks/0/use_blend = true
+
+[sub_resource type="Animation" id="Animation_eb6dy"]
+resource_name = "running"
+length = 17.57
+loop_mode = 1
+tracks/0/type = "audio"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("9_choun")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/0/use_blend = true
+
+[sub_resource type="Animation" id="Animation_trceg"]
+resource_name = "stop"
+length = 3.258
+tracks/0/type = "audio"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": [{
+"end_offset": 3.3027,
+"start_offset": 0.0,
+"stream": ExtResource("10_ya4ey")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/0/use_blend = true
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_eb6dy"]
+_data = {
+&"running": SubResource("Animation_eb6dy"),
+&"start": SubResource("Animation_ya4ey"),
+&"stop": SubResource("Animation_trceg")
+}
 
 [sub_resource type="Gradient" id="Gradient_tipki"]
 interpolation_color_space = 1
@@ -48,7 +116,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("../AudioStreamPlayer:playing")
+tracks/2/path = NodePath("../MusicPlayer:playing")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -87,7 +155,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("../AudioStreamPlayer:playing")
+tracks/2/path = NodePath("../MusicPlayer:playing")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -126,8 +194,8 @@ tracks/1/keys = {
 }
 tracks/2/type = "value"
 tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("../AudioStreamPlayer:playing")
+tracks/2/enabled = false
+tracks/2/path = NodePath("../MusicPlayer:playing")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -144,7 +212,7 @@ _data = {
 &"turn_on": SubResource("Animation_choun")
 }
 
-[node name="Main" type="Control" node_paths=PackedStringArray("available_results", "timer", "accept_dialog", "animation_player")]
+[node name="Main" type="Control" node_paths=PackedStringArray("available_results", "timer", "accept_dialog", "animation_player", "bg_animation_player", "music_player")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -158,6 +226,8 @@ available_results = NodePath("MainMarginContainer/HBoxContainer/BackendContainer
 timer = NodePath("Timer")
 accept_dialog = NodePath("AcceptDialog")
 animation_player = NodePath("ShutDownTextureRect/AnimationPlayer")
+bg_animation_player = NodePath("BackgroundPlayer/BGAnimationPlayer")
+music_player = NodePath("MusicPlayer")
 
 [node name="MainMarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -256,7 +326,15 @@ size = Vector2i(400, 300)
 popup_window = true
 dialog_autowrap = true
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="BackgroundPlayer" type="AudioStreamPlayer" parent="."]
+
+[node name="BGAnimationPlayer" type="AnimationPlayer" parent="BackgroundPlayer"]
+libraries = {
+&"": SubResource("AnimationLibrary_eb6dy")
+}
+next/start = &"running"
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("8_tipki")
 
 [node name="ShutDownTextureRect" type="TextureRect" parent="."]
