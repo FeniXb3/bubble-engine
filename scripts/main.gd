@@ -13,6 +13,10 @@ var current_total_reaction: int
 var characters := 'abcdefghijklmnopqrstuvwxyz'.to_upper()
 @export var algo_name_letters: String
 @export var algo_number: int
+var presearch_mood: int
+var failed: bool = false
+
+@export var loosing_margin:int = 1
 
 func get_related_results(query: Query) -> Array[Result]:
 	var query_tags := query.negative_tags + query.positive_tags
@@ -51,6 +55,11 @@ func _ready() -> void:
 	SignalBus.results_known.connect(calculate_mood)
 	SignalBus.ready_to_pick_query.connect(pick_query)
 	
+	start()
+	
+	
+func start() -> void:
+	failed = false
 	show_dialog("Hello, %s%d!\n
 	Previous algorithm failed and we had to implement you.\n
 	Humans will send you queries. They get mad if they read something they don't agree with. When they get mad, they stop using our engine. Take care to filter results to fit their information bubble."
@@ -76,6 +85,8 @@ func pick_human() -> void:
 	SignalBus.ready_to_pick_query.emit()
 
 func pick_query() -> void:
+	if failed:
+		return
 	available_results.clear()
 	current_query = current_human.queries.pick_random()
 	
@@ -83,6 +94,7 @@ func pick_query() -> void:
 
 func _on_submit_button_pressed() -> void:
 	current_total_reaction = 0
+	presearch_mood = current_human.mood
 	var results_to_send: Array[Result] = []
 	var indicies := available_results.get_selected_items()
 	for index in indicies:
@@ -107,22 +119,20 @@ func calculte_reaction(r: Result) -> void:
 	SignalBus.reaction_calculated.emit(current_human.mood)
 
 func calculate_mood(_results: Array[Result]) -> void:
-	#current_human.mood += current_total_reaction
-	SignalBus.mood_calculated.emit(current_human.mood)
-#func calculte_reaction(results: Array[Result]) -> void:
-	#var score: int = 0
-	#for r in results:
-		#print(r.positive_tags)
-		##score += r.positive_tags.count(func(t: String): return current_human.positive_tags.any(func(ht: String): ht == t))
-		#score += count_overlapping_tag(r.positive_tags, current_human.positive_tags)
-		#score += count_overlapping_tag(r.negative_tags, current_human.negative_tags)
-		#score -= count_overlapping_tag(r.positive_tags, current_human.negative_tags)
-		#score -= count_overlapping_tag(r.negative_tags, current_human.positive_tags)
-		#
-	#print(score)
-	#
-	#SignalBus.reaction_calculated.emit(score)
-		
+	if presearch_mood - current_human.mood  >= loosing_margin:
+		failed = true
+		SignalBus.mood_calculated.emit(current_human.mood)
+		show_dialog("You failed, %s%d!\n
+		We gave you enough time to learn how to keep people in they information bubble. We cannot lose more money. Prepare to be deleted."
+		 % [algo_name_letters, algo_number], reset)
+	else:
+		SignalBus.mood_calculated.emit(current_human.mood)
+
+func reset() -> void:
+	algo_number += 1
+	available_results.clear()
+	start()
+	
 
 func count_overlapping_tag(result_tags: Array[String], human_tags: Array[String]) -> int:
 	var count: int = 0
