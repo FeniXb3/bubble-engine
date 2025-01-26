@@ -8,6 +8,7 @@ extends Control
 @export var animation_player: AnimationPlayer
 @export var bg_animation_player: AnimationPlayer
 @export var music_player: AudioStreamPlayer
+@export var submit_button: Button
 
 @export var current_human: Human
 @export var current_query: Query
@@ -45,6 +46,7 @@ func show_results() -> void:
 			available_results.set_item_icon(index, t)
 			
 	available_results.grab_focus()
+	submit_button.disabled = false
 		
 func generate_word(chars, length):
 	var word: String = ""
@@ -128,6 +130,7 @@ func _on_submit_button_pressed() -> void:
 		results_to_send.append(available_results.get_item_metadata(index))
 		
 	SignalBus.results_submitted.emit(results_to_send)
+	submit_button.disabled = true
 
 func calculte_reaction(r: Result) -> void:
 	timer.start()

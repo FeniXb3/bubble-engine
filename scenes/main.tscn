@@ -209,7 +209,7 @@ _data = {
 &"turn_on": SubResource("Animation_choun")
 }
 
-[node name="Main" type="Control" node_paths=PackedStringArray("available_results", "timer", "accept_dialog", "animation_player", "bg_animation_player", "music_player")]
+[node name="Main" type="Control" node_paths=PackedStringArray("available_results", "timer", "accept_dialog", "animation_player", "bg_animation_player", "music_player", "submit_button")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -225,6 +225,7 @@ accept_dialog = NodePath("AcceptDialog")
 animation_player = NodePath("ShutDownTextureRect/AnimationPlayer")
 bg_animation_player = NodePath("BackgroundPlayer/BGAnimationPlayer")
 music_player = NodePath("MusicPlayer")
+submit_button = NodePath("MainMarginContainer/HBoxContainer/BackendContainer/SubmitButton")
 
 [node name="MainMarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -282,6 +283,7 @@ item_1/text = "sdfghgfgf"
 
 [node name="SubmitButton" type="Button" parent="MainMarginContainer/HBoxContainer/BackendContainer"]
 layout_mode = 2
+disabled = true
 text = "SUBMIT"
 
 [node name="Timer" type="Timer" parent="."]
