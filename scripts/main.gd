@@ -16,6 +16,7 @@ var characters := 'abcdefghijklmnopqrstuvwxyz'.to_upper()
 var presearch_mood: int
 var failed: bool = false
 var available_queries: Array[Query]
+var available_humans: Array[Human]
 
 @export var loosing_margin:int = 1
 
@@ -56,6 +57,7 @@ func _ready() -> void:
 	SignalBus.results_known.connect(calculate_mood)
 	SignalBus.ready_to_pick_query.connect(pick_query)
 	
+	available_humans = data.humans.duplicate()
 	start()
 	
 	
@@ -78,7 +80,12 @@ func show_dialog(text: String, handler: Callable) -> void:
 	accept_dialog.canceled.connect(handler)
 
 func pick_human() -> void:
-	current_human = data.humans.pick_random()
+	if available_humans.is_empty():
+		available_humans = data.humans.duplicate()
+		
+	current_human = available_humans.pick_random()
+	available_humans.erase(current_human)
+	
 	available_queries = current_human.queries.duplicate()
 	var human_index: int = data.humans.find(current_human)
 	SignalBus.human_picked.emit(current_human, human_index)
