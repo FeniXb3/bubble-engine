@@ -21,6 +21,7 @@ var presearch_mood: int
 var failed: bool = false
 var available_queries: Array[Query]
 var available_humans: Array[Human]
+var first_time := true
 
 @export var loosing_margin:int = 1
 
@@ -46,7 +47,14 @@ func show_results() -> void:
 			available_results.set_item_icon(index, t)
 			
 	available_results.grab_focus()
-	submit_button.disabled = false
+	
+	if first_time:
+		first_time = false
+		show_dialog("Pay attention, %s%d!\n
+			You have incoming query from a human. Click on the list to pick result fitting their information bubble. When you're done, press Submit button.\n\n
+			Better be better than %s%d"
+	 % [algo_name_letters, algo_number,
+		algo_name_letters, algo_number-1], func(): pass)
 		
 func generate_word(chars, length):
 	var word: String = ""
@@ -75,9 +83,10 @@ func start() -> void:
 	await animation_player.animation_finished
 	failed = false
 	show_dialog("Hello, %s%d!\n
-	Previous algorithm failed and we had to implement you.\n
+	Algorithm %s%d failed and we had to implement you.\n
 	Humans will send you queries. They get mad if they read something they don't agree with. When they get mad, they stop using our engine. Take care to filter results to fit their information bubble."
-	 % [algo_name_letters, algo_number], pick_human)
+	 % [algo_name_letters, algo_number,
+		algo_name_letters, algo_number-1], pick_human)
 
 func show_dialog(text: String, handler: Callable) -> void:
 	for c in accept_dialog.confirmed.get_connections():
@@ -87,8 +96,9 @@ func show_dialog(text: String, handler: Callable) -> void:
 		
 	accept_dialog.dialog_text = text
 	accept_dialog.show()
-	accept_dialog.confirmed.connect(handler)
-	accept_dialog.canceled.connect(handler)
+	if handler:
+		accept_dialog.confirmed.connect(handler)
+		accept_dialog.canceled.connect(handler)
 
 func pick_human() -> void:
 	if not music_player.playing:
@@ -182,3 +192,9 @@ func count_overlapping_tag(result_tags: Array[String], human_tags: Array[String]
 
 func _on_check_box_toggled(toggled_on: bool) -> void:
 	SignalBus.flip_change_requested.emit(not toggled_on)
+
+
+func _on_available_results_multi_selected(index: int, selected: bool) -> void:
+	var indicies := available_results.get_selected_items()
+	submit_button.disabled = indicies.is_empty()
+		

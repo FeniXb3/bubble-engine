@@ -322,4 +322,5 @@ libraries = {
 }
 
 [connection signal="toggled" from="MainMarginContainer/HBoxContainer/BackendContainer/CheckBox" to="." method="_on_check_box_toggled"]
+[connection signal="multi_selected" from="MainMarginContainer/HBoxContainer/BackendContainer/AvailableResults" to="." method="_on_available_results_multi_selected"]
 [connection signal="pressed" from="MainMarginContainer/HBoxContainer/BackendContainer/SubmitButton" to="." method="_on_submit_button_pressed"]
