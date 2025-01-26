@@ -5,6 +5,7 @@ extends Control
 @export var available_results: ItemList
 @export var timer: Timer
 @export var accept_dialog: AcceptDialog
+@export var animation_player: AnimationPlayer
 
 @export var current_human: Human
 @export var current_query: Query
@@ -64,6 +65,8 @@ func _ready() -> void:
 	
 	
 func start() -> void:
+	animation_player.play("turn_on")
+	await animation_player.animation_finished
 	failed = false
 	show_dialog("Hello, %s%d!\n
 	Previous algorithm failed and we had to implement you.\n
@@ -146,6 +149,8 @@ func calculate_mood(_results: Array[Result]) -> void:
 		SignalBus.mood_calculated.emit(current_human.mood)
 
 func reset() -> void:
+	animation_player.play("shut_down")
+	await animation_player.animation_finished
 	algo_number += 1
 	available_results.clear()
 	start()
