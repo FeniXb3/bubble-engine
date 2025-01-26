@@ -4,12 +4,15 @@ extends Control
 
 @export var available_results: ItemList
 @export var timer: Timer
+@export var accept_dialog: AcceptDialog
 
 @export var current_human: Human
 @export var current_query: Query
 
 var current_total_reaction: int
-
+var characters := 'abcdefghijklmnopqrstuvwxyz'.to_upper()
+@export var algo_name_letters: String
+@export var algo_number: int
 
 func get_related_results(query: Query) -> Array[Result]:
 	var query_tags := query.negative_tags + query.positive_tags
@@ -25,24 +28,51 @@ func show_results() -> void:
 	for r in results:
 		
 		var index = available_results.add_item(r.title)
+		available_results.set_item_metadata(index, r)
 		if current_human.past_reactions.has(r):
 			var last_mood: int = current_human.past_reactions.get(r)
 			
 			var t = human_visuals.faces.get(last_mood)
 			available_results.set_item_icon(index, t)
-		available_results.set_item_metadata(index, r)
 		
+func generate_word(chars, length):
+	var word: String
+	var n_char = len(chars)
+	for i in range(length):
+		word += chars[randi()% n_char]
+	return word
+	
 func _ready() -> void:
+	algo_name_letters = generate_word(characters, 3)
+	algo_number = randi_range(128, 2048)
 	available_results.clear()
 	SignalBus.query_submitted.connect(show_results)
 	SignalBus.result_read.connect(calculte_reaction)
 	SignalBus.results_known.connect(calculate_mood)
 	SignalBus.ready_to_pick_query.connect(pick_query)
 	
-	pick_human()
+	show_dialog("Hello, %s%d!\n
+	Previous algorithm failed and we had to implement you.\n
+	Humans will send you queries. They get mad if they read something they don't agree with. When they get mad, they stop using our engine. Take care to filter results to fit their information bubble."
+	 % [algo_name_letters, algo_number], pick_human)
+
+func show_dialog(text: String, handler: Callable) -> void:
+	for c in accept_dialog.confirmed.get_connections():
+		accept_dialog.confirmed.disconnect(c.callable)
+	for c in accept_dialog.canceled.get_connections():
+		accept_dialog.canceled.disconnect(c.callable)
+		
+	accept_dialog.dialog_text = text
+	accept_dialog.show()
+	accept_dialog.confirmed.connect(handler)
+	accept_dialog.canceled.connect(handler)
 
 func pick_human() -> void:
 	current_human = data.humans.pick_random()
+	var human_index: int = data.humans.find(current_human)
+	SignalBus.human_picked.emit(current_human, human_index)
+	timer.start()
+	await timer.timeout
 	SignalBus.ready_to_pick_query.emit()
 
 func pick_query() -> void:

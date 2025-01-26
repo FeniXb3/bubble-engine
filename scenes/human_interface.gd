@@ -5,6 +5,7 @@ extends Control
 @export var face_update_timer: Timer
 
 @export var face: TextureRect
+@export var head: TextureRect
 @export var human_visuals: HumanVisuals
 
 func _ready() -> void:
@@ -12,6 +13,14 @@ func _ready() -> void:
 	SignalBus.results_submitted.connect(show_results)
 	SignalBus.mood_calculated.connect(update_face)
 	SignalBus.ready_to_pick_query.connect(clean_results)
+	SignalBus.human_picked.connect(show_head)
+	
+func show_head(human: Human, index: int) -> void:
+	var head_shape := human_visuals.heads[index]
+	head.texture = head_shape
+	update_face(human.mood)
+	head.show()
+	
 	
 func clean_results() -> void:
 	results_list.clear()

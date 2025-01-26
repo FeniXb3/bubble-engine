@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://caxkj1i0p3pci" path="res://graphics/kenney_shape-characters/PNG/Default/face_a.png" id="4_tefeu"]
 [ext_resource type="Texture2D" uid="uid://bnbvj4f6ekugk" path="res://graphics/kenney_shape-characters/PNG/Default/purple_hand_point.png" id="6_tefeu"]
 
-[node name="Main" type="Control" node_paths=PackedStringArray("available_results", "timer")]
+[node name="Main" type="Control" node_paths=PackedStringArray("available_results", "timer", "accept_dialog")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -20,6 +20,7 @@ data = ExtResource("2_sugp2")
 human_visuals = ExtResource("3_o6xl0")
 available_results = NodePath("MainMarginContainer/HBoxContainer/BackendContainer/AvailableResults")
 timer = NodePath("Timer")
+accept_dialog = NodePath("AcceptDialog")
 
 [node name="MainMarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -111,5 +112,11 @@ flip_v = true
 
 [node name="Timer" type="Timer" parent="."]
 one_shot = true
+
+[node name="AcceptDialog" type="AcceptDialog" parent="."]
+initial_position = 2
+size = Vector2i(400, 300)
+popup_window = true
+dialog_autowrap = true
 
 [connection signal="pressed" from="MainMarginContainer/HBoxContainer/BackendContainer/SubmitButton" to="." method="_on_submit_button_pressed"]
