@@ -3,31 +3,27 @@
 [ext_resource type="Script" uid="uid://doul7wro0a34o" path="res://scripts/search_bar.gd" id="1_nw6hu"]
 [ext_resource type="Script" uid="uid://cssv6kle72cvy" path="res://control_flipper.gd" id="2_pbamf"]
 
-[node name="SearchBar" type="Control" node_paths=PackedStringArray("query_field", "input_timer")]
+[node name="SearchBar" type="HBoxContainer" node_paths=PackedStringArray("query_field", "input_timer", "cleaning_timer")]
 custom_minimum_size = Vector2(0, 31)
-layout_mode = 3
+anchors_preset = -1
 anchor_top = 0.47608
 anchor_right = 1.0
 anchor_bottom = 0.52392
-offset_top = 15.5
-offset_bottom = -15.5
+offset_top = 0.000152588
+offset_bottom = 9.99985
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
+size_flags_vertical = 3
 script = ExtResource("1_nw6hu")
 query_field = NodePath("HBox/LineEdit")
-input_timer = NodePath("Timer")
+input_timer = NodePath("InputTimer")
+cleaning_timer = NodePath("CleaningTimer")
 metadata/_edit_use_anchors_ = true
 
 [node name="HBox" type="HBoxContainer" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(576, 15.5)
-size_flags_horizontal = 4
+layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 4
 alignment = 1
 
@@ -42,7 +38,10 @@ caret_force_displayed = true
 layout_mode = 2
 text = "GO"
 
-[node name="Timer" type="Timer" parent="."]
+[node name="InputTimer" type="Timer" parent="."]
+wait_time = 0.2
+
+[node name="CleaningTimer" type="Timer" parent="."]
 wait_time = 0.1
 
 [node name="ControlFlipper" type="Node" parent="." node_paths=PackedStringArray("to_flip", "container")]
@@ -52,4 +51,4 @@ container = NodePath("..")
 flip = false
 metadata/_custom_type_script = ExtResource("2_pbamf")
 
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="InputTimer" to="." method="_on_timer_timeout"]

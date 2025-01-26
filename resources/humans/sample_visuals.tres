@@ -1,0 +1,32 @@
+[gd_resource type="Resource" script_class="HumanVisuals" load_steps=16 format=3 uid="uid://dcww28fkwrhvp"]
+
+[ext_resource type="Texture2D" uid="uid://cjdnvi06tp0na" path="res://graphics/kenney_shape-characters/PNG/Default/face_c.png" id="1_gj1pq"]
+[ext_resource type="Script" uid="uid://8pygkxvnhaed" path="res://scripts/resources/human_visuals.gd" id="1_kw2yt"]
+[ext_resource type="Texture2D" uid="uid://b0k14q4mkvrkb" path="res://graphics/kenney_shape-characters/PNG/Default/yellow_body_squircle.png" id="1_tf32g"]
+[ext_resource type="Texture2D" uid="uid://b3uajddv6wf33" path="res://graphics/kenney_shape-characters/PNG/Default/red_body_rhombus.png" id="2_3ak86"]
+[ext_resource type="Texture2D" uid="uid://cdgld6m5elrbd" path="res://graphics/kenney_shape-characters/PNG/Default/face_e.png" id="2_jnit2"]
+[ext_resource type="Texture2D" uid="uid://ds4n8a62e6rs1" path="res://graphics/kenney_shape-characters/PNG/Default/face_d.png" id="2_jvnpd"]
+[ext_resource type="Texture2D" uid="uid://owsh87g2rjud" path="res://graphics/kenney_shape-characters/PNG/Default/purple_body_circle.png" id="3_21gvk"]
+[ext_resource type="Texture2D" uid="uid://caxkj1i0p3pci" path="res://graphics/kenney_shape-characters/PNG/Default/face_a.png" id="3_vo426"]
+[ext_resource type="Texture2D" uid="uid://pqioyl1hdj0d" path="res://graphics/kenney_shape-characters/PNG/Default/pink_body_square.png" id="4_gj1pq"]
+[ext_resource type="Texture2D" uid="uid://rynli3t1h6di" path="res://graphics/kenney_shape-characters/PNG/Default/face_l.png" id="4_qft0h"]
+[ext_resource type="Texture2D" uid="uid://drrqo74na670y" path="res://graphics/kenney_shape-characters/PNG/Default/green_body_circle.png" id="5_jvnpd"]
+[ext_resource type="Texture2D" uid="uid://l40tt6hu2bhn" path="res://graphics/kenney_shape-characters/PNG/Default/face_b.png" id="6_cfpd5"]
+[ext_resource type="Texture2D" uid="uid://cbmy4yspkpc18" path="res://graphics/kenney_shape-characters/PNG/Default/blue_body_square.png" id="6_vo426"]
+[ext_resource type="Texture2D" uid="uid://dqrw3wn5tn35g" path="res://graphics/kenney_shape-characters/PNG/Default/face_k.png" id="7_0hvq6"]
+[ext_resource type="Texture2D" uid="uid://cg6v2djbescr8" path="res://graphics/kenney_shape-characters/PNG/Default/face_j.png" id="8_1oueu"]
+
+[resource]
+script = ExtResource("1_kw2yt")
+heads = Array[Texture]([ExtResource("1_tf32g"), ExtResource("2_3ak86"), ExtResource("3_21gvk"), ExtResource("4_gj1pq"), ExtResource("5_jvnpd"), ExtResource("6_vo426")])
+faces = Dictionary[int, Texture]({
+-4: ExtResource("8_1oueu"),
+-3: ExtResource("7_0hvq6"),
+-2: ExtResource("6_cfpd5"),
+-1: ExtResource("2_jvnpd"),
+0: ExtResource("1_gj1pq"),
+1: ExtResource("2_jnit2"),
+2: ExtResource("3_vo426"),
+3: ExtResource("4_qft0h")
+})
+metadata/_custom_type_script = ExtResource("1_kw2yt")

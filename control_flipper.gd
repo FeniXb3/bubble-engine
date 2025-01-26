@@ -17,7 +17,7 @@ func _process(_delta: float) -> void:
 	if container == null or to_flip == null:
 		return
 	
-	container.custom_minimum_size.y = abs(to_flip.get_rect().size.y)
+	#container.custom_minimum_size.y = abs(to_flip.get_rect().size.y)
 	to_flip.pivot_offset = abs(to_flip.get_rect().size / 2)
 	to_flip.scale.x = -1 if flip else 1
 

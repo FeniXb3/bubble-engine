@@ -1,35 +1,73 @@
-[gd_scene load_steps=4 format=3 uid="uid://kogfwa2w7dnr"]
+[gd_scene load_steps=9 format=3 uid="uid://kogfwa2w7dnr"]
 
 [ext_resource type="PackedScene" uid="uid://cbutk778cqf52" path="res://scenes/search_bar.tscn" id="1_f6fq2"]
 [ext_resource type="Script" uid="uid://buoleoq1f6u1l" path="res://scenes/human_interface.gd" id="1_vwbkh"]
+[ext_resource type="Resource" uid="uid://dcww28fkwrhvp" path="res://resources/humans/sample_visuals.tres" id="2_44nd2"]
+[ext_resource type="Texture2D" uid="uid://owsh87g2rjud" path="res://graphics/kenney_shape-characters/PNG/Default/purple_body_circle.png" id="2_b6sqf"]
 [ext_resource type="Script" uid="uid://cssv6kle72cvy" path="res://control_flipper.gd" id="2_stup5"]
+[ext_resource type="Texture2D" uid="uid://caxkj1i0p3pci" path="res://graphics/kenney_shape-characters/PNG/Default/face_a.png" id="3_44nd2"]
+[ext_resource type="Texture2D" uid="uid://bnbvj4f6ekugk" path="res://graphics/kenney_shape-characters/PNG/Default/purple_hand_point.png" id="4_eaepp"]
+[ext_resource type="Texture2D" uid="uid://f1ocoetugv2w" path="res://graphics/kenney_shape-characters/PNG/Double/face_a.png" id="7_eaepp"]
 
-[node name="HumanInterface" type="Control" node_paths=PackedStringArray("results_list")]
+[node name="HumanInterface" type="HBoxContainer" node_paths=PackedStringArray("results_list", "reading_timer", "face")]
 custom_minimum_size = Vector2(0, 648)
-layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 script = ExtResource("1_vwbkh")
 results_list = NodePath("Panel/MarginContainer/VBoxContainer/ItemList")
+reading_timer = NodePath("ResultReadingTimer")
+face = NodePath("Panel/MarginContainer/VBoxContainer/Head/Face")
+human_visuals = ExtResource("2_44nd2")
 
 [node name="Panel" type="PanelContainer" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(-1, 1)
-pivot_offset = Vector2(576, 324)
+layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="MarginContainer" type="MarginContainer" parent="Panel"]
 layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer"]
 layout_mode = 2
+
+[node name="Head" type="TextureRect" parent="Panel/MarginContainer/VBoxContainer"]
+modulate = Color(1, 1, 1, 0.439216)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("2_b6sqf")
+stretch_mode = 2
+metadata/_edit_group_ = true
+
+[node name="Face" type="TextureRect" parent="Panel/MarginContainer/VBoxContainer/Head"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -25.0
+offset_top = -20.0
+offset_right = 25.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_44nd2")
+stretch_mode = 2
+
+[node name="Hand" type="TextureRect" parent="Panel/MarginContainer/VBoxContainer/Head"]
+visible = false
+layout_mode = 0
+offset_left = -38.0
+offset_top = 65.0
+offset_right = 2.0
+offset_bottom = 105.0
+texture = ExtResource("4_eaepp")
+flip_h = true
+flip_v = true
 
 [node name="SearchBar" parent="Panel/MarginContainer/VBoxContainer" instance=ExtResource("1_f6fq2")]
 custom_minimum_size = Vector2(0, 41)
@@ -43,9 +81,16 @@ horizontal_alignment = 1
 [node name="ItemList" type="ItemList" parent="Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+item_count = 1
+icon_scale = 0.5
+item_0/text = "asdfg"
+item_0/icon = ExtResource("7_eaepp")
 
 [node name="ControlFlipper" type="Node" parent="." node_paths=PackedStringArray("to_flip", "container")]
 script = ExtResource("2_stup5")
 to_flip = NodePath("../Panel")
 container = NodePath("..")
 metadata/_custom_type_script = ExtResource("2_stup5")
+
+[node name="ResultReadingTimer" type="Timer" parent="."]
+wait_time = 0.3

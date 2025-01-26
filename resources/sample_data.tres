@@ -15,9 +15,11 @@ metadata/_custom_type_script = ExtResource("2_ou03s")
 [sub_resource type="Resource" id="Resource_frgmt"]
 script = ExtResource("1_eqmsu")
 name = ""
+mood = 0
 queries = Array[ExtResource("2_ou03s")]([SubResource("Resource_xv1yj")])
-positive_tags = Array[String]([])
-negative_tags = Array[String]([])
+positive_tags = Array[String](["flat earth", "nothingburger"])
+negative_tags = Array[String](["science"])
+past_reactions = Dictionary[ExtResource("3_ou03s"), int]({})
 metadata/_custom_type_script = ExtResource("1_eqmsu")
 
 [sub_resource type="Resource" id="Resource_j32xr"]
