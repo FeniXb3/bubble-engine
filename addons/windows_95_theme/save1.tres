@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=123 format=3 uid="uid://cnjtetudthuan"]
+[gd_resource type="Theme" load_steps=125 format=3 uid="uid://cnjtetudthuan"]
 
 [ext_resource type="FontFile" uid="uid://80f5vdk0lhte" path="res://addons/windows_95_theme/MS Sans Serif.ttf" id="1_ewhgx"]
 [ext_resource type="Texture2D" uid="uid://c1833rva8bi5u" path="res://addons/windows_95_theme/Windows_95_panel1.png" id="2_6pbjp"]
@@ -283,6 +283,8 @@ texture_margin_bottom = 12.0
 axis_stretch_horizontal = 1
 axis_stretch_vertical = 1
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1lst4"]
+
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bxiym"]
 texture = ExtResource("2_6pbjp")
 texture_margin_left = 6.0
@@ -291,6 +293,9 @@ texture_margin_right = 6.0
 texture_margin_bottom = 6.0
 axis_stretch_horizontal = 1
 axis_stretch_vertical = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vg7ga"]
+bg_color = Color(0.470588, 0.619608, 0.733333, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lcwfo"]
 
@@ -922,10 +927,14 @@ HScrollBar/styles/scroll = SubResource("StyleBoxTexture_a8la2")
 HScrollBar/styles/scroll_focus = SubResource("StyleBoxTexture_uayha")
 Icons/icons/close = ExtResource("15_fhcp3")
 ItemList/colors/font_color = Color(0, 0, 0, 1)
+ItemList/colors/font_hovered_color = Color(0.2, 0.2, 0.2, 1)
+ItemList/colors/font_hovered_selected_color = Color(0.470588, 0.619608, 0.733333, 1)
 ItemList/colors/font_selected_color = Color(0, 0, 0.501961, 1)
 ItemList/font_sizes/font_size = 26
 ItemList/fonts/font = ExtResource("1_ewhgx")
+ItemList/styles/hovered = SubResource("StyleBoxFlat_1lst4")
 ItemList/styles/panel = SubResource("StyleBoxTexture_bxiym")
+ItemList/styles/selected = SubResource("StyleBoxFlat_vg7ga")
 Label/colors/font_color = Color(0, 0, 0, 1)
 Label/colors/font_outline_color = Color(1, 1, 1, 1)
 Label/colors/font_shadow_color = Color(0, 0, 0, 0)
