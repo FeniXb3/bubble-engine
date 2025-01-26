@@ -245,7 +245,7 @@ size_flags_horizontal = 3
 
 [node name="FrontendLabel" type="Label" parent="MainMarginContainer/HBoxContainer/FrontendContainer"]
 layout_mode = 2
-text = "ENGINE FRONTEND"
+text = "HUMAN INTERFACE"
 horizontal_alignment = 1
 
 [node name="HumanInterface" parent="MainMarginContainer/HBoxContainer/FrontendContainer" instance=ExtResource("4_jyhfs")]
@@ -260,13 +260,12 @@ size_flags_stretch_ratio = 2.0
 
 [node name="BackendLabel" type="Label" parent="MainMarginContainer/HBoxContainer/BackendContainer"]
 layout_mode = 2
-text = "ENGINE BACKEND"
+text = "ALGORITHM INTERFACE"
 horizontal_alignment = 1
 
 [node name="CheckBox" type="CheckBox" parent="MainMarginContainer/HBoxContainer/BackendContainer"]
 layout_mode = 2
-button_pressed = true
-text = "FLIP HUMAN INTERFACE"
+text = "SEE LIKE HUMAN"
 
 [node name="Label" type="Label" parent="MainMarginContainer/HBoxContainer/BackendContainer"]
 layout_mode = 2

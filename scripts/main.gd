@@ -181,4 +181,4 @@ func count_overlapping_tag(result_tags: Array[String], human_tags: Array[String]
 
 
 func _on_check_box_toggled(toggled_on: bool) -> void:
-	SignalBus.flip_change_requested.emit(toggled_on)
+	SignalBus.flip_change_requested.emit(not toggled_on)
