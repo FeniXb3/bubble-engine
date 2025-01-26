@@ -120,7 +120,7 @@ func calculte_reaction(r: Result) -> void:
 	score -= count_overlapping_tag(r.negative_tags, current_human.positive_tags)
 	
 	current_total_reaction += score
-	current_human.mood += score
+	current_human.mood = clampi(current_human.mood + score, -4, 3,)
 	#SignalBus.reaction_calculated.emit(score)
 	#SignalBus.reaction_calculated.emit(score + current_human.mood)
 	current_human.past_reactions.set(r, current_human.mood)
