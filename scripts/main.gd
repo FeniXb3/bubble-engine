@@ -1,5 +1,6 @@
 extends Control
 @export var data: GameData
+@export var human_visuals: HumanVisuals
 
 @export var available_results: ItemList
 @export var timer: Timer
@@ -22,7 +23,13 @@ func show_results() -> void:
 	
 	available_results.clear()
 	for r in results:
+		
 		var index = available_results.add_item(r.title)
+		if current_human.past_reactions.has(r):
+			var last_mood: int = current_human.past_reactions.get(r)
+			
+			var t = human_visuals.faces.get(last_mood)
+			available_results.set_item_icon(index, t)
 		available_results.set_item_metadata(index, r)
 		
 func _ready() -> void:
@@ -66,6 +73,7 @@ func calculte_reaction(r: Result) -> void:
 	current_human.mood += score
 	#SignalBus.reaction_calculated.emit(score)
 	#SignalBus.reaction_calculated.emit(score + current_human.mood)
+	current_human.past_reactions.set(r, current_human.mood)
 	SignalBus.reaction_calculated.emit(current_human.mood)
 
 func calculate_mood(_results: Array[Result]) -> void:
