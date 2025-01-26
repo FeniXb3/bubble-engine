@@ -44,7 +44,7 @@ func show_results() -> void:
 	available_results.grab_focus()
 		
 func generate_word(chars, length):
-	var word: String
+	var word: String = ""
 	var n_char = len(chars)
 	for i in range(length):
 		word += chars[randi()% n_char]
