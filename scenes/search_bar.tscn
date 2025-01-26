@@ -39,7 +39,7 @@ layout_mode = 2
 text = "GO"
 
 [node name="InputTimer" type="Timer" parent="."]
-wait_time = 0.2
+wait_time = 0.1
 
 [node name="CleaningTimer" type="Timer" parent="."]
 wait_time = 0.1
