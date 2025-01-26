@@ -40,6 +40,8 @@ func show_results() -> void:
 			
 			var t = human_visuals.faces.get(last_mood)
 			available_results.set_item_icon(index, t)
+			
+	available_results.grab_focus()
 		
 func generate_word(chars, length):
 	var word: String
