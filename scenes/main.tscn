@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dvwpk5124o4es"]
+[gd_scene load_steps=9 format=3 uid="uid://dvwpk5124o4es"]
 
 [ext_resource type="Script" uid="uid://bd400a1w377bh" path="res://scripts/main.gd" id="1_0wfyh"]
 [ext_resource type="Resource" uid="uid://seg4sdlnbehf" path="res://resources/sample_data.tres" id="2_sugp2"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://kogfwa2w7dnr" path="res://scenes/human_interface.tscn" id="4_jyhfs"]
 [ext_resource type="Texture2D" uid="uid://caxkj1i0p3pci" path="res://graphics/kenney_shape-characters/PNG/Default/face_a.png" id="4_tefeu"]
 [ext_resource type="Texture2D" uid="uid://bnbvj4f6ekugk" path="res://graphics/kenney_shape-characters/PNG/Default/purple_hand_point.png" id="6_tefeu"]
+[ext_resource type="AudioStream" uid="uid://b5pb0qrq2rrye" path="res://music/Thinking Out Loud.mp3" id="8_tipki"]
 
 [node name="Main" type="Control" node_paths=PackedStringArray("available_results", "timer", "accept_dialog")]
 layout_mode = 3
@@ -118,5 +119,9 @@ initial_position = 2
 size = Vector2i(400, 300)
 popup_window = true
 dialog_autowrap = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_tipki")
+autoplay = true
 
 [connection signal="pressed" from="MainMarginContainer/HBoxContainer/BackendContainer/SubmitButton" to="." method="_on_submit_button_pressed"]
