@@ -6,6 +6,7 @@ extends Control
 
 @export var face: TextureRect
 @export var head: TextureRect
+@export var name_label: Label
 @export var human_visuals: HumanVisuals
 
 func _ready() -> void:
@@ -20,7 +21,7 @@ func show_head(human: Human, index: int) -> void:
 	head.texture = head_shape
 	update_face(human.mood)
 	head.show()
-	
+	name_label.text = human.name
 	
 func clean_results() -> void:
 	results_list.clear()

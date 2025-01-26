@@ -14,7 +14,7 @@ metadata/_custom_type_script = ExtResource("2_ou03s")
 
 [sub_resource type="Resource" id="Resource_frgmt"]
 script = ExtResource("1_eqmsu")
-name = ""
+name = "Albert"
 mood = 0
 queries = Array[ExtResource("2_ou03s")]([SubResource("Resource_xv1yj")])
 positive_tags = Array[String](["flat earth", "nothingburger"])
