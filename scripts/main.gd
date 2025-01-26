@@ -51,7 +51,7 @@ func show_results() -> void:
 	if first_time:
 		first_time = false
 		show_dialog("Pay attention, %s%d!\n
-			You have incoming query from a human. Click on the list to pick result fitting their information bubble. When you're done, press Submit button.\n\n
+			You have incoming query from a human. Click on the list to pick one or more results fitting their information bubble. When you're done, press Submit button.\n\n
 			Better be better than %s%d"
 	 % [algo_name_letters, algo_number,
 		algo_name_letters, algo_number-1], func(): pass)
