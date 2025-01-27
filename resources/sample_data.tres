@@ -231,6 +231,7 @@ metadata/_custom_type_script = ExtResource("3_ou03s")
 
 [resource]
 script = ExtResource("2_xv1yj")
+tags = Array[String](["aliens", "pyramids", "flat earth", "nothingburger", "productivity", "science", "reptilians", "magic"])
 humans = Array[ExtResource("1_eqmsu")]([SubResource("Resource_frgmt"), SubResource("Resource_15nfe"), SubResource("Resource_gq85j")])
 results = Array[ExtResource("3_ou03s")]([SubResource("Resource_j32xr"), SubResource("Resource_pc7no"), SubResource("Resource_ou03s"), SubResource("Resource_ssp8i"), SubResource("Resource_1cqkf"), SubResource("Resource_mdj5b"), SubResource("Resource_nbf25"), SubResource("Resource_uawj3"), SubResource("Resource_eyox8"), SubResource("Resource_uyojr"), SubResource("Resource_40ktm"), SubResource("Resource_avpqo"), SubResource("Resource_4lo1j"), SubResource("Resource_vyxl2"), SubResource("Resource_hwix5"), SubResource("Resource_q2cx5"), SubResource("Resource_q0g1b"), SubResource("Resource_2qajw"), SubResource("Resource_g0dqo")])
 metadata/_custom_type_script = ExtResource("2_xv1yj")

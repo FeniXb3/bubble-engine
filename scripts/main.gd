@@ -194,7 +194,7 @@ func _on_check_box_toggled(toggled_on: bool) -> void:
 	SignalBus.flip_change_requested.emit(not toggled_on)
 
 
-func _on_available_results_multi_selected(index: int, selected: bool) -> void:
+func _on_available_results_multi_selected(_index: int, _selected: bool) -> void:
 	var indicies := available_results.get_selected_items()
 	submit_button.disabled = indicies.is_empty()
 		
