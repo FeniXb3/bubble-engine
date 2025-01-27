@@ -58,6 +58,24 @@ func _ready() -> void:
 			_create_editable_item_with_text(negative_tags_parent_branch, t)
 
 
+	var results_parent_branch := tree.create_item(root)
+	results_parent_branch.set_text(TYPE_COLUMN, "Results")
+	
+	for r in game_data.results:
+		var result_branch := _create_editable_item_with_text(results_parent_branch, r.title)
+		
+		var positive_tags_parent_branch := tree.create_item(result_branch)
+		positive_tags_parent_branch.set_text(NAME_COLUMN, "Positive about")
+	
+		for t in r.positive_tags:
+			_create_editable_item_with_text(positive_tags_parent_branch, t)
+		
+		var negative_tags_parent_branch := tree.create_item(result_branch)
+		negative_tags_parent_branch.set_text(NAME_COLUMN, "Negative about")
+		for t in r.negative_tags:
+			_create_editable_item_with_text(negative_tags_parent_branch, t)
+
+
 func _on_tree_item_edited() -> void:
 	var item := tree.get_edited()
 	var column := tree.get_edited_column()
