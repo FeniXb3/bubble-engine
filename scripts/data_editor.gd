@@ -61,21 +61,17 @@ func _ready() -> void:
 	root.collapsed = false
 		
 func _add_tags(parent_branch: TreeItem, data_with_tags) -> void:
-	
-	var positive_tags_parent_branch := tree.create_item(parent_branch)
-	positive_tags_parent_branch.set_text(NAME_COLUMN, "Positive about")
+	_add_array_dropdowns(parent_branch, "Positive about", data_with_tags.positive_tags, game_data.tags)
+	_add_array_dropdowns(parent_branch, "Negative about", data_with_tags.negative_tags, game_data.tags)
 
-	for t in data_with_tags.positive_tags:
-		var all_tags := "---," + ",".join(game_data.tags)
-		var selected_index := game_data.tags.find(t) + 1
-		_create_editable_dropdown_item(positive_tags_parent_branch, all_tags, selected_index)
+func _add_array_dropdowns(parent_branch: TreeItem, dropdowns_name: String, data: Array[String], options: Array[String], add_empty_element: bool = true) -> void:
+	var dropdowns_parent_branch := tree.create_item(parent_branch)
+	dropdowns_parent_branch.set_text(NAME_COLUMN, dropdowns_name)
 	
-	var negative_tags_parent_branch := tree.create_item(parent_branch)
-	negative_tags_parent_branch.set_text(NAME_COLUMN, "Negative about")
-	for t in data_with_tags.negative_tags:
-		var all_tags := "---," + ",".join(game_data.tags)
-		var selected_index := game_data.tags.find(t) + 1
-		_create_editable_dropdown_item(negative_tags_parent_branch, all_tags, selected_index)
+	for t in data:
+		var all_tags := ("---," if add_empty_element else "") + ",".join(options)
+		var selected_index := game_data.tags.find(t) + (1 if add_empty_element else 0)
+		_create_editable_dropdown_item(dropdowns_parent_branch, all_tags, selected_index)
 
 func _on_tree_item_edited() -> void:
 	var item := tree.get_edited()
