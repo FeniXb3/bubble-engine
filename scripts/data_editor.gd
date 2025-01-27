@@ -9,7 +9,7 @@ extends Control
 const TYPE_COLUMN := 0
 const NAME_COLUMN := 0
 const MOOD_COLUMN := 1
-const MOOD_ICON_COLUMN := 2
+#const MOOD_ICON_COLUMN := 2
 #const POSITIVE_COLUMN := 3
 #const NEGATIVE_COLUMN := 4
 
@@ -18,7 +18,7 @@ func _ready() -> void:
 	#tree.set_column_title(TYPE_COLUMN, "Type")
 	tree.set_column_title(NAME_COLUMN, "Name")
 	tree.set_column_title(MOOD_COLUMN, "Mood Value")
-	tree.set_column_title(MOOD_ICON_COLUMN, "Mood Face")
+	#tree.set_column_title(MOOD_ICON_COLUMN, "Mood Face")
 	
 	var tags_parent_branch := tree.create_item(root)
 	tags_parent_branch.set_text(TYPE_COLUMN, "Available Tags")
@@ -37,9 +37,9 @@ func _ready() -> void:
 		human_branch.set_range(MOOD_COLUMN, h.mood)
 		human_branch.set_editable(MOOD_COLUMN, true)
 		
-		human_branch.set_cell_mode(MOOD_ICON_COLUMN, TreeItem.CELL_MODE_ICON)
+		#human_branch.set_cell_mode(MOOD_ICON_COLUMN, TreeItem.CELL_MODE_ICON)
 		var face_texture = human_visuals.faces.get(h.mood)
-		human_branch.set_icon(MOOD_ICON_COLUMN, face_texture)
+		human_branch.set_icon(NAME_COLUMN, face_texture)
 		
 		var queries_parent_branch := tree.create_item(human_branch)
 		queries_parent_branch.set_text(TYPE_COLUMN, "Queries")
@@ -79,7 +79,7 @@ func _on_tree_item_edited() -> void:
 	if column == MOOD_COLUMN:
 		var mood := int(item.get_range(MOOD_COLUMN))
 		var face_texture = human_visuals.faces.get(mood)
-		item.set_icon.call_deferred(MOOD_ICON_COLUMN, face_texture)
+		item.set_icon.call_deferred(NAME_COLUMN, face_texture)
 		
 func _create_editable_item_with_text(parent: TreeItem, text: String, column: int = NAME_COLUMN) -> TreeItem:
 		var item := tree.create_item(parent)
