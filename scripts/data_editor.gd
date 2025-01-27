@@ -31,7 +31,8 @@ func _ready() -> void:
 	
 	for h in game_data.humans:
 		var human_branch := _create_editable_item_with_text(humans_parent_branch, h.name)
-		
+	
+		#human_branch.set_cell_mode(MOOD_COLUMN, TreeItem.CELL_MODE_CUSTOM)
 		human_branch.set_cell_mode(MOOD_COLUMN, TreeItem.CELL_MODE_RANGE)
 		human_branch.set_range_config(MOOD_COLUMN, worst_mood, best_mood, 1)
 		human_branch.set_range(MOOD_COLUMN, h.mood)
@@ -65,12 +66,16 @@ func _add_tags(parent_branch: TreeItem, data_with_tags) -> void:
 	positive_tags_parent_branch.set_text(NAME_COLUMN, "Positive about")
 
 	for t in data_with_tags.positive_tags:
-		_create_editable_item_with_text(positive_tags_parent_branch, t)
+		var all_tags := "---," + ",".join(game_data.tags)
+		var selected_index := game_data.tags.find(t) + 1
+		_create_editable_dropdown_item(positive_tags_parent_branch, all_tags, selected_index)
 	
 	var negative_tags_parent_branch := tree.create_item(parent_branch)
 	negative_tags_parent_branch.set_text(NAME_COLUMN, "Negative about")
 	for t in data_with_tags.negative_tags:
-		_create_editable_item_with_text(negative_tags_parent_branch, t)
+		var all_tags := "---," + ",".join(game_data.tags)
+		var selected_index := game_data.tags.find(t) + 1
+		_create_editable_dropdown_item(negative_tags_parent_branch, all_tags, selected_index)
 
 func _on_tree_item_edited() -> void:
 	var item := tree.get_edited()
@@ -84,6 +89,15 @@ func _on_tree_item_edited() -> void:
 func _create_editable_item_with_text(parent: TreeItem, text: String, column: int = NAME_COLUMN) -> TreeItem:
 		var item := tree.create_item(parent)
 		item.set_text(column, text)
+		item.set_editable(NAME_COLUMN, true)
+		
+		return item
+
+func _create_editable_dropdown_item(parent: TreeItem, text: String, selected_index: int, column: int = NAME_COLUMN) -> TreeItem:
+		var item := tree.create_item(parent)
+		item.set_cell_mode(NAME_COLUMN, TreeItem.CELL_MODE_RANGE)
+		item.set_text(column, text)
+		item.set_range(NAME_COLUMN, selected_index)
 		item.set_editable(NAME_COLUMN, true)
 		
 		return item
