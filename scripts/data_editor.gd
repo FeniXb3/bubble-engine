@@ -44,37 +44,33 @@ func _ready() -> void:
 		var queries_parent_branch := tree.create_item(human_branch)
 		queries_parent_branch.set_text(TYPE_COLUMN, "Queries")
 		for q in h.queries:
-			_create_editable_item_with_text(queries_parent_branch, q.text)
+			var query_branch := _create_editable_item_with_text(queries_parent_branch, q.text)
+			_add_tags(query_branch, q)
 		
-		var positive_tags_parent_branch := tree.create_item(human_branch)
-		positive_tags_parent_branch.set_text(NAME_COLUMN, "Positive about")
-	
-		for t in h.positive_tags:
-			_create_editable_item_with_text(positive_tags_parent_branch, t)
-		
-		var negative_tags_parent_branch := tree.create_item(human_branch)
-		negative_tags_parent_branch.set_text(NAME_COLUMN, "Negative about")
-		for t in h.negative_tags:
-			_create_editable_item_with_text(negative_tags_parent_branch, t)
-
+		_add_tags(human_branch, h)
 
 	var results_parent_branch := tree.create_item(root)
 	results_parent_branch.set_text(TYPE_COLUMN, "Results")
 	
 	for r in game_data.results:
 		var result_branch := _create_editable_item_with_text(results_parent_branch, r.title)
+		_add_tags(result_branch, r)
 		
-		var positive_tags_parent_branch := tree.create_item(result_branch)
-		positive_tags_parent_branch.set_text(NAME_COLUMN, "Positive about")
+	root.set_collapsed_recursive(true)
+	root.collapsed = false
+		
+func _add_tags(parent_branch: TreeItem, data_with_tags) -> void:
 	
-		for t in r.positive_tags:
-			_create_editable_item_with_text(positive_tags_parent_branch, t)
-		
-		var negative_tags_parent_branch := tree.create_item(result_branch)
-		negative_tags_parent_branch.set_text(NAME_COLUMN, "Negative about")
-		for t in r.negative_tags:
-			_create_editable_item_with_text(negative_tags_parent_branch, t)
+	var positive_tags_parent_branch := tree.create_item(parent_branch)
+	positive_tags_parent_branch.set_text(NAME_COLUMN, "Positive about")
 
+	for t in data_with_tags.positive_tags:
+		_create_editable_item_with_text(positive_tags_parent_branch, t)
+	
+	var negative_tags_parent_branch := tree.create_item(parent_branch)
+	negative_tags_parent_branch.set_text(NAME_COLUMN, "Negative about")
+	for t in data_with_tags.negative_tags:
+		_create_editable_item_with_text(negative_tags_parent_branch, t)
 
 func _on_tree_item_edited() -> void:
 	var item := tree.get_edited()
