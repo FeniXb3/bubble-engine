@@ -768,10 +768,10 @@ axis_stretch_vertical = 1
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3kdbo"]
 texture = ExtResource("9_xl0vj")
-texture_margin_left = 2.0
-texture_margin_top = 2.0
-texture_margin_right = 2.0
-texture_margin_bottom = 2.0
+texture_margin_left = 3.0
+texture_margin_top = 3.0
+texture_margin_right = 3.0
+texture_margin_bottom = 3.0
 axis_stretch_horizontal = 1
 axis_stretch_vertical = 1
 
@@ -1088,8 +1088,10 @@ TooltipLabel/font_sizes/font_size = 26
 TooltipLabel/fonts/font = ExtResource("1_ewhgx")
 TooltipPanel/styles/panel = SubResource("StyleBoxTexture_g0wj8")
 Tree/colors/font_color = Color(0, 0, 0, 1)
-Tree/colors/font_selected_color = Color(0, 0, 0, 1)
+Tree/colors/font_hovered_color = Color(0.470588, 0.619608, 0.733333, 1)
+Tree/colors/font_selected_color = Color(0.32299, 0.458425, 0.560516, 1)
 Tree/colors/title_button_color = Color(0, 0, 0.501961, 1)
+Tree/constants/draw_guides = 1
 Tree/font_sizes/font_size = 26
 Tree/fonts/font = ExtResource("1_ewhgx")
 Tree/fonts/title_button_font = ExtResource("1_ewhgx")
