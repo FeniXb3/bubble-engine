@@ -22,7 +22,7 @@ var tag_holders_to_update: Array[TreeItem]
 
 const TYPE_COLUMN := 0
 const NAME_COLUMN := 0
-const MOOD_COLUMN := 1
+const MOOD_COLUMN := 0
 #const MOOD_ICON_COLUMN := 2
 #const POSITIVE_COLUMN := 3
 #const NEGATIVE_COLUMN := 4
@@ -64,18 +64,36 @@ func populate_tree() -> void:
 	
 	for h in game_data.humans:
 		var human_branch := _create_editable_item_with_text(humans_parent_branch, h.name)
+		human_branch.set_metadata(0, h)
 	
 		#human_branch.set_cell_mode(MOOD_COLUMN, TreeItem.CELL_MODE_CUSTOM)
-		human_branch.set_cell_mode(MOOD_COLUMN, TreeItem.CELL_MODE_RANGE)
-		human_branch.set_range_config(MOOD_COLUMN, worst_mood, best_mood, 1)
-		human_branch.set_range(MOOD_COLUMN, h.mood)
-		human_branch.set_editable(MOOD_COLUMN, true)
+		
+		var mood_parent_branch := tree.create_item(human_branch)
+		mood_parent_branch.set_text(TYPE_COLUMN, "Mood")
+		mood_parent_branch.set_metadata(0, h)
+		
+		var face_texture = human_visuals.faces.get(h.mood)
+		mood_parent_branch.set_icon(NAME_COLUMN, face_texture)
+		
+		
+		var mood_branch := tree.create_item(mood_parent_branch)
+		#mood_branch.set_text(TYPE_COLUMN, "Mood")
+		mood_branch.set_cell_mode(MOOD_COLUMN, TreeItem.CELL_MODE_RANGE)
+		mood_branch.set_range_config(MOOD_COLUMN, worst_mood, best_mood, 1)
+		mood_branch.set_range(MOOD_COLUMN, h.mood)
+		mood_branch.set_editable(MOOD_COLUMN, true)
+		#mood_branch.set_metadata(0, h.mood)
+		mood_branch.set_metadata(0, func(item: TreeItem): _update_mood(item, h))
+		
+		
+		
+		#human_branch.set_cell_mode(MOOD_COLUMN, TreeItem.CELL_MODE_RANGE)
+		#human_branch.set_range_config(MOOD_COLUMN, worst_mood, best_mood, 1)
+		#human_branch.set_range(MOOD_COLUMN, h.mood)
+		#human_branch.set_editable(MOOD_COLUMN, true)
 		
 		#human_branch.set_cell_mode(MOOD_ICON_COLUMN, TreeItem.CELL_MODE_ICON)
-		var face_texture = human_visuals.faces.get(h.mood)
-		human_branch.set_icon(NAME_COLUMN, face_texture)
 		
-		human_branch.set_metadata(0, h)
 		
 		var queries_parent_branch := tree.create_item(human_branch)
 		queries_parent_branch.set_text(TYPE_COLUMN, "Queries")
@@ -99,7 +117,13 @@ func populate_tree() -> void:
 		
 	root.set_collapsed_recursive(true)
 	root.collapsed = false
-		
+	
+func _update_mood(item: TreeItem, human: Human) -> void:
+	var mood := int(item.get_range(MOOD_COLUMN))
+	var new_face_texture = human_visuals.faces.get(mood)
+	item.get_parent().set_icon.call_deferred(NAME_COLUMN, new_face_texture)
+	human.mood = mood
+
 func _add_tags(parent_branch: TreeItem, data_with_tags) -> void:
 	_add_array_dropdowns(parent_branch, "Positive about", data_with_tags.positive_tags, game_data.tags)
 	_add_array_dropdowns(parent_branch, "Negative about", data_with_tags.negative_tags, game_data.tags)
@@ -148,6 +172,8 @@ func _on_tree_item_edited() -> void:
 		metadata.title = item.get_text(column)
 	elif metadata is Query:
 		metadata.text = item.get_text(column)
+	elif metadata is Callable:
+		metadata.call(item)
 		
 func _create_editable_item_with_text(parent: TreeItem, text: String, column: int = NAME_COLUMN) -> TreeItem:
 		var item := tree.create_item(parent)
