@@ -59,11 +59,11 @@ func _populate_human(parent: TreeItem, h: Human) -> void:
 	var queries_parent_branch := tree.create_item(human_branch)
 	queries_parent_branch.set_text(NAME_COLUMN, "Queries")
 	queries_parent_branch.set_metadata(0, h.queries)
+	queries_parent_branch.add_button(BUTTON_COLUMN, add_texture)
+	queries_parent_branch.set_metadata(BUTTON_COLUMN, func(): _add_query(queries_parent_branch, h))
 	
 	for q in h.queries:
-		var query_branch := _create_editable_item_with_text(queries_parent_branch, q.text)
-		query_branch.set_metadata(0, func(item: TreeItem): q.text = item.get_text(NAME_COLUMN))
-		_add_tags(query_branch, q)
+		_populate_query(queries_parent_branch, q)
 	
 	_add_tags(human_branch, h)
 
@@ -79,6 +79,18 @@ func _add_human(parent: TreeItem) -> void:
 	var i := game_data.humans.size()
 	human.name = "human%d" % i
 	_populate_human(parent, human)
+
+func _add_query(parent: TreeItem, h: Human) -> void:
+	var query := Query.new()
+	h.queries.append(query)
+	var i := h.queries.size()
+	query.text = "query%d" % i
+	_populate_query(parent, query)
+
+func _populate_query(parent: TreeItem, q: Query) -> void:
+	var query_branch := _create_editable_item_with_text(parent, q.text)
+	query_branch.set_metadata(0, func(item: TreeItem): q.text = item.get_text(NAME_COLUMN))
+	_add_tags(query_branch, q)
 
 func populate_tree() -> void:
 	tree.clear()
@@ -104,7 +116,6 @@ func populate_tree() -> void:
 	humans_parent_branch.set_metadata(0, game_data.humans)
 	humans_parent_branch.add_button(BUTTON_COLUMN, add_texture)
 	humans_parent_branch.set_metadata(BUTTON_COLUMN, func(): _add_human(humans_parent_branch))
-	
 	
 	for h in game_data.humans:
 		_populate_human(humans_parent_branch, h)
