@@ -18,9 +18,13 @@ extends Control
 		modified = value
 		save_button.disabled = not modified or current_path == null or current_path.is_empty()
 		discard_button.disabled = save_button.disabled
+@export var add_texture: Texture2D
+@export var remove_texture: Texture2D
+		
 var tag_holders_to_update: Array[TreeItem]
 
 const NAME_COLUMN := 0
+const BUTTON_COLUMN := 1
 
 func _ready() -> void:
 	save_dialog.file_selected.connect(save_data)
@@ -31,6 +35,16 @@ func _ready() -> void:
 	DataManager.load_data()
 	game_data = DataManager.data
 
+func _populate_available_tag(parent: TreeItem, i: int):
+	var tag_item := _create_editable_item_with_text(parent, game_data.tags[i])
+	tag_item.set_metadata(0, func(item: TreeItem): _update_available_tag(item, i, game_data.tags))
+
+func _add_available_tag(parent: TreeItem):
+	var i := game_data.tags.size()
+	game_data.tags.append("tag%d" % i)
+	_populate_available_tag(parent, i)
+	_update_tags_dropdown()
+
 func populate_tree() -> void:
 	tree.clear()
 	tag_holders_to_update.clear()
@@ -39,14 +53,16 @@ func populate_tree() -> void:
 	
 	print(JSON.stringify(game_data).c_unescape())
 	tree.set_column_title(NAME_COLUMN, "Name")
+	tree.set_column_expand(BUTTON_COLUMN, false)
 	
 	var tags_parent_branch := tree.create_item(root)
 	tags_parent_branch.set_text(NAME_COLUMN, "Available Tags")
 	tags_parent_branch.set_metadata(0, game_data.tags)
+	tags_parent_branch.add_button(BUTTON_COLUMN, add_texture)
+	tags_parent_branch.set_metadata(BUTTON_COLUMN, func(): _add_available_tag(tags_parent_branch))
 	
 	for i in game_data.tags.size():
-		var tag_item := _create_editable_item_with_text(tags_parent_branch, game_data.tags[i])
-		tag_item.set_metadata(0, func(item: TreeItem): _update_available_tag(item, i, game_data.tags))
+		_populate_available_tag(tags_parent_branch, i)
 	
 	var humans_parent_branch := tree.create_item(root)
 	humans_parent_branch.set_text(NAME_COLUMN, "Humans")
@@ -189,3 +205,10 @@ func _update_available_tag(item: TreeItem, index: int, tags: Array[String]):
 func _update_tag(item: TreeItem, index: int, tags: Array[String]):
 	var available_tag_index: int = int(item.get_range(0))
 	tags[index] = game_data.tags[available_tag_index - 1]
+
+
+func _on_tree_button_clicked(item: TreeItem, column: int, id: int, mouse_button_index: int) -> void:
+	var metadata = item.get_metadata(BUTTON_COLUMN)
+	
+	if metadata is Callable:
+		metadata.call()
