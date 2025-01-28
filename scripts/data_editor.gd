@@ -39,6 +39,14 @@ func _populate_available_tag(parent: TreeItem, i: int) -> void:
 	var tag_item := _create_editable_item_with_text(parent, game_data.tags[i])
 	tag_item.set_metadata(0, func(item: TreeItem): _update_available_tag(item, i, game_data.tags))
 
+func _populate_tag(parent: TreeItem, i: int, data: Array[String],  options: Array[String], add_empty_element: bool = true) -> void:
+	var all_tags := ("---," if add_empty_element else "") + ",".join(options)
+	var selected_index := options.find(data[i]) + (1 if add_empty_element else 0)
+	var tag_item := _create_editable_dropdown_item(parent, all_tags, selected_index)
+	tag_item.set_metadata(0, func(item: TreeItem): _update_tag(item, i, data))
+	
+	tag_holders_to_update.append(tag_item)
+
 func _populate_human(parent: TreeItem, h: Human) -> void:
 	var human_branch := _create_editable_item_with_text(parent, h.name)
 	human_branch.set_metadata(0, func(item: TreeItem): h.name = item.get_text(NAME_COLUMN))
@@ -79,6 +87,12 @@ func _add_human(parent: TreeItem) -> void:
 	var i := game_data.humans.size()
 	human.name = "human%d" % i
 	_populate_human(parent, human)
+
+func _add_tag(parent: TreeItem, tags: Array[String]) -> void:
+	
+	var i := tags.size()
+	tags.append("tag%d" % (i + 1))
+	_populate_tag(parent, i, tags, game_data.tags)
 
 func _add_query(parent: TreeItem, h: Human) -> void:
 	var query := Query.new()
@@ -146,14 +160,12 @@ func _add_array_dropdowns(parent_branch: TreeItem, dropdowns_name: String, data:
 	var dropdowns_parent_branch := tree.create_item(parent_branch)
 	dropdowns_parent_branch.set_text(NAME_COLUMN, dropdowns_name)
 	dropdowns_parent_branch.set_metadata(0, data)
+	dropdowns_parent_branch.add_button(BUTTON_COLUMN, add_texture)
+	dropdowns_parent_branch.set_metadata(BUTTON_COLUMN, func(): _add_tag(dropdowns_parent_branch, data))
+	
 	
 	for i in data.size():
-		var all_tags := ("---," if add_empty_element else "") + ",".join(options)
-		var selected_index := game_data.tags.find(data[i]) + (1 if add_empty_element else 0)
-		var tag_item := _create_editable_dropdown_item(dropdowns_parent_branch, all_tags, selected_index)
-		tag_item.set_metadata(0, func(item: TreeItem): _update_tag(item, i, data))
-		
-		tag_holders_to_update.append(tag_item)
+		_populate_tag(dropdowns_parent_branch, i, data, game_data.tags)
 
 func _on_tree_item_edited() -> void:
 	modified = true
