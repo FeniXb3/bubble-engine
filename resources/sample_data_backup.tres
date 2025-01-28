@@ -1,0 +1,237 @@
+[gd_resource type="Resource" script_class="GameData" load_steps=33 format=3 uid="uid://b17ek0ut7h3u1"]
+
+[ext_resource type="Script" uid="uid://b6f4d3ixd3l5n" path="res://scripts/resources/human.gd" id="1_wotuw"]
+[ext_resource type="Script" uid="uid://ca27kkmccmd5k" path="res://scripts/resources/result.gd" id="2_ey6fs"]
+[ext_resource type="Script" uid="uid://bmyqsksr6337x" path="res://scripts/resources/query.gd" id="3_svhvc"]
+[ext_resource type="Script" uid="uid://c2nq8gq0i8mhb" path="res://scripts/resources/game_data.gd" id="4_0t4t6"]
+
+[sub_resource type="Resource" id="Resource_xv1yj"]
+script = ExtResource("3_svhvc")
+text = "Flat earth truth"
+positive_tags = Array[String](["flat earth"])
+negative_tags = Array[String]([])
+metadata/_custom_type_script = ExtResource("3_svhvc")
+
+[sub_resource type="Resource" id="Resource_skcnt"]
+script = ExtResource("3_svhvc")
+text = "Who created pyramids?"
+positive_tags = Array[String](["pyramids"])
+negative_tags = Array[String]([])
+metadata/_custom_type_script = ExtResource("3_svhvc")
+
+[sub_resource type="Resource" id="Resource_frgmt"]
+script = ExtResource("1_wotuw")
+name = "Albert"
+mood = 0
+queries = Array[ExtResource("3_svhvc")]([SubResource("Resource_xv1yj"), SubResource("Resource_skcnt")])
+positive_tags = Array[String](["flat earth", "nothingburger", "magic"])
+negative_tags = Array[String](["science", "aliens"])
+past_reactions = Dictionary[ExtResource("2_ey6fs"), int]({})
+metadata/_custom_type_script = ExtResource("1_wotuw")
+
+[sub_resource type="Resource" id="Resource_wg2qs"]
+script = ExtResource("3_svhvc")
+text = "Who are reptilians?"
+positive_tags = Array[String](["aliens", "reptilians"])
+negative_tags = Array[String]([])
+metadata/_custom_type_script = ExtResource("3_svhvc")
+
+[sub_resource type="Resource" id="Resource_v3mf0"]
+script = ExtResource("3_svhvc")
+text = "Expensive cars owners"
+positive_tags = Array[String](["nothingburger"])
+negative_tags = Array[String]([])
+metadata/_custom_type_script = ExtResource("3_svhvc")
+
+[sub_resource type="Resource" id="Resource_r0dkd"]
+script = ExtResource("3_svhvc")
+text = "The oldest pyramid"
+positive_tags = Array[String](["pyramids"])
+negative_tags = Array[String]([])
+metadata/_custom_type_script = ExtResource("3_svhvc")
+
+[sub_resource type="Resource" id="Resource_15nfe"]
+script = ExtResource("1_wotuw")
+name = "Benji"
+mood = -1
+queries = Array[ExtResource("3_svhvc")]([SubResource("Resource_wg2qs"), SubResource("Resource_v3mf0"), SubResource("Resource_r0dkd")])
+positive_tags = Array[String](["science", "nothingburger", "pyramids"])
+negative_tags = Array[String](["reptilians", "aliens", "productivity"])
+past_reactions = Dictionary[ExtResource("2_ey6fs"), int]({})
+metadata/_custom_type_script = ExtResource("1_wotuw")
+
+[sub_resource type="Resource" id="Resource_o3cr7"]
+script = ExtResource("3_svhvc")
+text = "Fantastic beasts"
+positive_tags = Array[String](["magic"])
+negative_tags = Array[String]([])
+metadata/_custom_type_script = ExtResource("3_svhvc")
+
+[sub_resource type="Resource" id="Resource_gq85j"]
+script = ExtResource("1_wotuw")
+name = "Cleo"
+mood = 1
+queries = Array[ExtResource("3_svhvc")]([SubResource("Resource_o3cr7")])
+positive_tags = Array[String](["productivity", "science"])
+negative_tags = Array[String](["magic", "aliens"])
+past_reactions = Dictionary[ExtResource("2_ey6fs"), int]({})
+metadata/_custom_type_script = ExtResource("1_wotuw")
+
+[sub_resource type="Resource" id="Resource_j32xr"]
+script = ExtResource("2_ey6fs")
+title = "Behind Copernicus lies"
+description = ""
+positive_tags = Array[String](["flat earth"])
+negative_tags = Array[String]([])
+metadata/_custom_type_script = ExtResource("2_ey6fs")
+
+[sub_resource type="Resource" id="Resource_pc7no"]
+script = ExtResource("2_ey6fs")
+title = "Earth is flat as their brains"
+description = ""
+positive_tags = Array[String]([])
+negative_tags = Array[String](["flat earth"])
+metadata/_custom_type_script = ExtResource("2_ey6fs")
+
+[sub_resource type="Resource" id="Resource_ou03s"]
+script = ExtResource("2_ey6fs")
+title = "News about nothing"
+description = ""
+positive_tags = Array[String](["nothingburger"])
+negative_tags = Array[String](["productivity"])
+metadata/_custom_type_script = ExtResource("2_ey6fs")
+
+[sub_resource type="Resource" id="Resource_ssp8i"]
+script = ExtResource("2_ey6fs")
+title = "Aliens are not among us. We are aliens."
+description = ""
+positive_tags = Array[String](["aliens"])
+negative_tags = Array[String]([])
+metadata/_custom_type_script = ExtResource("2_ey6fs")
+
+[sub_resource type="Resource" id="Resource_1cqkf"]
+script = ExtResource("2_ey6fs")
+title = "Magic powers of pharaoh and their builders"
+description = ""
+positive_tags = Array[String](["magic", "pyramids"])
+negative_tags = Array[String](["science"])
+metadata/_custom_type_script = ExtResource("2_ey6fs")
+
+[sub_resource type="Resource" id="Resource_mdj5b"]
+script = ExtResource("2_ey6fs")
+title = "Pyramids were not built on this planet"
+description = ""
+positive_tags = Array[String](["aliens", "pyramids"])
+negative_tags = Array[String]([])
+metadata/_custom_type_script = ExtResource("2_ey6fs")
+
+[sub_resource type="Resource" id="Resource_nbf25"]
+script = ExtResource("2_ey6fs")
+title = "Newest info on Antarctica's ice wall"
+description = ""
+positive_tags = Array[String](["flat earth"])
+negative_tags = Array[String]([])
+metadata/_custom_type_script = ExtResource("2_ey6fs")
+
+[sub_resource type="Resource" id="Resource_uawj3"]
+script = ExtResource("2_ey6fs")
+title = "Oscar's newest possession is huge"
+description = ""
+positive_tags = Array[String](["nothingburger"])
+negative_tags = Array[String](["productivity"])
+metadata/_custom_type_script = ExtResource("2_ey6fs")
+
+[sub_resource type="Resource" id="Resource_eyox8"]
+script = ExtResource("2_ey6fs")
+title = "Importance of not comparing with others"
+description = ""
+positive_tags = Array[String](["science", "productivity"])
+negative_tags = Array[String](["nothingburger"])
+metadata/_custom_type_script = ExtResource("2_ey6fs")
+
+[sub_resource type="Resource" id="Resource_uyojr"]
+script = ExtResource("2_ey6fs")
+title = "Ancient reptiles built societies lasting to this day."
+description = ""
+positive_tags = Array[String](["reptilians"])
+negative_tags = Array[String](["aliens"])
+metadata/_custom_type_script = ExtResource("2_ey6fs")
+
+[sub_resource type="Resource" id="Resource_40ktm"]
+script = ExtResource("2_ey6fs")
+title = "I want to belive"
+description = ""
+positive_tags = Array[String](["aliens"])
+negative_tags = Array[String]([])
+metadata/_custom_type_script = ExtResource("2_ey6fs")
+
+[sub_resource type="Resource" id="Resource_avpqo"]
+script = ExtResource("2_ey6fs")
+title = "Pharaoh came from the sky"
+description = ""
+positive_tags = Array[String](["aliens", "pyramids"])
+negative_tags = Array[String](["science"])
+metadata/_custom_type_script = ExtResource("2_ey6fs")
+
+[sub_resource type="Resource" id="Resource_4lo1j"]
+script = ExtResource("2_ey6fs")
+title = "Is boredom bad?"
+description = ""
+positive_tags = Array[String](["productivity"])
+negative_tags = Array[String](["nothingburger"])
+metadata/_custom_type_script = ExtResource("2_ey6fs")
+
+[sub_resource type="Resource" id="Resource_vyxl2"]
+script = ExtResource("2_ey6fs")
+title = "The Flying Dutchman mirage"
+description = ""
+positive_tags = Array[String](["science"])
+negative_tags = Array[String](["magic"])
+metadata/_custom_type_script = ExtResource("2_ey6fs")
+
+[sub_resource type="Resource" id="Resource_hwix5"]
+script = ExtResource("2_ey6fs")
+title = "Huge mysterious structures "
+description = ""
+positive_tags = Array[String](["aliens", "magic", "pyramids"])
+negative_tags = Array[String](["science", "productivity"])
+metadata/_custom_type_script = ExtResource("2_ey6fs")
+
+[sub_resource type="Resource" id="Resource_q2cx5"]
+script = ExtResource("2_ey6fs")
+title = "The werewolf disease"
+description = ""
+positive_tags = Array[String](["science"])
+negative_tags = Array[String](["magic"])
+metadata/_custom_type_script = ExtResource("2_ey6fs")
+
+[sub_resource type="Resource" id="Resource_q0g1b"]
+script = ExtResource("2_ey6fs")
+title = "Minotaur or poor child"
+description = ""
+positive_tags = Array[String](["science"])
+negative_tags = Array[String](["magic"])
+metadata/_custom_type_script = ExtResource("2_ey6fs")
+
+[sub_resource type="Resource" id="Resource_2qajw"]
+script = ExtResource("2_ey6fs")
+title = "Phantom ship was cursed"
+description = ""
+positive_tags = Array[String](["magic"])
+negative_tags = Array[String](["science"])
+metadata/_custom_type_script = ExtResource("2_ey6fs")
+
+[sub_resource type="Resource" id="Resource_g0dqo"]
+script = ExtResource("2_ey6fs")
+title = "Egyptians knew math"
+description = ""
+positive_tags = Array[String](["science", "pyramids"])
+negative_tags = Array[String](["aliens", "nothingburger", "magic"])
+metadata/_custom_type_script = ExtResource("2_ey6fs")
+
+[resource]
+script = ExtResource("4_0t4t6")
+tags = Array[String](["aliens", "pyramids", "flat earth", "nothingburger", "productivity", "science", "reptilians", "magic"])
+humans = Array[ExtResource("1_wotuw")]([SubResource("Resource_frgmt"), SubResource("Resource_15nfe"), SubResource("Resource_gq85j")])
+results = Array[ExtResource("2_ey6fs")]([SubResource("Resource_j32xr"), SubResource("Resource_pc7no"), SubResource("Resource_ou03s"), SubResource("Resource_ssp8i"), SubResource("Resource_1cqkf"), SubResource("Resource_mdj5b"), SubResource("Resource_nbf25"), SubResource("Resource_uawj3"), SubResource("Resource_eyox8"), SubResource("Resource_uyojr"), SubResource("Resource_40ktm"), SubResource("Resource_avpqo"), SubResource("Resource_4lo1j"), SubResource("Resource_vyxl2"), SubResource("Resource_hwix5"), SubResource("Resource_q2cx5"), SubResource("Resource_q0g1b"), SubResource("Resource_2qajw"), SubResource("Resource_g0dqo")])
+metadata/_custom_type_script = ExtResource("4_0t4t6")

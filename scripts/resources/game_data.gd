@@ -7,3 +7,8 @@ extends Resource
 
 func _to_string() -> String:
 	return "{\"tags\": {tags}, \"humans\": {humans}}".format({"tags": tags, "humans": humans})
+
+static func load(path: String) -> GameData:
+	var data := ResourceLoader.load(path, "GameData", ResourceLoader.CACHE_MODE_IGNORE) as GameData
+
+	return data
