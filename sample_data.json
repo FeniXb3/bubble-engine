@@ -1,0 +1,105 @@
+{
+  "tags": [
+	"aliens",
+	"pyramids",
+	"flat earth",
+	"nothingburger",
+	"productivity",
+	"science",
+	"reptilians",
+	"magic"
+  ],
+  "humans": [
+	{
+	  "name": "Albert",
+	  "mood": 0,
+	  "queries": [
+		{
+		  "text": "Flat earth truth",
+		  "positive_tags": [
+			"flat earth"
+		  ],
+		  "negative_tags": []
+		},
+		{
+		  "text": "Who created pyramids?",
+		  "positive_tags": [
+			"pyramids"
+		  ],
+		  "negative_tags": []
+		}
+	  ],
+	  "positive_tags": [
+		"flat earth",
+		"nothingburger",
+		"magic"
+	  ],
+	  "negative_tags": [
+		"science",
+		"aliens"
+	  ],
+	  "past_reactions": {}
+	},
+	{
+	  "name": "Benji",
+	  "mood": -1,
+	  "queries": [
+		{
+		  "text": "Who are reptilians?",
+		  "positive_tags": [
+			"aliens",
+			"reptilians"
+		  ],
+		  "negative_tags": []
+		},
+		{
+		  "text": "Expensive cars owners",
+		  "positive_tags": [
+			"nothingburger"
+		  ],
+		  "negative_tags": []
+		},
+		{
+		  "text": "The oldest pyramid",
+		  "positive_tags": [
+			"pyramids"
+		  ],
+		  "negative_tags": []
+		}
+	  ],
+	  "positive_tags": [
+		"science",
+		"nothingburger",
+		"pyramids"
+	  ],
+	  "negative_tags": [
+		"reptilians",
+		"aliens",
+		"productivity"
+	  ],
+	  "past_reactions": {}
+	},
+	{
+	  "name": "Cleo",
+	  "mood": 1,
+	  "queries": [
+		{
+		  "text": "Fantastic beasts",
+		  "positive_tags": [
+			"magic"
+		  ],
+		  "negative_tags": []
+		}
+	  ],
+	  "positive_tags": [
+		"productivity",
+		"science"
+	  ],
+	  "negative_tags": [
+		"magic",
+		"aliens"
+	  ],
+	  "past_reactions": {}
+	}
+  ]
+}

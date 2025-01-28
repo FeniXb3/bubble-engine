@@ -15,6 +15,10 @@ const MOOD_COLUMN := 1
 
 func _ready() -> void:
 	var root = tree.create_item()
+	#var json := JSON.new()
+	#json["humans"] = []
+	
+	print(JSON.stringify(game_data).c_unescape())
 	#tree.set_column_title(TYPE_COLUMN, "Type")
 	tree.set_column_title(NAME_COLUMN, "Name")
 	tree.set_column_title(MOOD_COLUMN, "Mood Value")
