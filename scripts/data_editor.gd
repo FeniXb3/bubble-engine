@@ -35,15 +35,50 @@ func _ready() -> void:
 	DataManager.load_data()
 	game_data = DataManager.data
 
-func _populate_available_tag(parent: TreeItem, i: int):
+func _populate_available_tag(parent: TreeItem, i: int) -> void:
 	var tag_item := _create_editable_item_with_text(parent, game_data.tags[i])
 	tag_item.set_metadata(0, func(item: TreeItem): _update_available_tag(item, i, game_data.tags))
 
-func _add_available_tag(parent: TreeItem):
+func _populate_human(parent: TreeItem, h: Human) -> void:
+	var human_branch := _create_editable_item_with_text(parent, h.name)
+	human_branch.set_metadata(0, func(item: TreeItem): h.name = item.get_text(NAME_COLUMN))
+	
+	var mood_parent_branch := tree.create_item(human_branch)
+	mood_parent_branch.set_text(NAME_COLUMN, "Mood")
+	
+	var face_texture = human_visuals.faces.get(h.mood)
+	mood_parent_branch.set_icon(NAME_COLUMN, face_texture)
+	
+	var mood_branch := tree.create_item(mood_parent_branch)
+	mood_branch.set_cell_mode(NAME_COLUMN, TreeItem.CELL_MODE_RANGE)
+	mood_branch.set_range_config(NAME_COLUMN, worst_mood, best_mood, 1)
+	mood_branch.set_range(NAME_COLUMN, h.mood)
+	mood_branch.set_editable(NAME_COLUMN, true)
+	mood_branch.set_metadata(0, func(item: TreeItem): _update_mood(item, h))
+	
+	var queries_parent_branch := tree.create_item(human_branch)
+	queries_parent_branch.set_text(NAME_COLUMN, "Queries")
+	queries_parent_branch.set_metadata(0, h.queries)
+	
+	for q in h.queries:
+		var query_branch := _create_editable_item_with_text(queries_parent_branch, q.text)
+		query_branch.set_metadata(0, func(item: TreeItem): q.text = item.get_text(NAME_COLUMN))
+		_add_tags(query_branch, q)
+	
+	_add_tags(human_branch, h)
+
+func _add_available_tag(parent: TreeItem) -> void:
 	var i := game_data.tags.size()
-	game_data.tags.append("tag%d" % i)
+	game_data.tags.append("tag%d" % (i + 1))
 	_populate_available_tag(parent, i)
 	_update_tags_dropdown()
+
+func _add_human(parent: TreeItem) -> void:
+	var human := Human.new()
+	game_data.humans.append(human)
+	var i := game_data.humans.size()
+	human.name = "human%d" % i
+	_populate_human(parent, human)
 
 func populate_tree() -> void:
 	tree.clear()
@@ -66,36 +101,13 @@ func populate_tree() -> void:
 	
 	var humans_parent_branch := tree.create_item(root)
 	humans_parent_branch.set_text(NAME_COLUMN, "Humans")
-	
 	humans_parent_branch.set_metadata(0, game_data.humans)
+	humans_parent_branch.add_button(BUTTON_COLUMN, add_texture)
+	humans_parent_branch.set_metadata(BUTTON_COLUMN, func(): _add_human(humans_parent_branch))
+	
 	
 	for h in game_data.humans:
-		var human_branch := _create_editable_item_with_text(humans_parent_branch, h.name)
-		human_branch.set_metadata(0, func(item: TreeItem): h.name = item.get_text(NAME_COLUMN))
-		
-		var mood_parent_branch := tree.create_item(human_branch)
-		mood_parent_branch.set_text(NAME_COLUMN, "Mood")
-		
-		var face_texture = human_visuals.faces.get(h.mood)
-		mood_parent_branch.set_icon(NAME_COLUMN, face_texture)
-		
-		var mood_branch := tree.create_item(mood_parent_branch)
-		mood_branch.set_cell_mode(NAME_COLUMN, TreeItem.CELL_MODE_RANGE)
-		mood_branch.set_range_config(NAME_COLUMN, worst_mood, best_mood, 1)
-		mood_branch.set_range(NAME_COLUMN, h.mood)
-		mood_branch.set_editable(NAME_COLUMN, true)
-		mood_branch.set_metadata(0, func(item: TreeItem): _update_mood(item, h))
-		
-		var queries_parent_branch := tree.create_item(human_branch)
-		queries_parent_branch.set_text(NAME_COLUMN, "Queries")
-		queries_parent_branch.set_metadata(0, h.queries)
-		
-		for q in h.queries:
-			var query_branch := _create_editable_item_with_text(queries_parent_branch, q.text)
-			query_branch.set_metadata(0, func(item: TreeItem): q.text = item.get_text(NAME_COLUMN))
-			_add_tags(query_branch, q)
-		
-		_add_tags(human_branch, h)
+		_populate_human(humans_parent_branch, h)
 
 	var results_parent_branch := tree.create_item(root)
 	results_parent_branch.set_text(NAME_COLUMN, "Results")
