@@ -22,6 +22,7 @@ extends Control
 		discard_button.disabled = save_button.disabled
 @export var add_texture: Texture2D
 @export var remove_texture: Texture2D
+@export var should_collapse_tree: bool = false
 		
 var tag_holders_to_update: Array[TreeItem]
 
@@ -199,8 +200,9 @@ func populate_tree() -> void:
 	for r in game_data.results:
 		_populate_result(results_parent_branch, r, game_data.results)
 	
-	root.set_collapsed_recursive(true)
-	root.collapsed = false
+	if should_collapse_tree:
+		root.set_collapsed_recursive(true)
+		root.collapsed = false
 	
 func _update_mood(item: TreeItem, human: Human) -> void:
 	var mood := int(item.get_range(NAME_COLUMN))
