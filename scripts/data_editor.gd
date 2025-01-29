@@ -293,7 +293,7 @@ func _update_tag(item: TreeItem, parent: TreeItem, tags: Array[String]):
 	tags[index] = game_data.tags[available_tag_index]
 
 
-func _on_tree_button_clicked(item: TreeItem, column: int, id: int, mouse_button_index: int) -> void:
+func _on_tree_button_clicked(item: TreeItem, _column: int, _id: int, _mouse_button_index: int) -> void:
 	var metadata = item.get_metadata(BUTTON_COLUMN)
 	
 	if metadata is Callable:
