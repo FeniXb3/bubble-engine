@@ -9,6 +9,7 @@ extends Control
 @export var bg_animation_player: AnimationPlayer
 @export var music_player: AudioStreamPlayer
 @export var submit_button: Button
+@export var editor_popup_panel: PopupPanel
 
 @export var current_human: Human
 @export var current_query: Query
@@ -71,12 +72,17 @@ func _ready() -> void:
 	SignalBus.result_read.connect(calculte_reaction)
 	SignalBus.results_known.connect(calculate_mood)
 	SignalBus.ready_to_pick_query.connect(pick_query)
+	SignalBus.starting.connect(_on_starting)
 	
 	available_humans = data.humans.duplicate()
 	start()
 	
+func _on_starting() -> void:
+	available_results.clear()
 	
 func start() -> void:
+	SignalBus.starting.emit()
+	
 	
 	bg_animation_player.play("start", 0.01)
 	animation_player.play("turn_on")
@@ -169,6 +175,7 @@ func calculate_mood(_results: Array[Result]) -> void:
 		SignalBus.mood_calculated.emit(current_human.mood)
 
 func reset() -> void:
+	SignalBus.reseting.emit()
 	animation_player.play("shut_down")
 	bg_animation_player.play("stop")
 	#await animation_player.animation_finished
@@ -198,3 +205,16 @@ func _on_available_results_multi_selected(_index: int, _selected: bool) -> void:
 	var indicies := available_results.get_selected_items()
 	submit_button.disabled = indicies.is_empty()
 		
+
+
+func _on_close_editor_button_pressed() -> void:
+	data = DataManager.data
+	available_humans = data.humans.duplicate()
+	editor_popup_panel.hide()
+	
+	start()
+	
+
+
+func _on_open_data_editor_button_pressed() -> void:
+	editor_popup_panel.popup()

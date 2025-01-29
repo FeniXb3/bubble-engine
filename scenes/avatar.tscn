@@ -1,0 +1,131 @@
+[gd_scene load_steps=10 format=3 uid="uid://csh6bdijgmy8g"]
+
+[ext_resource type="Script" uid="uid://cod8nhr0d3a4w" path="res://scripts/avatar.gd" id="1_d0d8i"]
+[ext_resource type="Texture2D" uid="uid://owsh87g2rjud" path="res://graphics/kenney_shape-characters/PNG/Default/purple_body_circle.png" id="1_k23up"]
+[ext_resource type="Texture2D" uid="uid://caxkj1i0p3pci" path="res://graphics/kenney_shape-characters/PNG/Default/face_a.png" id="2_d0d8i"]
+[ext_resource type="Resource" uid="uid://dcww28fkwrhvp" path="res://resources/humans/sample_visuals.tres" id="2_v4bhi"]
+[ext_resource type="Texture2D" uid="uid://bnbvj4f6ekugk" path="res://graphics/kenney_shape-characters/PNG/Default/purple_hand_point.png" id="3_v4bhi"]
+
+[sub_resource type="Animation" id="Animation_v4bhi"]
+resource_name = "hide"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_sngax"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_p046f"]
+resource_name = "show"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ijl72"]
+_data = {
+&"RESET": SubResource("Animation_sngax"),
+&"hide": SubResource("Animation_v4bhi"),
+&"show": SubResource("Animation_p046f")
+}
+
+[node name="Avatar" type="VBoxContainer" node_paths=PackedStringArray("face", "head", "name_label", "animation_player", "timer")]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -40.0
+offset_right = 40.0
+offset_bottom = 113.0
+grow_horizontal = 2
+size_flags_vertical = 3
+script = ExtResource("1_d0d8i")
+face = NodePath("Head/Face")
+head = NodePath("Head")
+name_label = NodePath("NameLabel")
+animation_player = NodePath("AnimationPlayer")
+timer = NodePath("Timer")
+human_visuals = ExtResource("2_v4bhi")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_ijl72")
+}
+
+[node name="NameLabel" type="Label" parent="."]
+layout_mode = 2
+text = "Avatar"
+horizontal_alignment = 1
+
+[node name="Head" type="TextureRect" parent="."]
+modulate = Color(1, 1, 1, 0.439216)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("1_k23up")
+stretch_mode = 2
+metadata/_edit_group_ = true
+
+[node name="Face" type="TextureRect" parent="Head"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -25.0
+offset_top = -20.0
+offset_right = 25.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_d0d8i")
+stretch_mode = 2
+
+[node name="Hand" type="TextureRect" parent="Head"]
+visible = false
+layout_mode = 0
+offset_left = -38.0
+offset_top = 65.0
+offset_right = 2.0
+offset_bottom = 105.0
+texture = ExtResource("3_v4bhi")
+flip_h = true
+flip_v = true
+
+[node name="NameLabel2" type="Label" parent="."]
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true

@@ -15,7 +15,10 @@ var text_length: int = 0
 func _ready() -> void:
 	SignalBus.query_picked.connect(show_query)
 	SignalBus.mood_calculated.connect(clean_query)
+	SignalBus.starting.connect(_on_starting)
 
+func _on_starting() -> void:
+	query_field.clear()
 #
 #func _process(_delta: float) -> void:
 	#custom_minimum_size.y = abs(container.get_rect().size.y)
