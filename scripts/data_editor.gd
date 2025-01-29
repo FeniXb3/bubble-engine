@@ -139,11 +139,15 @@ func _add_result(parent: TreeItem) -> void:
 	game_data.results.append(result)
 	var i := game_data.results.size()
 	result.title = "result%d" % i
-	_populate_result(parent, result)
+	_populate_result(parent, result, game_data.results)
 
-func _populate_result(parent: TreeItem, r: Result) -> void:
+func _populate_result(parent: TreeItem, r: Result, array: Array[Result]) -> void:
 	var result_branch := _create_editable_item_with_text(parent, r.title)
-	result_branch.set_metadata(NAME_COLUMN, r)
+	result_branch.set_metadata(NAME_COLUMN, func(item: TreeItem): r.title = item.get_text(NAME_COLUMN))
+	
+	result_branch.add_button(BUTTON_COLUMN, remove_texture)
+	result_branch.set_metadata(BUTTON_COLUMN, func(): _remove_item(parent, result_branch, r, array))
+	
 	_add_tags(result_branch, r)
 
 func _populate_query(parent: TreeItem, q: Query, array: Array) -> TreeItem:
@@ -189,14 +193,12 @@ func populate_tree() -> void:
 	results_parent_branch.set_text(NAME_COLUMN, "Results")
 	results_parent_branch.set_metadata(NAME_COLUMN, game_data.results)
 	
-	
 	results_parent_branch.add_button(BUTTON_COLUMN, add_texture)
 	results_parent_branch.set_metadata(BUTTON_COLUMN, func(): _add_result(results_parent_branch))
 	
 	for r in game_data.results:
-		_populate_result(results_parent_branch, r)
-		
-		
+		_populate_result(results_parent_branch, r, game_data.results)
+	
 	root.set_collapsed_recursive(true)
 	root.collapsed = false
 	
