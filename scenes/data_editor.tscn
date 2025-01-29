@@ -31,6 +31,22 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="TopHBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="NewDataButton" type="Button" parent="VBoxContainer/TopHBoxContainer"]
+layout_mode = 2
+text = "New"
+
+[node name="LoadButton" type="Button" parent="VBoxContainer/TopHBoxContainer"]
+layout_mode = 2
+text = "Load"
+
+[node name="LoadDefaultsButton" type="Button" parent="VBoxContainer/TopHBoxContainer"]
+layout_mode = 2
+text = "Load defaults"
+
 [node name="OptionButton" type="OptionButton" parent="VBoxContainer"]
 visible = false
 layout_mode = 2
@@ -59,14 +75,6 @@ text = "Save"
 layout_mode = 2
 text = "Save as"
 
-[node name="LoadDefaultsButton" type="Button" parent="VBoxContainer/HBoxContainer"]
-layout_mode = 2
-text = "Load defaults"
-
-[node name="LoadButton" type="Button" parent="VBoxContainer/HBoxContainer"]
-layout_mode = 2
-text = "Load"
-
 [node name="DiscardChangesButton" type="Button" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "Discard changes"
@@ -87,10 +95,11 @@ file_mode = 0
 access = 2
 filters = PackedStringArray("*.tres")
 
+[connection signal="pressed" from="VBoxContainer/TopHBoxContainer/NewDataButton" to="." method="_on_new_data_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/TopHBoxContainer/LoadButton" to="." method="_on_load_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/TopHBoxContainer/LoadDefaultsButton" to="." method="_on_load_defaults_button_pressed"]
 [connection signal="button_clicked" from="VBoxContainer/Tree" to="." method="_on_tree_button_clicked"]
 [connection signal="item_edited" from="VBoxContainer/Tree" to="." method="_on_tree_item_edited"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/SaveAsButton" to="." method="_on_save_as_button_pressed"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/LoadDefaultsButton" to="." method="_on_load_defaults_button_pressed"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/LoadButton" to="." method="_on_load_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/DiscardChangesButton" to="." method="_on_discard_changes_button_pressed"]

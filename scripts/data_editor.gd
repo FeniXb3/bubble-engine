@@ -303,3 +303,10 @@ func _on_tree_button_clicked(item: TreeItem, _column: int, _id: int, _mouse_butt
 	
 	if metadata is Callable:
 		metadata.call()
+
+
+func _on_new_data_button_pressed() -> void:
+	DataManager.data = GameData.new()
+	game_data = DataManager.data
+	modified = false
+	populate_tree()
