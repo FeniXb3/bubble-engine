@@ -51,6 +51,14 @@ func _remove_human(parent: TreeItem, item: TreeItem, h: Human, humans: Array[Hum
 	var index := humans.find(h)
 	humans.remove_at(index)
 	parent.remove_child(item)
+	#_remove_query
+
+func _remove_item(parent: TreeItem, item: TreeItem, element: Variant, array: Array) -> void:
+	var index := array.find(element)
+	array.remove_at(index)
+	parent.remove_child(item)
+	
+
 	
 func _populate_human(parent: TreeItem, h: Human) -> void:
 	var human_branch := _create_editable_item_with_text(parent, h.name)
@@ -58,7 +66,8 @@ func _populate_human(parent: TreeItem, h: Human) -> void:
 	
 	
 	human_branch.add_button(BUTTON_COLUMN, remove_texture)
-	human_branch.set_metadata(BUTTON_COLUMN, func(): _remove_human(parent, human_branch, h, game_data.humans))
+	human_branch.set_metadata(BUTTON_COLUMN, func(): _remove_item(parent, human_branch, h, game_data.humans))
+	#human_branch.set_metadata(BUTTON_COLUMN, func(): _remove_human(parent, human_branch, h, game_data.humans))
 	
 	var mood_parent_branch := tree.create_item(human_branch)
 	mood_parent_branch.set_text(NAME_COLUMN, "Mood")
@@ -80,7 +89,10 @@ func _populate_human(parent: TreeItem, h: Human) -> void:
 	queries_parent_branch.set_metadata(BUTTON_COLUMN, func(): _add_query(queries_parent_branch, h))
 	
 	for q in h.queries:
-		_populate_query(queries_parent_branch, q)
+		var query_branch := _populate_query(queries_parent_branch, q)
+		
+		query_branch.add_button(BUTTON_COLUMN, remove_texture)
+		query_branch.set_metadata(BUTTON_COLUMN, func(): _remove_item(queries_parent_branch, query_branch, q, h.queries))
 	
 	_add_tags(human_branch, h)
 
@@ -122,10 +134,12 @@ func _populate_result(parent: TreeItem, r: Result) -> void:
 	result_branch.set_metadata(0, r)
 	_add_tags(result_branch, r)
 
-func _populate_query(parent: TreeItem, q: Query) -> void:
+func _populate_query(parent: TreeItem, q: Query) -> TreeItem:
 	var query_branch := _create_editable_item_with_text(parent, q.text)
 	query_branch.set_metadata(0, func(item: TreeItem): q.text = item.get_text(NAME_COLUMN))
+	
 	_add_tags(query_branch, q)
+	return query_branch
 
 func populate_tree() -> void:
 	tree.clear()
