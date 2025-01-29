@@ -19,6 +19,7 @@ load_dialog = NodePath("LoadFileDialog")
 save_button = NodePath("VBoxContainer/HBoxContainer/SaveButton")
 discard_button = NodePath("VBoxContainer/HBoxContainer/DiscardChangesButton")
 human_visuals = ExtResource("3_txbwn")
+add_empty_element = false
 add_texture = ExtResource("3_i70uo")
 remove_texture = ExtResource("4_i70uo")
 
