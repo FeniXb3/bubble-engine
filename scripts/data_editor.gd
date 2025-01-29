@@ -40,10 +40,6 @@ func _ready() -> void:
 func _populate_available_tag(parent: TreeItem, i: int) -> void:
 	var tag_item := _create_editable_item_with_text(parent, game_data.tags[i])
 	tag_item.set_metadata(NAME_COLUMN, func(item: TreeItem): _update_available_tag(item, i, game_data.tags))
-	#
-	#tag_item.add_button(BUTTON_COLUMN, remove_texture)
-	#tag_item.set_metadata(BUTTON_COLUMN, func(): _remove_available_tag(item, i, game_data.tags))
-	
 
 func _populate_tag(parent: TreeItem, i: int, data: Array[String],  options: Array[String]) -> TreeItem:
 	var all_tags := (empty_dropdown_element + "," if add_empty_element else "") + ",".join(options)
@@ -65,11 +61,13 @@ func _remove_human(parent: TreeItem, item: TreeItem, h: Human, humans: Array[Hum
 	parent.remove_child(item)
 
 func _remove_item(parent: TreeItem, item: TreeItem, element: Variant, array: Array) -> void:
+	modified = true
 	var index := array.find(element)
 	array.remove_at(index)
 	parent.remove_child(item)
 	
 func _remove_text_range_item(parent: TreeItem, item: TreeItem, array: Array) -> void:
+	modified = true
 	var available_tag_index := int(item.get_range(NAME_COLUMN)) - (1 if add_empty_element else 0)
 	var text := game_data.tags[available_tag_index] if available_tag_index >= 0 else empty_dropdown_element
 	array.erase(text)
@@ -107,12 +105,14 @@ func _populate_human(parent: TreeItem, h: Human) -> void:
 	_add_tags(human_branch, h)
 
 func _add_available_tag(parent: TreeItem) -> void:
+	modified = true
 	var i := game_data.tags.size()
 	game_data.tags.append("tag%d" % (i + 1))
 	_populate_available_tag(parent, i)
 	_update_tags_dropdown()
 
 func _add_human(parent: TreeItem) -> void:
+	modified = true
 	var human := Human.new()
 	game_data.humans.append(human)
 	var i := game_data.humans.size()
@@ -120,11 +120,13 @@ func _add_human(parent: TreeItem) -> void:
 	_populate_human(parent, human)
 
 func _add_tag(parent: TreeItem, tags: Array[String]) -> void:
+	modified = true
 	var i := tags.size()
 	tags.append(empty_dropdown_element if add_empty_element else game_data.tags[0])
 	_populate_tag(parent, i, tags, game_data.tags)
 
 func _add_query(parent: TreeItem, h: Human) -> void:
+	modified = true
 	var query := Query.new()
 	h.queries.append(query)
 	var i := h.queries.size()
@@ -132,6 +134,7 @@ func _add_query(parent: TreeItem, h: Human) -> void:
 	_populate_query(parent, query, h.queries)
 	
 func _add_result(parent: TreeItem) -> void:
+	modified = true
 	var result := Result.new()
 	game_data.results.append(result)
 	var i := game_data.results.size()
