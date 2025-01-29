@@ -39,7 +39,7 @@ func _ready() -> void:
 
 func _populate_available_tag(parent: TreeItem, i: int) -> void:
 	var tag_item := _create_editable_item_with_text(parent, game_data.tags[i])
-	tag_item.set_metadata(0, func(item: TreeItem): _update_available_tag(item, i, game_data.tags))
+	tag_item.set_metadata(NAME_COLUMN, func(item: TreeItem): _update_available_tag(item, i, game_data.tags))
 	#
 	#tag_item.add_button(BUTTON_COLUMN, remove_texture)
 	#tag_item.set_metadata(BUTTON_COLUMN, func(): _remove_available_tag(item, i, game_data.tags))
@@ -49,7 +49,7 @@ func _populate_tag(parent: TreeItem, i: int, data: Array[String],  options: Arra
 	var all_tags := (empty_dropdown_element + "," if add_empty_element else "") + ",".join(options)
 	var selected_index := options.find(data[i]) + (1 if add_empty_element else 0)
 	var tag_item := _create_editable_dropdown_item(parent, all_tags, selected_index)
-	tag_item.set_metadata(0, func(item: TreeItem): _update_tag(item, parent, data))
+	tag_item.set_metadata(NAME_COLUMN, func(item: TreeItem): _update_tag(item, parent, data))
 	
 	tag_item.add_button(BUTTON_COLUMN, remove_texture)
 	tag_item.set_metadata(BUTTON_COLUMN, func(): _remove_text_range_item(parent, tag_item, data))
@@ -63,7 +63,6 @@ func _remove_human(parent: TreeItem, item: TreeItem, h: Human, humans: Array[Hum
 	var index := humans.find(h)
 	humans.remove_at(index)
 	parent.remove_child(item)
-	#_remove_query
 
 func _remove_item(parent: TreeItem, item: TreeItem, element: Variant, array: Array) -> void:
 	var index := array.find(element)
@@ -78,7 +77,7 @@ func _remove_text_range_item(parent: TreeItem, item: TreeItem, array: Array) -> 
 	
 func _populate_human(parent: TreeItem, h: Human) -> void:
 	var human_branch := _create_editable_item_with_text(parent, h.name)
-	human_branch.set_metadata(0, func(item: TreeItem): h.name = item.get_text(NAME_COLUMN))
+	human_branch.set_metadata(NAME_COLUMN, func(item: TreeItem): h.name = item.get_text(NAME_COLUMN))
 	
 	human_branch.add_button(BUTTON_COLUMN, remove_texture)
 	human_branch.set_metadata(BUTTON_COLUMN, func(): _remove_item(parent, human_branch, h, game_data.humans))
@@ -94,19 +93,16 @@ func _populate_human(parent: TreeItem, h: Human) -> void:
 	mood_branch.set_range_config(NAME_COLUMN, worst_mood, best_mood, 1)
 	mood_branch.set_range(NAME_COLUMN, h.mood)
 	mood_branch.set_editable(NAME_COLUMN, true)
-	mood_branch.set_metadata(0, func(item: TreeItem): _update_mood(item, h))
+	mood_branch.set_metadata(NAME_COLUMN, func(item: TreeItem): _update_mood(item, h))
 	
 	var queries_parent_branch := tree.create_item(human_branch)
 	queries_parent_branch.set_text(NAME_COLUMN, "Queries")
-	queries_parent_branch.set_metadata(0, h.queries)
+	queries_parent_branch.set_metadata(NAME_COLUMN, h.queries)
 	queries_parent_branch.add_button(BUTTON_COLUMN, add_texture)
 	queries_parent_branch.set_metadata(BUTTON_COLUMN, func(): _add_query(queries_parent_branch, h))
 	
 	for q in h.queries:
-		var query_branch := _populate_query(queries_parent_branch, q)
-		
-		query_branch.add_button(BUTTON_COLUMN, remove_texture)
-		query_branch.set_metadata(BUTTON_COLUMN, func(): _remove_item(queries_parent_branch, query_branch, q, h.queries))
+		_populate_query(queries_parent_branch, q, h.queries)
 	
 	_add_tags(human_branch, h)
 
@@ -133,7 +129,7 @@ func _add_query(parent: TreeItem, h: Human) -> void:
 	h.queries.append(query)
 	var i := h.queries.size()
 	query.text = "query%d" % i
-	_populate_query(parent, query)
+	_populate_query(parent, query, h.queries)
 	
 func _add_result(parent: TreeItem) -> void:
 	var result := Result.new()
@@ -144,12 +140,16 @@ func _add_result(parent: TreeItem) -> void:
 
 func _populate_result(parent: TreeItem, r: Result) -> void:
 	var result_branch := _create_editable_item_with_text(parent, r.title)
-	result_branch.set_metadata(0, r)
+	result_branch.set_metadata(NAME_COLUMN, r)
 	_add_tags(result_branch, r)
 
-func _populate_query(parent: TreeItem, q: Query) -> TreeItem:
+func _populate_query(parent: TreeItem, q: Query, array: Array) -> TreeItem:
 	var query_branch := _create_editable_item_with_text(parent, q.text)
-	query_branch.set_metadata(0, func(item: TreeItem): q.text = item.get_text(NAME_COLUMN))
+	query_branch.set_metadata(NAME_COLUMN, func(item: TreeItem): q.text = item.get_text(NAME_COLUMN))
+	
+	query_branch.add_button(BUTTON_COLUMN, remove_texture)
+	query_branch.set_metadata(BUTTON_COLUMN, func(): _remove_item(parent, query_branch, q, array))
+
 	
 	_add_tags(query_branch, q)
 	return query_branch
@@ -158,7 +158,7 @@ func populate_tree() -> void:
 	tree.clear()
 	tag_holders_to_update.clear()
 	var root = tree.create_item()
-	root.set_metadata(0, game_data)
+	root.set_metadata(NAME_COLUMN, game_data)
 	
 	print(JSON.stringify(game_data).c_unescape())
 	tree.set_column_title(NAME_COLUMN, "Name")
@@ -166,7 +166,7 @@ func populate_tree() -> void:
 	
 	var tags_parent_branch := tree.create_item(root)
 	tags_parent_branch.set_text(NAME_COLUMN, "Available Tags")
-	tags_parent_branch.set_metadata(0, game_data.tags)
+	tags_parent_branch.set_metadata(NAME_COLUMN, game_data.tags)
 	tags_parent_branch.add_button(BUTTON_COLUMN, add_texture)
 	tags_parent_branch.set_metadata(BUTTON_COLUMN, func(): _add_available_tag(tags_parent_branch))
 	
@@ -175,7 +175,7 @@ func populate_tree() -> void:
 	
 	var humans_parent_branch := tree.create_item(root)
 	humans_parent_branch.set_text(NAME_COLUMN, "Humans")
-	humans_parent_branch.set_metadata(0, game_data.humans)
+	humans_parent_branch.set_metadata(NAME_COLUMN, game_data.humans)
 	humans_parent_branch.add_button(BUTTON_COLUMN, add_texture)
 	humans_parent_branch.set_metadata(BUTTON_COLUMN, func(): _add_human(humans_parent_branch))
 	
@@ -184,7 +184,7 @@ func populate_tree() -> void:
 
 	var results_parent_branch := tree.create_item(root)
 	results_parent_branch.set_text(NAME_COLUMN, "Results")
-	results_parent_branch.set_metadata(0, game_data.results)
+	results_parent_branch.set_metadata(NAME_COLUMN, game_data.results)
 	
 	
 	results_parent_branch.add_button(BUTTON_COLUMN, add_texture)
@@ -210,10 +210,9 @@ func _add_tags(parent_branch: TreeItem, data_with_tags) -> void:
 func _add_array_dropdowns(parent_branch: TreeItem, dropdowns_name: String, data: Array[String], options: Array[String]) -> void:
 	var dropdowns_parent_branch := tree.create_item(parent_branch)
 	dropdowns_parent_branch.set_text(NAME_COLUMN, dropdowns_name)
-	dropdowns_parent_branch.set_metadata(0, data)
+	dropdowns_parent_branch.set_metadata(NAME_COLUMN, data)
 	dropdowns_parent_branch.add_button(BUTTON_COLUMN, add_texture)
 	dropdowns_parent_branch.set_metadata(BUTTON_COLUMN, func(): _add_tag(dropdowns_parent_branch, data))
-	
 	
 	for i in data.size():
 		_populate_tag(dropdowns_parent_branch, i, data, options)
@@ -285,7 +284,7 @@ func _update_tags_dropdown() -> void:
 
 func _update_available_tag(item: TreeItem, index: int, tags: Array[String]):
 	tags[index] = item.get_text(0)
-	item.set_metadata(0, item.get_text(0))
+	item.set_metadata(NAME_COLUMN, item.get_text(0))
 	_update_tags_dropdown()
 		
 func _update_tag(item: TreeItem, parent: TreeItem, tags: Array[String]):
