@@ -47,9 +47,18 @@ func _populate_tag(parent: TreeItem, i: int, data: Array[String],  options: Arra
 	
 	tag_holders_to_update.append(tag_item)
 
+func _remove_human(parent: TreeItem, item: TreeItem, h: Human, humans: Array[Human]) -> void:
+	var index := humans.find(h)
+	humans.remove_at(index)
+	parent.remove_child(item)
+	
 func _populate_human(parent: TreeItem, h: Human) -> void:
 	var human_branch := _create_editable_item_with_text(parent, h.name)
 	human_branch.set_metadata(0, func(item: TreeItem): h.name = item.get_text(NAME_COLUMN))
+	
+	
+	human_branch.add_button(BUTTON_COLUMN, remove_texture)
+	human_branch.set_metadata(BUTTON_COLUMN, func(): _remove_human(parent, human_branch, h, game_data.humans))
 	
 	var mood_parent_branch := tree.create_item(human_branch)
 	mood_parent_branch.set_text(NAME_COLUMN, "Mood")
