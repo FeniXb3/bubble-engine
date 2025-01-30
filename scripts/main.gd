@@ -51,12 +51,8 @@ func show_results() -> void:
 	
 	if first_time:
 		first_time = false
-		show_dialog("Pay attention, %s%d!\n
-			You have incoming query from a human. Click on the list to pick one or more results fitting their information bubble. When you're done, press Submit button.\n\n
-			Better be better than %s%d"
-	 % [algo_name_letters, algo_number,
-		algo_name_letters, algo_number-1], func(): pass)
-		
+		TutorialManager.perform_step("incoming_query", {"algo_letters" : algo_name_letters, "algo_number": algo_number, "prev_algo_number": algo_number - 1})
+
 func generate_word(chars, length):
 	var word: String = ""
 	var n_char = len(chars)
@@ -75,6 +71,7 @@ func _ready() -> void:
 	SignalBus.starting.connect(_on_starting)
 	
 	available_humans = data.humans.duplicate()
+	
 	start()
 	
 func _on_starting() -> void:

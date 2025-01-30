@@ -16,6 +16,10 @@ func _ready() -> void:
 	SignalBus.query_picked.connect(show_query)
 	SignalBus.mood_calculated.connect(clean_query)
 	SignalBus.starting.connect(_on_starting)
+	
+	TutorialManager.register_step("incoming_query", "Pay attention, {algo_letters}{algo_number}!\n
+			You have incoming query from a human. Click on the list to pick one or more results fitting their information bubble. When you're done, press Submit button.\n\n
+			Better be better than {algo_letters}{prev_algo_number}", query_field)
 
 func _on_starting() -> void:
 	query_field.clear()

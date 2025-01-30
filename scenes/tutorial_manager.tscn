@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://crsg6tdubam3j"]
+
+[ext_resource type="Script" uid="uid://b7esy8ystmafq" path="res://scripts/tutorial_manager.gd" id="1_o3net"]
+[ext_resource type="Material" uid="uid://7dbhfj4jc5jp" path="res://resources/tutorial_visible_material.tres" id="2_ubejk"]
+
+[node name="TutorialCanvasModulate" type="CanvasModulate" node_paths=PackedStringArray("dialog", "canvas_modulate", "timer")]
+color = Color(0.380208, 0.380208, 0.380208, 1)
+script = ExtResource("1_o3net")
+dialog = NodePath("AcceptDialog")
+canvas_modulate = NodePath(".")
+visible_material = ExtResource("2_ubejk")
+timer = NodePath("Timer")
+
+[node name="AcceptDialog" type="AcceptDialog" parent="."]
+auto_translate_mode = 1
+initial_position = 2
+size = Vector2i(400, 300)
+popup_window = true
+dialog_autowrap = true
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.25
+one_shot = true
+
+[connection signal="canceled" from="AcceptDialog" to="." method="_on_accept_dialog_canceled"]
+[connection signal="confirmed" from="AcceptDialog" to="." method="_on_accept_dialog_confirmed"]

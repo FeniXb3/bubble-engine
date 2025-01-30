@@ -30,12 +30,22 @@ alignment = 1
 [node name="LineEdit" type="LineEdit" parent="HBox"]
 layout_mode = 2
 size_flags_horizontal = 3
+focus_mode = 0
+mouse_filter = 2
 placeholder_text = "Search something..."
+context_menu_enabled = false
+emoji_menu_enabled = false
+virtual_keyboard_enabled = false
+shortcut_keys_enabled = false
+middle_mouse_paste_enabled = false
 caret_blink = true
 caret_force_displayed = true
 
 [node name="Button" type="Button" parent="HBox"]
 layout_mode = 2
+focus_mode = 0
+mouse_filter = 2
+button_mask = 0
 text = "GO"
 
 [node name="InputTimer" type="Timer" parent="."]

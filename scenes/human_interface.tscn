@@ -47,10 +47,13 @@ horizontal_alignment = 1
 [node name="ItemList" type="ItemList" parent="Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+focus_mode = 0
+mouse_filter = 2
 item_count = 1
 icon_scale = 0.5
 item_0/text = "asdfg"
 item_0/icon = ExtResource("7_eaepp")
+item_0/selectable = false
 
 [node name="ControlFlipper" type="Node" parent="." node_paths=PackedStringArray("to_flip", "container")]
 script = ExtResource("2_stup5")
