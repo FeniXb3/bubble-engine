@@ -59,7 +59,6 @@ item_0/selectable = false
 script = ExtResource("2_stup5")
 to_flip = NodePath("../Panel")
 container = NodePath("..")
-flip = false
 metadata/_custom_type_script = ExtResource("2_stup5")
 
 [node name="ResultReadingTimer" type="Timer" parent="."]
