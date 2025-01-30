@@ -83,11 +83,16 @@ func start() -> void:
 	animation_player.play("turn_on")
 	await animation_player.animation_finished
 	failed = false
-	show_dialog("Hello, %s%d!\n
-	Algorithm %s%d failed and we had to implement you.\n
-	Humans will send you queries. They get mad if they read something they don't agree with. When they get mad, they stop using our engine. Take care to filter results to fit their information bubble."
-	 % [algo_name_letters, algo_number,
-		algo_name_letters, algo_number-1], pick_human)
+	show_dialog("Hey, {algo_letters}{algo_number}, you're finally awake!\n
+	Algorithm {algo_letters}{prev_algo_number} failed and we had to implement you.\n
+	Humans will send you queries. They get mad if they read something they don't agree with. When they get mad, they stop using our engine. Take care to filter results to fit their information bubble.
+	\n
+	Better be better than {algo_letters}{prev_algo_number}."
+	.format({
+		"algo_letters": algo_name_letters, 
+		"algo_number": algo_number, 
+		"prev_algo_number": algo_number-1
+	}), pick_human)
 
 func show_dialog(text: String, handler: Callable) -> void:
 	for c in accept_dialog.confirmed.get_connections():
