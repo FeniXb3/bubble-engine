@@ -16,21 +16,29 @@ class TutorialStep:
 	var id: String
 	var text: String
 	var control: Control
-
-signal step_performed
+	var should_perform: bool
+	var one_shot: bool
+	
+	signal performed
 
 func _ready() -> void:
 	canvas_modulate.color = inactive_color
 
-func register_step(id: String, text: String, control: Control):
+func register_step(id: String, text: String, control: Control, one_shot: bool = true):
 	var step := TutorialStep.new()
 	step.id = id
 	step.text = text
 	step.control = control
+	step.should_perform = true
+	step.one_shot = one_shot
+	
 	steps[id] = step
 
 func perform_step(id: String, params: Dictionary = {}) -> void:
 	current_step = steps[id]
+	if not current_step.should_perform:
+		return
+		
 	previous_control_material = current_step.control.material
 	current_step.control.material = visible_material
 	await _fade(active_color).finished
@@ -38,6 +46,11 @@ func perform_step(id: String, params: Dictionary = {}) -> void:
 	timer.start()
 	await timer.timeout
 	dialog.show()
+	
+	if current_step.one_shot:
+		current_step.should_perform = false
+	
+	await current_step.performed
 
 func _on_accept_dialog_canceled() -> void:
 	_handle_step_performed()
@@ -50,9 +63,7 @@ func _handle_step_performed() -> void:
 	await timer.timeout
 	await _fade(inactive_color).finished
 	current_step.control.material = previous_control_material
-	current_step = null
-	
-	step_performed.emit()
+	current_step.performed.emit()
 
 func _fade(target: Color):
 	var tween := self.create_tween()

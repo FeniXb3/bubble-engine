@@ -17,9 +17,7 @@ func _ready() -> void:
 	SignalBus.mood_calculated.connect(clean_query)
 	SignalBus.starting.connect(_on_starting)
 	
-	TutorialManager.register_step("incoming_query", "Pay attention, {algo_letters}{algo_number}!\n
-			You have incoming query from a human. Click on the list to pick one or more results fitting their information bubble. When you're done, press Submit button.\n\n
-			Better be better than {algo_letters}{prev_algo_number}", query_field)
+	TutorialManager.register_step("incoming_query", "You have incoming query from a human.", query_field)
 
 func _on_starting() -> void:
 	query_field.clear()
@@ -41,8 +39,8 @@ func _on_timer_timeout() -> void:
 	
 	if query_field.text == current_query.text:
 		input_timer.stop()
+		await TutorialManager.perform_step("incoming_query")
 		SignalBus.query_submitted.emit()
-		
 
 func clean_query(_mood: int) -> void:
 	cleaning_timer.start()

@@ -22,7 +22,6 @@ var presearch_mood: int
 var failed: bool = false
 var available_queries: Array[Query]
 var available_humans: Array[Human]
-var first_time := true
 
 @export var loosing_margin:int = 1
 
@@ -47,11 +46,8 @@ func show_results() -> void:
 			var t = human_visuals.faces.get(last_mood)
 			available_results.set_item_icon(index, t)
 			
+	await TutorialManager.perform_step("select_results")
 	available_results.grab_focus()
-	
-	if first_time:
-		first_time = false
-		TutorialManager.perform_step("incoming_query", {"algo_letters" : algo_name_letters, "algo_number": algo_number, "prev_algo_number": algo_number - 1})
 
 func generate_word(chars, length):
 	var word: String = ""
@@ -72,6 +68,8 @@ func _ready() -> void:
 	
 	available_humans = data.humans.duplicate()
 	
+	TutorialManager.register_step("select_results", "Click on the list to pick one or more results fitting their information bubble. When you're done, press Submit button.", available_results)
+
 	start()
 	
 func _on_starting() -> void:
