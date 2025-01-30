@@ -258,7 +258,7 @@ layout_mode = 2
 [node name="BackendContainer" type="VBoxContainer" parent="MainMarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_stretch_ratio = 2.0
+size_flags_stretch_ratio = 1.5
 
 [node name="BackendLabel" type="Label" parent="MainMarginContainer/HBoxContainer/BackendContainer"]
 layout_mode = 2

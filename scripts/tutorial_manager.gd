@@ -7,6 +7,7 @@ extends CanvasModulate
 @export var visible_material: CanvasItemMaterial
 @export var fade_duration: float = 0.5
 @export var timer: Timer
+@export var dialog_margin: float = 20
 
 var steps: Dictionary[String, TutorialStep]
 var previous_control_material: CanvasItemMaterial
@@ -38,7 +39,16 @@ func perform_step(id: String, params: Dictionary = {}) -> void:
 	current_step = steps[id]
 	if not current_step.should_perform:
 		return
-		
+	
+	var p := current_step.control.global_position
+	var rect := current_step.control.get_global_rect()
+	var window_size := DisplayServer.window_get_size()
+	var right_border := rect.position.x + rect.size.x
+	if rect.position.x > window_size.x - right_border:
+		dialog.position = Vector2i(rect.position.x - dialog.size.x - dialog_margin, rect.position.y)
+	else:
+		dialog.position = Vector2i(right_border + dialog_margin, rect.position.y)
+	
 	previous_control_material = current_step.control.material
 	current_step.control.material = visible_material
 	await _fade(active_color).finished

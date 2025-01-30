@@ -13,7 +13,7 @@ timer = NodePath("Timer")
 
 [node name="AcceptDialog" type="AcceptDialog" parent="."]
 auto_translate_mode = 1
-initial_position = 2
+position = Vector2i(376, 278)
 size = Vector2i(400, 92)
 popup_window = true
 dialog_autowrap = true
