@@ -34,6 +34,7 @@ layout_mode = 2
 
 [node name="Avatar" parent="Panel/MarginContainer/VBoxContainer" instance=ExtResource("3_b6sqf")]
 layout_mode = 2
+size_flags_horizontal = 4
 
 [node name="SearchBar" parent="Panel/MarginContainer/VBoxContainer" instance=ExtResource("1_f6fq2")]
 custom_minimum_size = Vector2(0, 41)
