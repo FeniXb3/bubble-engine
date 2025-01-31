@@ -1,5 +1,6 @@
 extends Control
 @export var data: GameData
+@export var sample_data: GameData
 @export var human_visuals: HumanVisuals
 
 @export var available_results: ItemList
@@ -57,6 +58,8 @@ func generate_word(chars, length):
 	return word
 	
 func _ready() -> void:
+	DataManager.set_sample_data(sample_data)
+	data = DataManager.save_data(sample_data)
 	algo_name_letters = generate_word(characters, 3)
 	algo_number = randi_range(128, 2048)
 	available_results.clear()
@@ -146,6 +149,7 @@ func _on_submit_button_pressed() -> void:
 		results_to_send.append(available_results.get_item_metadata(index))
 		
 	SignalBus.results_submitted.emit(results_to_send)
+	
 	submit_button.disabled = true
 
 func calculte_reaction(r: Result) -> void:

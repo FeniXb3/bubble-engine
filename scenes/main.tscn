@@ -219,6 +219,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_0wfyh")
 data = ExtResource("2_sugp2")
+sample_data = ExtResource("2_sugp2")
 human_visuals = ExtResource("3_o6xl0")
 available_results = NodePath("MainMarginContainer/HBoxContainer/BackendContainer/AvailableResults")
 timer = NodePath("Timer")

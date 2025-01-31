@@ -34,7 +34,7 @@ func _ready() -> void:
 	load_dialog.file_selected.connect(load_data)
 	
 	DataManager.load_data()
-	DataManager.save_data()
+	DataManager.save_current_data()
 	DataManager.load_data()
 	game_data = DataManager.data
 
@@ -253,7 +253,7 @@ func _on_save_as_button_pressed() -> void:
 	
 func save_data(path: String) -> void:
 	current_path = path
-	DataManager.save_data(current_path)
+	DataManager.save_current_data(current_path)
 	modified = false
 
 func _on_load_button_pressed() -> void:
@@ -273,7 +273,7 @@ func _on_discard_changes_button_pressed() -> void:
 	populate_tree()
 
 func _on_save_button_pressed() -> void:
-	DataManager.save_data(current_path)
+	DataManager.save_current_data(current_path)
 	modified = false
 
 func _on_load_defaults_button_pressed() -> void:

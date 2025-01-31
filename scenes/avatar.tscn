@@ -6,9 +6,8 @@
 [ext_resource type="Resource" uid="uid://dcww28fkwrhvp" path="res://resources/humans/sample_visuals.tres" id="2_v4bhi"]
 [ext_resource type="Texture2D" uid="uid://bnbvj4f6ekugk" path="res://graphics/kenney_shape-characters/PNG/Default/purple_hand_point.png" id="3_v4bhi"]
 
-[sub_resource type="Animation" id="Animation_v4bhi"]
-resource_name = "hide"
-length = 0.5
+[sub_resource type="Animation" id="Animation_sngax"]
+length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
