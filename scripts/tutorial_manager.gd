@@ -10,7 +10,7 @@ extends CanvasModulate
 @export var dialog_margin: float = 20
 
 var steps: Dictionary[String, TutorialStep]
-var previous_control_material: CanvasItemMaterial
+var previous_control_materials: Dictionary[Control, CanvasItemMaterial]
 var current_step: TutorialStep
 
 class TutorialStep:
@@ -54,8 +54,7 @@ func perform_step(id: String, params: Dictionary = {}) -> void:
 		else:
 			dialog.position = Vector2i(right_border + dialog_margin, rect.position.y)
 	
-	previous_control_material = current_step.control.material
-	current_step.control.material = visible_material
+	_set_tutorial_visible_material(current_step.control)
 	await _fade(active_color).finished
 	dialog.dialog_text = current_step.text.format(params)
 	timer.start()
@@ -77,9 +76,26 @@ func _handle_step_performed() -> void:
 	timer.start()
 	await timer.timeout
 	await _fade(inactive_color).finished
-	current_step.control.material = previous_control_material
+	_reset_material(current_step.control)
+	
 	current_step.performed.emit()
 
+func _set_tutorial_visible_material(control: Control, recursive: bool = true):
+	previous_control_materials[control] = control.material
+	control.material = visible_material
+	if recursive:
+		for child in control.get_children():
+			if child is Control:
+				_set_tutorial_visible_material(child)
+
+func _reset_material(control: Control, recursive: bool = true):
+	control.material = previous_control_materials[control]
+	previous_control_materials.erase(control)
+	if recursive:
+		for child in control.get_children():
+			if child is Control:
+				_reset_material(child)
+	
 func _fade(target: Color):
 	var tween := self.create_tween()
 	tween.tween_property(canvas_modulate, "color", target, fade_duration)

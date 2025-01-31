@@ -17,7 +17,7 @@ func _ready() -> void:
 	SignalBus.mood_calculated.connect(clean_query)
 	SignalBus.starting.connect(_on_starting)
 	
-	TutorialManager.register_step("incoming_query", "You have incoming query from a human.", query_field)
+	TutorialManager.register_step("incoming_query", "You have incoming query from a human.", self)
 
 func _on_starting() -> void:
 	query_field.clear()
