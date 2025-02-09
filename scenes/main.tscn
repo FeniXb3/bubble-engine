@@ -411,7 +411,9 @@ grow_vertical = 2
 
 [node name="PowerButton" type="Button" parent="CenterContainer"]
 layout_mode = 2
+text = "           "
 icon = ExtResource("10_choun")
+icon_alignment = 1
 
 [connection signal="toggled" from="MainMarginContainer/HBoxContainer/BackendContainer/CheckBox" to="." method="_on_check_box_toggled"]
 [connection signal="pressed" from="MainMarginContainer/HBoxContainer/BackendContainer/OpenDataEditorButton" to="." method="_on_open_data_editor_button_pressed"]
