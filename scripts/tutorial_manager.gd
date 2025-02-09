@@ -42,17 +42,14 @@ func perform_step(id: String, params: Dictionary = {}) -> void:
 	
 	var p := current_step.control.global_position
 	var rect := current_step.control.get_global_rect()
-	var window_size := DisplayServer.window_get_size()
+	var window_size := get_viewport_rect().size
 	var right_border := rect.position.x if rect.size.y < 0 else rect.position.x + rect.size.x
 	
-	if OS.get_name() == "Web": # Popup location is wierd on web, so just disabling it for now for web
-		dialog.initial_position = Window.WINDOW_INITIAL_POSITION_CENTER_MAIN_WINDOW_SCREEN
+	dialog.initial_position = Window.WINDOW_INITIAL_POSITION_ABSOLUTE
+	if rect.position.x > window_size.x - right_border:
+		dialog.position = Vector2i(rect.position.x - dialog.size.x - dialog_margin, rect.position.y)
 	else:
-		dialog.initial_position = Window.WINDOW_INITIAL_POSITION_ABSOLUTE
-		if rect.position.x > window_size.x - right_border:
-			dialog.position = Vector2i(rect.position.x - dialog.size.x - dialog_margin, rect.position.y)
-		else:
-			dialog.position = Vector2i(right_border + dialog_margin, rect.position.y)
+		dialog.position = Vector2i(right_border + dialog_margin, rect.position.y)
 	
 	_set_tutorial_visible_material(current_step.control)
 	await _fade(active_color).finished
