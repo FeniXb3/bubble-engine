@@ -23,6 +23,7 @@ class TutorialStep:
 	signal performed
 
 func _ready() -> void:
+	dialog.visible = false
 	canvas_modulate.color = inactive_color
 
 func register_step(id: String, text: String, control: Control, one_shot: bool = true):
@@ -40,20 +41,10 @@ func perform_step(id: String, params: Dictionary = {}) -> void:
 	if not current_step.should_perform:
 		return
 	
-	var p := current_step.control.global_position
-	var rect := current_step.control.get_global_rect()
-	var window_size := get_viewport_rect().size
-	var right_border := rect.position.x if rect.size.y < 0 else rect.position.x + rect.size.x
-	
-	dialog.initial_position = Window.WINDOW_INITIAL_POSITION_ABSOLUTE
-	if rect.position.x > window_size.x - right_border:
-		dialog.position = Vector2i(rect.position.x - dialog.size.x - dialog_margin, rect.position.y)
-	else:
-		dialog.position = Vector2i(right_border + dialog_margin, rect.position.y)
-	
 	_set_tutorial_visible_material(current_step.control)
 	await _fade(active_color).finished
 	dialog.dialog_text = current_step.text.format(params)
+	_calculate_position()
 	timer.start()
 	await timer.timeout
 	dialog.show()
@@ -62,6 +53,23 @@ func perform_step(id: String, params: Dictionary = {}) -> void:
 		current_step.should_perform = false
 	
 	await current_step.performed
+
+func _calculate_position() -> void:
+	dialog.reset_size()
+	var viewport_size := get_viewport_rect().size
+	if current_step.control == null:
+		dialog.initial_position = Window.WINDOW_INITIAL_POSITION_ABSOLUTE
+		dialog.position = (Vector2i)(viewport_size / 2) - dialog.size / 2
+	else:
+		var p := current_step.control.global_position
+		var rect := current_step.control.get_global_rect()
+		var right_border := rect.position.x if rect.size.y < 0 else rect.position.x + rect.size.x
+		
+		dialog.initial_position = Window.WINDOW_INITIAL_POSITION_ABSOLUTE
+		if rect.position.x > viewport_size.x - right_border:
+			dialog.position = Vector2i(rect.position.x - dialog.size.x - dialog_margin, rect.position.y)
+		else:
+			dialog.position = Vector2i(right_border + dialog_margin, rect.position.y)
 
 func _on_accept_dialog_canceled() -> void:
 	_handle_step_performed()
@@ -78,6 +86,9 @@ func _handle_step_performed() -> void:
 	current_step.performed.emit()
 
 func _set_tutorial_visible_material(control: Control, recursive: bool = true):
+	if control == null:
+		return
+	
 	previous_control_materials[control] = control.material
 	control.material = visible_material
 	if recursive:
@@ -86,6 +97,9 @@ func _set_tutorial_visible_material(control: Control, recursive: bool = true):
 				_set_tutorial_visible_material(child)
 
 func _reset_material(control: Control, recursive: bool = true):
+	if control == null:
+		return
+	
 	control.material = previous_control_materials[control]
 	previous_control_materials.erase(control)
 	if recursive:

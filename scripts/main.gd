@@ -76,6 +76,11 @@ func _ready() -> void:
 	
 	available_humans = data.humans.duplicate()
 	
+	TutorialManager.register_step("finally_awake", "Hey, {algo_letters}{algo_number}, you're finally awake!\n
+		Algorithm {algo_letters}{prev_algo_number} failed and we had to implement you.\n
+		Humans will send you queries. They get mad if they read something they don't agree with. When they get mad, they stop using our engine. Take care to filter results to fit their information bubble.
+		\n
+		Better be better than {algo_letters}{prev_algo_number}.", null, false)
 	TutorialManager.register_step("select_results", "Click on the list to pick one or more results fitting their information bubble. When you're done, press Submit button.", available_results)
 	TutorialManager.register_step("mood_retrieved", "Use previously stored mood triggered by the results to learn this human's preferences.", available_results)
 	animation_player.play("RESET")
@@ -93,16 +98,12 @@ func start() -> void:
 	animation_player.play("turn_on")
 	await animation_player.animation_finished
 	failed = false
-	show_dialog("Hey, {algo_letters}{algo_number}, you're finally awake!\n
-	Algorithm {algo_letters}{prev_algo_number} failed and we had to implement you.\n
-	Humans will send you queries. They get mad if they read something they don't agree with. When they get mad, they stop using our engine. Take care to filter results to fit their information bubble.
-	\n
-	Better be better than {algo_letters}{prev_algo_number}."
-	.format({
-		"algo_letters": algo_name_letters, 
-		"algo_number": algo_number, 
-		"prev_algo_number": algo_number-1
-	}), pick_human)
+	await TutorialManager.perform_step("finally_awake", {
+			"algo_letters": algo_name_letters, 
+			"algo_number": algo_number, 
+			"prev_algo_number": algo_number-1
+		})
+	pick_human()
 
 func show_dialog(text: String, handler: Callable) -> void:
 	for c in accept_dialog.confirmed.get_connections():

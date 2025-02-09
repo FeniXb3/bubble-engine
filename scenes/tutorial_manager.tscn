@@ -16,6 +16,7 @@ auto_translate_mode = 1
 position = Vector2i(376, 278)
 size = Vector2i(400, 92)
 popup_window = true
+min_size = Vector2i(400, 92)
 dialog_autowrap = true
 
 [node name="Timer" type="Timer" parent="."]
