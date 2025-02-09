@@ -47,6 +47,7 @@ func show_results() -> void:
 			
 			var t = human_visuals.faces.get(last_mood)
 			available_results.set_item_icon(index, t)
+			await TutorialManager.perform_step("mood_retrieved")
 		timer.start(0.25)
 		await timer.timeout
 		
@@ -76,6 +77,7 @@ func _ready() -> void:
 	available_humans = data.humans.duplicate()
 	
 	TutorialManager.register_step("select_results", "Click on the list to pick one or more results fitting their information bubble. When you're done, press Submit button.", available_results)
+	TutorialManager.register_step("mood_retrieved", "Use previously stored mood triggered by the results to learn this human's preferences.", available_results)
 	animation_player.play("RESET")
 	control_to_focus_on_start.grab_focus()
 	
