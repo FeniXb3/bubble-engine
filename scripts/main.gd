@@ -61,6 +61,7 @@ func generate_word(chars, length):
 	return word
 	
 func _ready() -> void:
+	power_button_container.visible = true
 	DataManager.set_sample_data(sample_data)
 	data = DataManager.save_data(sample_data)
 	algo_name_letters = generate_word(characters, 3)

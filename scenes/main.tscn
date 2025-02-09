@@ -402,6 +402,7 @@ layout_mode = 2
 text = "Close"
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
