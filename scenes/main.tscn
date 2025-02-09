@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://dvwpk5124o4es"]
+[gd_scene load_steps=21 format=3 uid="uid://dvwpk5124o4es"]
 
 [ext_resource type="Script" uid="uid://bd400a1w377bh" path="res://scripts/main.gd" id="1_0wfyh"]
 [ext_resource type="Resource" uid="uid://seg4sdlnbehf" path="res://resources/sample_data.tres" id="2_sugp2"]
@@ -41,13 +41,25 @@ tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "clips": [{
-"end_offset": 0.0,
+"end_offset": 4.71,
 "start_offset": 0.0,
 "stream": ExtResource("8_85g3d")
 }],
-"times": PackedFloat32Array(0.133333)
+"times": PackedFloat32Array(0)
 }
 tracks/0/use_blend = true
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:volume_db")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 6.96667, 13.0667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [-10.0, -10.0, -80.0]
+}
 
 [sub_resource type="Animation" id="Animation_trceg"]
 resource_name = "stop"
@@ -67,9 +79,37 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0)
 }
 tracks/0/use_blend = true
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:volume_db")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [-80.0, -10.0]
+}
+
+[sub_resource type="Animation" id="Animation_a8y0u"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:volume_db")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-10.0]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_eb6dy"]
 _data = {
+&"RESET": SubResource("Animation_a8y0u"),
 &"running": SubResource("Animation_eb6dy"),
 &"start": SubResource("Animation_ya4ey"),
 &"stop": SubResource("Animation_trceg")
