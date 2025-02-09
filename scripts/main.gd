@@ -11,6 +11,8 @@ extends Control
 @export var music_player: AudioStreamPlayer
 @export var submit_button: Button
 @export var editor_popup_panel: PopupPanel
+@export var power_button_container: CenterContainer
+@export var control_to_focus_on_start: Control
 
 @export var current_human: Human
 @export var current_query: Query
@@ -73,8 +75,9 @@ func _ready() -> void:
 	available_humans = data.humans.duplicate()
 	
 	TutorialManager.register_step("select_results", "Click on the list to pick one or more results fitting their information bubble. When you're done, press Submit button.", available_results)
-
-	start()
+	animation_player.play("RESET")
+	control_to_focus_on_start.grab_focus()
+	
 	
 func _on_starting() -> void:
 	available_results.clear()
@@ -224,3 +227,8 @@ func _on_close_editor_button_pressed() -> void:
 
 func _on_open_data_editor_button_pressed() -> void:
 	editor_popup_panel.popup()
+
+
+func _on_power_button_pressed() -> void:
+	power_button_container.visible = false
+	start()
