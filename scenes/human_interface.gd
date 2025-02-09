@@ -14,6 +14,9 @@ func _ready() -> void:
 	SignalBus.flip_change_requested.connect(update_flip_state)
 	SignalBus.starting.connect(_on_starting)
 	
+	TutorialManager.register_step("mood_registered", "Thanks to live camera feed we can register how their mood changed after reading given result.
+		\nThey feel worse if the result don't fit into their information bubble.", results_list)
+	
 func _on_starting() -> void:
 	results_list.clear()
 
@@ -35,6 +38,8 @@ func show_results(results) -> void:
 		face_update_timer.start()
 		await face_update_timer.timeout
 		results_list.set_item_icon(index, t)
+		await TutorialManager.perform_step("mood_registered")
+
 		
 	reading_timer.stop()
 	SignalBus.results_known.emit(results)
