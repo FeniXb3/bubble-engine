@@ -87,7 +87,7 @@ func start() -> void:
 	SignalBus.starting.emit()
 	
 	
-	bg_animation_player.play("start", 0.01)
+	bg_animation_player.play("start")
 	animation_player.play("turn_on")
 	await animation_player.animation_finished
 	failed = false
