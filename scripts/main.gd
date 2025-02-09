@@ -38,7 +38,6 @@ func show_results() -> void:
 	
 	available_results.clear()
 	for r in results:
-		
 		var index = available_results.add_item(r.title)
 		available_results.set_item_metadata(index, r)
 		if current_human.past_reactions.has(r):
@@ -46,7 +45,9 @@ func show_results() -> void:
 			
 			var t = human_visuals.faces.get(last_mood)
 			available_results.set_item_icon(index, t)
-			
+		timer.start(0.25)
+		await timer.timeout
+		
 	await TutorialManager.perform_step("select_results")
 	available_results.grab_focus()
 
