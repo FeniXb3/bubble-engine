@@ -18,6 +18,7 @@ func _ready() -> void:
 	SignalBus.reseting.connect(func(): animation_player.play("hide"))
 	
 	modulate.a = 0
+	TutorialManager.register_step("human_approached", "Someone visited Bubble Engine. We hacked into their cameras to register their mood.", self)
 
 func show_head(human: Human, index: int) -> void:
 	if modulate.a > 0:

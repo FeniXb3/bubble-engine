@@ -123,6 +123,7 @@ func pick_human() -> void:
 	available_queries = current_human.queries.duplicate()
 	var human_index: int = data.humans.find(current_human)
 	SignalBus.human_picked.emit(current_human, human_index)
+	await TutorialManager.perform_step("human_approached")
 	timer.start()
 	await timer.timeout
 	SignalBus.ready_to_pick_query.emit()
