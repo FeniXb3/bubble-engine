@@ -70,6 +70,10 @@ func _calculate_position() -> void:
 			dialog.position = Vector2i(rect.position.x - dialog.size.x - dialog_margin, rect.position.y)
 		else:
 			dialog.position = Vector2i(right_border + dialog_margin, rect.position.y)
+			
+		var y_overflow = dialog.position.y + dialog.size.y + dialog_margin - viewport_size.y
+		if y_overflow > 0:
+			dialog.position.y -= y_overflow
 
 func _on_accept_dialog_canceled() -> void:
 	_handle_step_performed()
