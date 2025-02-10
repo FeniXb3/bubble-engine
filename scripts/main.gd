@@ -13,6 +13,8 @@ extends Control
 @export var editor_popup_panel: PopupPanel
 @export var power_button_container: CenterContainer
 @export var control_to_focus_on_start: Control
+@export var connections_editor_panel: Panel
+
 
 @export var current_human: Human
 @export var current_query: Query
@@ -85,6 +87,7 @@ func _ready() -> void:
 	TutorialManager.register_step("mood_retrieved", "Use previously stored mood triggered by the results to learn this human's preferences.", available_results)
 	animation_player.play("RESET")
 	control_to_focus_on_start.grab_focus()
+	connections_editor_panel.hide()
 	
 	
 func _on_starting() -> void:
@@ -236,3 +239,11 @@ func _on_open_data_editor_button_pressed() -> void:
 func _on_power_button_pressed() -> void:
 	power_button_container.visible = false
 	start()
+
+
+func _on_hide_connections_editor_button_pressed() -> void:
+	connections_editor_panel.hide()
+
+
+func _on_show_connections_editor_button_pressed() -> void:
+	connections_editor_panel.show()

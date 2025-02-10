@@ -1,0 +1,74 @@
+[gd_scene load_steps=6 format=3 uid="uid://dpaj5ntoqqp52"]
+
+[ext_resource type="PackedScene" uid="uid://csh6bdijgmy8g" path="res://scenes/avatar.tscn" id="1_t6gm4"]
+[ext_resource type="Script" uid="uid://n2xjqdfyv3na" path="res://scripts/connections_editor.gd" id="1_x4c2y"]
+[ext_resource type="Resource" uid="uid://seg4sdlnbehf" path="res://resources/sample_data.tres" id="2_lbwjx"]
+[ext_resource type="PackedScene" uid="uid://cdrxmtub6oqfa" path="res://scenes/tag_graph_node.tscn" id="4_6hbta"]
+[ext_resource type="PackedScene" uid="uid://djc6vdp8drxlj" path="res://scenes/human_graph_node.tscn" id="4_wpfui"]
+
+[node name="ConnectionsEditor" type="Control" node_paths=PackedStringArray("graph")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_x4c2y")
+graph = NodePath("GraphEdit")
+human_node_scene = ExtResource("4_wpfui")
+tag_node_scene = ExtResource("4_6hbta")
+data = ExtResource("2_lbwjx")
+
+[node name="GraphEdit" type="GraphEdit" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+show_zoom_label = true
+show_zoom_buttons = false
+show_grid_buttons = false
+show_arrange_button = false
+
+[node name="GraphNode" type="GraphNode" parent="GraphEdit"]
+visible = false
+layout_mode = 0
+offset_left = 83.0
+offset_top = 120.0
+offset_right = 204.0
+offset_bottom = 329.0
+mouse_filter = 1
+position_offset = Vector2(83, 120)
+title = "huhihuhiih"
+slot/0/left_enabled = true
+slot/0/left_type = 0
+slot/0/left_color = Color(1, 1, 1, 1)
+slot/0/left_icon = null
+slot/0/right_enabled = true
+slot/0/right_type = 0
+slot/0/right_color = Color(1, 1, 1, 1)
+slot/0/right_icon = null
+slot/0/draw_stylebox = true
+
+[node name="Avatar" parent="GraphEdit/GraphNode" instance=ExtResource("1_t6gm4")]
+layout_mode = 2
+
+[node name="HumanGraphNode" parent="GraphEdit" instance=ExtResource("4_wpfui")]
+visible = false
+layout_mode = 0
+offset_left = 95.0
+offset_top = 123.0
+offset_right = 228.0
+offset_bottom = 424.0
+
+[node name="TagGraphNode" parent="GraphEdit" instance=ExtResource("4_6hbta")]
+visible = false
+layout_mode = 0
+offset_left = 451.0
+offset_top = 269.0
+offset_right = 584.0
+offset_bottom = 390.0
+position_offset = Vector2(451, 269)
+
+[connection signal="connection_request" from="GraphEdit" to="." method="_on_graph_edit_connection_request"]
