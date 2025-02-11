@@ -65,19 +65,18 @@ func _calculate_position() -> void:
 		dialog.initial_position = Window.WINDOW_INITIAL_POSITION_ABSOLUTE
 		dialog.position = (Vector2i)(viewport_size / 2) - dialog.size / 2
 	else:
-		var p := current_step.control.global_position
 		var rect := current_step.control.get_global_rect()
 		var right_border := rect.position.x if rect.size.y < 0 else rect.position.x + rect.size.x
 		
 		dialog.initial_position = Window.WINDOW_INITIAL_POSITION_ABSOLUTE
 		if rect.position.x > viewport_size.x - right_border:
-			dialog.position = Vector2i(rect.position.x - dialog.size.x - dialog_margin, rect.position.y)
+			dialog.position = Vector2i(int(rect.position.x - dialog.size.x - dialog_margin), int(rect.position.y))
 		else:
-			dialog.position = Vector2i(right_border + dialog_margin, rect.position.y)
+			dialog.position = Vector2i(int(right_border + dialog_margin), int(rect.position.y))
 			
 		var y_overflow = dialog.position.y + dialog.size.y + dialog_margin - viewport_size.y
 		if y_overflow > 0:
-			dialog.position.y -= y_overflow
+			dialog.position.y -= int(y_overflow)
 
 func _on_accept_dialog_canceled() -> void:
 	_handle_step_performed()
