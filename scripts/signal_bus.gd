@@ -24,3 +24,7 @@ signal flip_change_requested(toggled_on: bool)
 signal starting
 @warning_ignore("unused_signal")
 signal reseting
+@warning_ignore("unused_signal")
+signal human_encountered(human: Human)
+@warning_ignore("unused_signal")
+signal tag_encountered(tag: String)
