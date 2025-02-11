@@ -274,6 +274,7 @@ editor_popup_panel = NodePath("EditorPopupPanel")
 power_button_container = NodePath("CenterContainer")
 control_to_focus_on_start = NodePath("CenterContainer/PowerButton")
 connections_editor_panel = NodePath("ConnectionsEditorPanel")
+skip_tutorials = true
 
 [node name="MainMarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1

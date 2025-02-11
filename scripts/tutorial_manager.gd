@@ -1,5 +1,6 @@
 extends CanvasModulate
 
+@export var skip_all_tutorials: bool = false
 @export var dialog: AcceptDialog
 @export var canvas_modulate: CanvasModulate
 @export var inactive_color: Color = Color.WHITE
@@ -37,6 +38,9 @@ func register_step(id: String, text: String, control: Control, one_shot: bool = 
 	steps[id] = step
 
 func perform_step(id: String, params: Dictionary = {}) -> void:
+	if skip_all_tutorials:
+		return
+	
 	current_step = steps[id]
 	if not current_step.should_perform:
 		return

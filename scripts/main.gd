@@ -29,6 +29,7 @@ var available_queries: Array[Query]
 var available_humans: Array[Human]
 
 @export var loosing_margin:int = 1
+@export var skip_tutorials: bool = false
 
 func get_related_results(query: Query) -> Array[Result]:
 	var query_tags := query.negative_tags + query.positive_tags
@@ -64,6 +65,7 @@ func generate_word(chars, length):
 	return word
 	
 func _ready() -> void:
+	TutorialManager.skip_all_tutorials = skip_tutorials
 	power_button_container.visible = true
 	DataManager.set_sample_data(sample_data)
 	data = DataManager.save_data(sample_data)
