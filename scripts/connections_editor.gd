@@ -32,13 +32,16 @@ func _show_submitted_results(results: Array[Result]) -> void:
 func _show_tag(tag: String):
 	if encountered_tags.has(tag):
 		return
-	
+	tags_nodes[tag].position_offset.y = tags_nodes[tag].size.y * encountered_tags.size()
 	encountered_tags.append(tag)
+	
 	tags_nodes[tag].show()
 	
 func _show_human(human: Human, _index: int = -1):
 	if encountered_humans.has(human):
 		return
+	
+	humans_nodes[human].position_offset.y = humans_nodes[human].size.y * encountered_humans.size()
 	
 	encountered_humans.append(human)
 	humans_nodes[human].show()
