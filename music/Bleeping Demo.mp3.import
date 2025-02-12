@@ -14,6 +14,6 @@ dest_files=["res://.godot/imported/Bleeping Demo.mp3-206f4f5586d099be841f3ef87e8
 
 loop=true
 loop_offset=0.0
-bpm=0.0
-beat_count=0
+bpm=120.0
+beat_count=404
 bar_beats=4

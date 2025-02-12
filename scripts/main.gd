@@ -27,6 +27,7 @@ var presearch_mood: int
 var failed: bool = false
 var available_queries: Array[Query]
 var available_humans: Array[Human]
+var music: AudioStreamPlaybackInteractive
 
 @export var loosing_margin:int = 1
 @export var skip_tutorials: bool = false
@@ -124,7 +125,11 @@ func show_dialog(text: String, handler: Callable) -> void:
 
 func pick_human() -> void:
 	if not music_player.playing:
-		music_player.play()
+		if music == null:
+			music_player.play()
+			music = music_player.get_stream_playback()
+		else:
+			music.switch_to_clip_by_name(&"Main")
 	
 	if available_humans.is_empty():
 		available_humans = data.humans.duplicate()
@@ -244,8 +249,16 @@ func _on_power_button_pressed() -> void:
 
 
 func _on_hide_connections_editor_button_pressed() -> void:
+	music.switch_to_clip_by_name(&"Main")
+	var tween: Tween = get_tree().create_tween()
+	tween.tween_property(connections_editor_panel, "position:x", connections_editor_panel.size.x, 0.5)
+	await tween.finished
 	connections_editor_panel.hide()
 
 
 func _on_show_connections_editor_button_pressed() -> void:
+	music.switch_to_clip_by_name(&"Connections")
 	connections_editor_panel.show()
+	
+	var tween: Tween = get_tree().create_tween()
+	tween.tween_property(connections_editor_panel, "position:x", 0, 0.5)
