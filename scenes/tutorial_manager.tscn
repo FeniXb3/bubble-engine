@@ -3,13 +3,13 @@
 [ext_resource type="Script" uid="uid://b7esy8ystmafq" path="res://scripts/tutorial_manager.gd" id="1_o3net"]
 [ext_resource type="Material" uid="uid://7dbhfj4jc5jp" path="res://resources/tutorial_visible_material.tres" id="2_ubejk"]
 
-[node name="TutorialCanvasModulate" type="CanvasModulate" node_paths=PackedStringArray("dialog", "canvas_modulate", "timer")]
+[node name="TutorialCanvasModulate" type="CanvasModulate" node_paths=PackedStringArray("dialog", "timer", "canvas_modulate")]
 color = Color(0.380208, 0.380208, 0.380208, 1)
 script = ExtResource("1_o3net")
 dialog = NodePath("AcceptDialog")
+timer = NodePath("Timer")
 canvas_modulate = NodePath(".")
 visible_material = ExtResource("2_ubejk")
-timer = NodePath("Timer")
 
 [node name="AcceptDialog" type="AcceptDialog" parent="."]
 auto_translate_mode = 1
