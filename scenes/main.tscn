@@ -174,7 +174,7 @@ _data = {
 &"turn_on": SubResource("Animation_choun")
 }
 
-[node name="Main" type="Control" node_paths=PackedStringArray("available_results", "timer", "accept_dialog", "animation_player", "music_player", "computer_bg_sfx_player", "submit_button", "editor_popup_panel", "power_button_container", "control_to_focus_on_start", "connections_editor_panel", "skip_tutorials_checkbox")]
+[node name="Main" type="Control" node_paths=PackedStringArray("engine_panel", "available_results", "timer", "accept_dialog", "animation_player", "music_player", "computer_bg_sfx_player", "submit_button", "editor_popup_panel", "power_button_container", "control_to_focus_on_start", "connections_editor_panel", "skip_tutorials_checkbox")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -185,13 +185,14 @@ script = ExtResource("1_0wfyh")
 data = ExtResource("2_sugp2")
 sample_data = ExtResource("2_sugp2")
 human_visuals = ExtResource("3_o6xl0")
-available_results = NodePath("Panel/MainMarginContainer/HBoxContainer/BackendContainer/AvailableResults")
+engine_panel = NodePath("EnginePanel")
+available_results = NodePath("EnginePanel/MainMarginContainer/HBoxContainer/BackendContainer/AvailableResults")
 timer = NodePath("Timer")
 accept_dialog = NodePath("AcceptDialog")
 animation_player = NodePath("ShutDownTextureRect/AnimationPlayer")
 music_player = NodePath("MusicPlayer")
 computer_bg_sfx_player = NodePath("BackgroundPlayer")
-submit_button = NodePath("Panel/MainMarginContainer/HBoxContainer/BackendContainer/SubmitButton")
+submit_button = NodePath("EnginePanel/MainMarginContainer/HBoxContainer/BackendContainer/SubmitButton")
 editor_popup_panel = NodePath("EditorPopupPanel")
 power_button_container = NodePath("IntroContainer")
 control_to_focus_on_start = NodePath("IntroContainer/PowerButton")
@@ -199,7 +200,7 @@ connections_editor_panel = NodePath("ConnectionsEditorPanel")
 skip_tutorials_checkbox = NodePath("IntroContainer/SkipTutorialCheckBox")
 skip_tutorials = true
 
-[node name="Panel" type="Panel" parent="."]
+[node name="EnginePanel" type="Panel" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -207,7 +208,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MainMarginContainer" type="MarginContainer" parent="Panel"]
+[node name="MainMarginContainer" type="MarginContainer" parent="EnginePanel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -215,49 +216,49 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Panel/MainMarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="EnginePanel/MainMarginContainer"]
 layout_mode = 2
 alignment = 1
 
-[node name="FrontendContainer" type="VBoxContainer" parent="Panel/MainMarginContainer/HBoxContainer"]
+[node name="FrontendContainer" type="VBoxContainer" parent="EnginePanel/MainMarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="FrontendLabel" type="Label" parent="Panel/MainMarginContainer/HBoxContainer/FrontendContainer"]
+[node name="FrontendLabel" type="Label" parent="EnginePanel/MainMarginContainer/HBoxContainer/FrontendContainer"]
 visible = false
 layout_mode = 2
 text = "HUMAN INTERFACE"
 horizontal_alignment = 1
 
-[node name="HumanInterface" parent="Panel/MainMarginContainer/HBoxContainer/FrontendContainer" instance=ExtResource("4_jyhfs")]
+[node name="HumanInterface" parent="EnginePanel/MainMarginContainer/HBoxContainer/FrontendContainer" instance=ExtResource("4_jyhfs")]
 modulate = Color(1, 1, 1, 0.517647)
 custom_minimum_size = Vector2(0, 615)
 layout_mode = 2
 
-[node name="BackendContainer" type="VBoxContainer" parent="Panel/MainMarginContainer/HBoxContainer"]
+[node name="BackendContainer" type="VBoxContainer" parent="EnginePanel/MainMarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 1.5
 
-[node name="BackendLabel" type="Label" parent="Panel/MainMarginContainer/HBoxContainer/BackendContainer"]
+[node name="BackendLabel" type="Label" parent="EnginePanel/MainMarginContainer/HBoxContainer/BackendContainer"]
 layout_mode = 2
 text = "ALGORITHM INTERFACE"
 horizontal_alignment = 1
 
-[node name="CheckBox" type="CheckBox" parent="Panel/MainMarginContainer/HBoxContainer/BackendContainer"]
+[node name="CheckBox" type="CheckBox" parent="EnginePanel/MainMarginContainer/HBoxContainer/BackendContainer"]
 layout_mode = 2
 text = "SEE LIKE HUMAN"
 
-[node name="OpenDataEditorButton" type="Button" parent="Panel/MainMarginContainer/HBoxContainer/BackendContainer"]
+[node name="OpenDataEditorButton" type="Button" parent="EnginePanel/MainMarginContainer/HBoxContainer/BackendContainer"]
 layout_mode = 2
 text = "Open data editor"
 
-[node name="Label" type="Label" parent="Panel/MainMarginContainer/HBoxContainer/BackendContainer"]
+[node name="Label" type="Label" parent="EnginePanel/MainMarginContainer/HBoxContainer/BackendContainer"]
 layout_mode = 2
 text = "RESULTS TO FILTER"
 horizontal_alignment = 1
 
-[node name="AvailableResults" type="ItemList" parent="Panel/MainMarginContainer/HBoxContainer/BackendContainer"]
+[node name="AvailableResults" type="ItemList" parent="EnginePanel/MainMarginContainer/HBoxContainer/BackendContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 select_mode = 2
@@ -265,14 +266,24 @@ item_count = 2
 item_0/text = "asdfgh"
 item_1/text = "sdfghgfgf"
 
-[node name="SubmitButton" type="Button" parent="Panel/MainMarginContainer/HBoxContainer/BackendContainer"]
+[node name="SubmitButton" type="Button" parent="EnginePanel/MainMarginContainer/HBoxContainer/BackendContainer"]
 layout_mode = 2
 disabled = true
 text = "SUBMIT"
 
-[node name="DataEditor" parent="Panel/MainMarginContainer" instance=ExtResource("5_85g3d")]
-visible = false
-layout_mode = 2
+[node name="ShowConnectionsEditorButton" type="Button" parent="EnginePanel"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -58.0
+offset_top = -29.0
+offset_bottom = 29.0
+grow_horizontal = 0
+grow_vertical = 2
+icon = ExtResource("11_a8y0u")
 
 [node name="Timer" type="Timer" parent="."]
 one_shot = true
@@ -292,35 +303,6 @@ bus = &"SFX"
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamInteractive_trceg")
 bus = &"Music"
-
-[node name="ShowConnectionsEditorButton" type="Button" parent="."]
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -26.0
-offset_top = -20.5
-offset_bottom = 20.5
-grow_horizontal = 0
-grow_vertical = 2
-icon = ExtResource("11_a8y0u")
-
-[node name="ShutDownTextureRect" type="TextureRect" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-texture = SubResource("GradientTexture2D_85g3d")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="ShutDownTextureRect"]
-libraries = {
-&"": SubResource("AnimationLibrary_choun")
-}
 
 [node name="EditorPopupPanel" type="PopupPanel" parent="."]
 initial_position = 1
@@ -347,30 +329,6 @@ size_flags_vertical = 3
 [node name="CloseEditorButton" type="Button" parent="EditorPopupPanel/VBoxContainer"]
 layout_mode = 2
 text = "Close"
-
-[node name="IntroContainer" type="VBoxContainer" parent="."]
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-alignment = 1
-
-[node name="PowerButton" type="Button" parent="IntroContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-text = "           "
-icon = ExtResource("10_choun")
-icon_alignment = 1
-
-[node name="SkipTutorialCheckBox" type="CheckBox" parent="IntroContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-text = "Skip tutorial"
 
 [node name="ConnectionsEditorPanel" type="Panel" parent="."]
 layout_mode = 1
@@ -411,12 +369,51 @@ offset_bottom = 20.5
 grow_vertical = 2
 icon = ExtResource("14_jkv2x")
 
-[connection signal="toggled" from="Panel/MainMarginContainer/HBoxContainer/BackendContainer/CheckBox" to="." method="_on_check_box_toggled"]
-[connection signal="pressed" from="Panel/MainMarginContainer/HBoxContainer/BackendContainer/OpenDataEditorButton" to="." method="_on_open_data_editor_button_pressed"]
-[connection signal="multi_selected" from="Panel/MainMarginContainer/HBoxContainer/BackendContainer/AvailableResults" to="." method="_on_available_results_multi_selected"]
-[connection signal="pressed" from="Panel/MainMarginContainer/HBoxContainer/BackendContainer/SubmitButton" to="." method="_on_submit_button_pressed"]
-[connection signal="pressed" from="ShowConnectionsEditorButton" to="." method="_on_show_connections_editor_button_pressed"]
+[node name="ShutDownTextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_85g3d")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="ShutDownTextureRect"]
+libraries = {
+&"": SubResource("AnimationLibrary_choun")
+}
+
+[node name="IntroContainer" type="VBoxContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="PowerButton" type="Button" parent="IntroContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "           "
+icon = ExtResource("10_choun")
+icon_alignment = 1
+
+[node name="SkipTutorialCheckBox" type="CheckBox" parent="IntroContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Skip tutorial"
+
+[connection signal="toggled" from="EnginePanel/MainMarginContainer/HBoxContainer/BackendContainer/CheckBox" to="." method="_on_check_box_toggled"]
+[connection signal="pressed" from="EnginePanel/MainMarginContainer/HBoxContainer/BackendContainer/OpenDataEditorButton" to="." method="_on_open_data_editor_button_pressed"]
+[connection signal="multi_selected" from="EnginePanel/MainMarginContainer/HBoxContainer/BackendContainer/AvailableResults" to="." method="_on_available_results_multi_selected"]
+[connection signal="pressed" from="EnginePanel/MainMarginContainer/HBoxContainer/BackendContainer/SubmitButton" to="." method="_on_submit_button_pressed"]
+[connection signal="pressed" from="EnginePanel/ShowConnectionsEditorButton" to="." method="_on_show_connections_editor_button_pressed"]
 [connection signal="pressed" from="EditorPopupPanel/VBoxContainer/CloseEditorButton" to="." method="_on_close_editor_button_pressed"]
+[connection signal="pressed" from="ConnectionsEditorPanel/HideConnectionsEditorButton" to="." method="_on_hide_connections_editor_button_pressed"]
 [connection signal="pressed" from="IntroContainer/PowerButton" to="." method="_on_power_button_pressed"]
 [connection signal="toggled" from="IntroContainer/SkipTutorialCheckBox" to="." method="_on_skip_tutorial_check_box_toggled"]
-[connection signal="pressed" from="ConnectionsEditorPanel/HideConnectionsEditorButton" to="." method="_on_hide_connections_editor_button_pressed"]

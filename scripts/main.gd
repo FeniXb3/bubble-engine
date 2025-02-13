@@ -3,6 +3,7 @@ extends Control
 @export var sample_data: GameData
 @export var human_visuals: HumanVisuals
 
+@export var engine_panel: Panel
 @export var available_results: ItemList
 @export var timer: Timer
 @export var accept_dialog: AcceptDialog
@@ -80,6 +81,8 @@ func _ready() -> void:
 	skip_tutorials_checkbox.set_pressed_no_signal(skip_tutorials)
 	
 	computer_bg_sfx_stream = computer_bg_sfx_player.stream
+	engine_panel.hide()
+	connections_editor_panel.hide()
 	power_button_container.show()
 	DataManager.set_sample_data(sample_data)
 	data = DataManager.save_data(sample_data)
@@ -272,6 +275,7 @@ func _on_open_data_editor_button_pressed() -> void:
 
 
 func _on_power_button_pressed() -> void:
+	engine_panel.show()
 	power_button_container.hide()
 	start()
 
