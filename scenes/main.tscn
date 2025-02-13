@@ -290,9 +290,11 @@ dialog_autowrap = true
 [node name="BackgroundPlayer" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamInteractive_a8y0u")
 volume_db = -15.0
+bus = &"SFX"
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamInteractive_trceg")
+bus = &"Music"
 
 [node name="ShowConnectionsEditorButton" type="Button" parent="."]
 layout_mode = 1
