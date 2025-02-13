@@ -137,8 +137,8 @@ func show_dialog(text: String, handler: Callable) -> void:
 
 func pick_human() -> void:
 	if not music_player.playing:
+		music_player.play()
 		if music == null:
-			music_player.play()
 			music = music_player.get_stream_playback()
 		else:
 			music.switch_to_clip_by_name(&"Main")
