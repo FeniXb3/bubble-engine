@@ -47,3 +47,7 @@ func define_theme():
 		margin_right = margin,
 		margin_bottom = margin,
 	})
+	
+	define_style("BoxContainer", {
+		separation = margin
+	})

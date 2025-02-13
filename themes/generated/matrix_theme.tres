@@ -19,6 +19,7 @@ bg_color = Color(0.209412, 0.209412, 0.209412, 1)
 
 [resource]
 default_font_size = 26
+BoxContainer/constants/separation = 10
 Button/constants/align_to_largest_stylebox = 1
 Button/styles/hover = SubResource("StyleBoxFlat_un3fy")
 Button/styles/normal = SubResource("StyleBoxFlat_7flby")
