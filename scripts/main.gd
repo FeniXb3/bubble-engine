@@ -222,6 +222,7 @@ func calculate_mood(_results: Array[Result]) -> void:
 func reset() -> void:
 	SignalBus.reseting.emit()
 	animation_player.play("shut_down")
+	music_player.stop()
 	
 	computer_bg_sfx.switch_to_clip_by_name(&"Turn Off")
 	# Hack to start new game right after the turn off sound is done playing
