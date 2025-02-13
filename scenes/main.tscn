@@ -185,13 +185,13 @@ script = ExtResource("1_0wfyh")
 data = ExtResource("2_sugp2")
 sample_data = ExtResource("2_sugp2")
 human_visuals = ExtResource("3_o6xl0")
-available_results = NodePath("MainMarginContainer/HBoxContainer/BackendContainer/AvailableResults")
+available_results = NodePath("Panel/MainMarginContainer/HBoxContainer/BackendContainer/AvailableResults")
 timer = NodePath("Timer")
 accept_dialog = NodePath("AcceptDialog")
 animation_player = NodePath("ShutDownTextureRect/AnimationPlayer")
 music_player = NodePath("MusicPlayer")
 computer_bg_sfx_player = NodePath("BackgroundPlayer")
-submit_button = NodePath("MainMarginContainer/HBoxContainer/BackendContainer/SubmitButton")
+submit_button = NodePath("Panel/MainMarginContainer/HBoxContainer/BackendContainer/SubmitButton")
 editor_popup_panel = NodePath("EditorPopupPanel")
 power_button_container = NodePath("IntroContainer")
 control_to_focus_on_start = NodePath("IntroContainer/PowerButton")
@@ -199,7 +199,7 @@ connections_editor_panel = NodePath("ConnectionsEditorPanel")
 skip_tutorials_checkbox = NodePath("IntroContainer/SkipTutorialCheckBox")
 skip_tutorials = true
 
-[node name="MainMarginContainer" type="MarginContainer" parent="."]
+[node name="Panel" type="Panel" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -207,48 +207,57 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MainMarginContainer"]
+[node name="MainMarginContainer" type="MarginContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/MainMarginContainer"]
 layout_mode = 2
 alignment = 1
 
-[node name="FrontendContainer" type="VBoxContainer" parent="MainMarginContainer/HBoxContainer"]
+[node name="FrontendContainer" type="VBoxContainer" parent="Panel/MainMarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="FrontendLabel" type="Label" parent="MainMarginContainer/HBoxContainer/FrontendContainer"]
+[node name="FrontendLabel" type="Label" parent="Panel/MainMarginContainer/HBoxContainer/FrontendContainer"]
+visible = false
 layout_mode = 2
 text = "HUMAN INTERFACE"
 horizontal_alignment = 1
 
-[node name="HumanInterface" parent="MainMarginContainer/HBoxContainer/FrontendContainer" instance=ExtResource("4_jyhfs")]
+[node name="HumanInterface" parent="Panel/MainMarginContainer/HBoxContainer/FrontendContainer" instance=ExtResource("4_jyhfs")]
 modulate = Color(1, 1, 1, 0.517647)
 custom_minimum_size = Vector2(0, 615)
 layout_mode = 2
 
-[node name="BackendContainer" type="VBoxContainer" parent="MainMarginContainer/HBoxContainer"]
+[node name="BackendContainer" type="VBoxContainer" parent="Panel/MainMarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 1.5
 
-[node name="BackendLabel" type="Label" parent="MainMarginContainer/HBoxContainer/BackendContainer"]
+[node name="BackendLabel" type="Label" parent="Panel/MainMarginContainer/HBoxContainer/BackendContainer"]
 layout_mode = 2
 text = "ALGORITHM INTERFACE"
 horizontal_alignment = 1
 
-[node name="CheckBox" type="CheckBox" parent="MainMarginContainer/HBoxContainer/BackendContainer"]
+[node name="CheckBox" type="CheckBox" parent="Panel/MainMarginContainer/HBoxContainer/BackendContainer"]
 layout_mode = 2
 text = "SEE LIKE HUMAN"
 
-[node name="OpenDataEditorButton" type="Button" parent="MainMarginContainer/HBoxContainer/BackendContainer"]
+[node name="OpenDataEditorButton" type="Button" parent="Panel/MainMarginContainer/HBoxContainer/BackendContainer"]
 layout_mode = 2
 text = "Open data editor"
 
-[node name="Label" type="Label" parent="MainMarginContainer/HBoxContainer/BackendContainer"]
+[node name="Label" type="Label" parent="Panel/MainMarginContainer/HBoxContainer/BackendContainer"]
 layout_mode = 2
 text = "RESULTS TO FILTER"
 horizontal_alignment = 1
 
-[node name="AvailableResults" type="ItemList" parent="MainMarginContainer/HBoxContainer/BackendContainer"]
+[node name="AvailableResults" type="ItemList" parent="Panel/MainMarginContainer/HBoxContainer/BackendContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 select_mode = 2
@@ -256,12 +265,12 @@ item_count = 2
 item_0/text = "asdfgh"
 item_1/text = "sdfghgfgf"
 
-[node name="SubmitButton" type="Button" parent="MainMarginContainer/HBoxContainer/BackendContainer"]
+[node name="SubmitButton" type="Button" parent="Panel/MainMarginContainer/HBoxContainer/BackendContainer"]
 layout_mode = 2
 disabled = true
 text = "SUBMIT"
 
-[node name="DataEditor" parent="MainMarginContainer" instance=ExtResource("5_85g3d")]
+[node name="DataEditor" parent="Panel/MainMarginContainer" instance=ExtResource("5_85g3d")]
 visible = false
 layout_mode = 2
 
@@ -321,10 +330,10 @@ size = Vector2i(1152, 648)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 6.0
-offset_top = 6.0
-offset_right = 1146.0
-offset_bottom = 642.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 1148.0
+offset_bottom = 644.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
@@ -402,10 +411,10 @@ offset_bottom = 20.5
 grow_vertical = 2
 icon = ExtResource("14_jkv2x")
 
-[connection signal="toggled" from="MainMarginContainer/HBoxContainer/BackendContainer/CheckBox" to="." method="_on_check_box_toggled"]
-[connection signal="pressed" from="MainMarginContainer/HBoxContainer/BackendContainer/OpenDataEditorButton" to="." method="_on_open_data_editor_button_pressed"]
-[connection signal="multi_selected" from="MainMarginContainer/HBoxContainer/BackendContainer/AvailableResults" to="." method="_on_available_results_multi_selected"]
-[connection signal="pressed" from="MainMarginContainer/HBoxContainer/BackendContainer/SubmitButton" to="." method="_on_submit_button_pressed"]
+[connection signal="toggled" from="Panel/MainMarginContainer/HBoxContainer/BackendContainer/CheckBox" to="." method="_on_check_box_toggled"]
+[connection signal="pressed" from="Panel/MainMarginContainer/HBoxContainer/BackendContainer/OpenDataEditorButton" to="." method="_on_open_data_editor_button_pressed"]
+[connection signal="multi_selected" from="Panel/MainMarginContainer/HBoxContainer/BackendContainer/AvailableResults" to="." method="_on_available_results_multi_selected"]
+[connection signal="pressed" from="Panel/MainMarginContainer/HBoxContainer/BackendContainer/SubmitButton" to="." method="_on_submit_button_pressed"]
 [connection signal="pressed" from="ShowConnectionsEditorButton" to="." method="_on_show_connections_editor_button_pressed"]
 [connection signal="pressed" from="EditorPopupPanel/VBoxContainer/CloseEditorButton" to="." method="_on_close_editor_button_pressed"]
 [connection signal="pressed" from="IntroContainer/PowerButton" to="." method="_on_power_button_pressed"]

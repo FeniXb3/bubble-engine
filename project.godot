@@ -30,7 +30,7 @@ enabled=PackedStringArray("res://addons/script-ide/plugin.cfg")
 
 [gui]
 
-theme/custom="uid://cnjtetudthuan"
+theme/custom="uid://o0wj5sud0fkj"
 theme/custom_font="uid://80f5vdk0lhte"
 
 [rendering]

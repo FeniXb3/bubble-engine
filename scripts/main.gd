@@ -80,7 +80,7 @@ func _ready() -> void:
 	skip_tutorials_checkbox.set_pressed_no_signal(skip_tutorials)
 	
 	computer_bg_sfx_stream = computer_bg_sfx_player.stream
-	power_button_container.visible = true
+	power_button_container.show()
 	DataManager.set_sample_data(sample_data)
 	data = DataManager.save_data(sample_data)
 	algo_name_letters = generate_word(characters, 3)
@@ -272,7 +272,7 @@ func _on_open_data_editor_button_pressed() -> void:
 
 
 func _on_power_button_pressed() -> void:
-	power_button_container.visible = false
+	power_button_container.hide()
 	start()
 
 
