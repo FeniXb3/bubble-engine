@@ -96,6 +96,8 @@ func _ready() -> void:
 		Humans will send you queries. They get mad if they read something they don't agree with. When they get mad, they stop using our engine. Take care to filter results to fit their information bubble.
 		\n
 		Better be better than {algo_letters}{prev_algo_number}.", null, false)
+	TutorialManager.register_step("failed", "You failed, {algo_letters}{algo_number}!\n
+		We gave you enough time to learn how to keep people in they information bubble. We cannot lose more money. Prepare to be deleted.", null, false)
 	TutorialManager.register_step("select_results", "Click on the list to pick one or more results fitting their information bubble. When you're done, press Submit button.", available_results)
 	TutorialManager.register_step("mood_retrieved", "Use previously stored mood triggered by the results to learn this human's preferences.", available_results)
 	animation_player.play("RESET")
@@ -200,10 +202,12 @@ func calculte_reaction(r: Result) -> void:
 func calculate_mood(_results: Array[Result]) -> void:
 	if presearch_mood - current_human.mood  >= loosing_margin:
 		failed = true
-		SignalBus.mood_calculated.emit(current_human.mood)
-		show_dialog("You failed, %s%d!\n
-		We gave you enough time to learn how to keep people in they information bubble. We cannot lose more money. Prepare to be deleted."
-		 % [algo_name_letters, algo_number], reset)
+		await TutorialManager.perform_step("failed", {
+			"algo_letters": algo_name_letters, 
+			"algo_number": algo_number, 
+			"prev_algo_number": algo_number-1
+		})
+		reset()
 	else:
 		SignalBus.mood_calculated.emit(current_human.mood)
 
