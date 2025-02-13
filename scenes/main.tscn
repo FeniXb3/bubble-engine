@@ -278,7 +278,7 @@ _data = {
 &"turn_on": SubResource("Animation_choun")
 }
 
-[node name="Main" type="Control" node_paths=PackedStringArray("available_results", "timer", "accept_dialog", "animation_player", "bg_animation_player", "music_player", "submit_button", "editor_popup_panel", "power_button_container", "control_to_focus_on_start", "connections_editor_panel")]
+[node name="Main" type="Control" node_paths=PackedStringArray("available_results", "timer", "accept_dialog", "animation_player", "bg_animation_player", "music_player", "submit_button", "editor_popup_panel", "power_button_container", "control_to_focus_on_start", "connections_editor_panel", "skip_tutorials_checkbox")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -297,9 +297,10 @@ bg_animation_player = NodePath("BackgroundPlayer/BGAnimationPlayer")
 music_player = NodePath("MusicPlayer")
 submit_button = NodePath("MainMarginContainer/HBoxContainer/BackendContainer/SubmitButton")
 editor_popup_panel = NodePath("EditorPopupPanel")
-power_button_container = NodePath("CenterContainer")
-control_to_focus_on_start = NodePath("CenterContainer/PowerButton")
+power_button_container = NodePath("IntroContainer")
+control_to_focus_on_start = NodePath("IntroContainer/PowerButton")
 connections_editor_panel = NodePath("ConnectionsEditorPanel")
+skip_tutorials_checkbox = NodePath("IntroContainer/SkipTutorialCheckBox")
 skip_tutorials = true
 
 [node name="MainMarginContainer" type="MarginContainer" parent="."]
@@ -444,20 +445,28 @@ size_flags_vertical = 3
 layout_mode = 2
 text = "Close"
 
-[node name="CenterContainer" type="CenterContainer" parent="."]
-visible = false
+[node name="IntroContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+alignment = 1
 
-[node name="PowerButton" type="Button" parent="CenterContainer"]
+[node name="PowerButton" type="Button" parent="IntroContainer"]
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 text = "           "
 icon = ExtResource("10_choun")
 icon_alignment = 1
+
+[node name="SkipTutorialCheckBox" type="CheckBox" parent="IntroContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Skip tutorial"
 
 [node name="ConnectionsEditorPanel" type="Panel" parent="."]
 layout_mode = 1
@@ -504,5 +513,6 @@ icon = ExtResource("14_jkv2x")
 [connection signal="pressed" from="MainMarginContainer/HBoxContainer/BackendContainer/SubmitButton" to="." method="_on_submit_button_pressed"]
 [connection signal="pressed" from="ShowConnectionsEditorButton" to="." method="_on_show_connections_editor_button_pressed"]
 [connection signal="pressed" from="EditorPopupPanel/VBoxContainer/CloseEditorButton" to="." method="_on_close_editor_button_pressed"]
-[connection signal="pressed" from="CenterContainer/PowerButton" to="." method="_on_power_button_pressed"]
+[connection signal="pressed" from="IntroContainer/PowerButton" to="." method="_on_power_button_pressed"]
+[connection signal="toggled" from="IntroContainer/SkipTutorialCheckBox" to="." method="_on_skip_tutorial_check_box_toggled"]
 [connection signal="pressed" from="ConnectionsEditorPanel/HideConnectionsEditorButton" to="." method="_on_hide_connections_editor_button_pressed"]

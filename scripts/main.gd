@@ -11,9 +11,10 @@ extends Control
 @export var music_player: AudioStreamPlayer
 @export var submit_button: Button
 @export var editor_popup_panel: PopupPanel
-@export var power_button_container: CenterContainer
+@export var power_button_container: Container
 @export var control_to_focus_on_start: Control
 @export var connections_editor_panel: Panel
+@export var skip_tutorials_checkbox: CheckBox
 
 
 @export var current_human: Human
@@ -30,7 +31,13 @@ var available_humans: Array[Human]
 var music: AudioStreamPlaybackInteractive
 
 @export var loosing_margin:int = 1
-@export var skip_tutorials: bool = false
+@export var skip_tutorials: bool = false:
+	set(value):
+		skip_tutorials = value
+		if TutorialManager.skip_all_tutorials == skip_tutorials:
+			return
+			
+		TutorialManager.skip_all_tutorials = skip_tutorials
 
 func get_related_results(query: Query) -> Array[Result]:
 	var query_tags := query.negative_tags + query.positive_tags
@@ -66,7 +73,10 @@ func generate_word(chars, length):
 	return word
 	
 func _ready() -> void:
-	TutorialManager.skip_all_tutorials = skip_tutorials
+	if not OS.has_feature("debug"):
+		skip_tutorials = false
+	skip_tutorials_checkbox.set_pressed_no_signal(skip_tutorials)
+	
 	power_button_container.visible = true
 	DataManager.set_sample_data(sample_data)
 	data = DataManager.save_data(sample_data)
@@ -262,3 +272,7 @@ func _on_show_connections_editor_button_pressed() -> void:
 	
 	var tween: Tween = get_tree().create_tween()
 	tween.tween_property(connections_editor_panel, "position:x", 0, 0.5)
+
+
+func _on_skip_tutorial_check_box_toggled(toggled_on: bool) -> void:
+	skip_tutorials = toggled_on
