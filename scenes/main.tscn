@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://dvwpk5124o4es"]
+[gd_scene load_steps=23 format=3 uid="uid://dvwpk5124o4es"]
 
 [ext_resource type="Script" uid="uid://bd400a1w377bh" path="res://scripts/main.gd" id="1_0wfyh"]
 [ext_resource type="Resource" uid="uid://seg4sdlnbehf" path="res://resources/sample_data.tres" id="2_sugp2"]
@@ -15,110 +15,18 @@
 [ext_resource type="PackedScene" uid="uid://dpaj5ntoqqp52" path="res://scenes/connections_editor.tscn" id="11_ya4ey"]
 [ext_resource type="Texture2D" uid="uid://bvts7s7ojgmqp" path="res://graphics/kenney_game-icons/PNG/Black/1x/exitRight.png" id="14_jkv2x"]
 
-[sub_resource type="Animation" id="Animation_a8y0u"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:volume_db")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [-10.0]
-}
-
-[sub_resource type="Animation" id="Animation_eb6dy"]
-resource_name = "running"
-length = 17.57
-loop_mode = 1
-tracks/0/type = "audio"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"clips": [{
-"end_offset": 0.0,
-"start_offset": 0.0,
-"stream": ExtResource("9_choun")
-}],
-"times": PackedFloat32Array(0)
-}
-tracks/0/use_blend = true
-
-[sub_resource type="Animation" id="Animation_ya4ey"]
-resource_name = "start"
-length = 17.8525
-tracks/0/type = "audio"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"clips": [{
-"end_offset": 4.71,
-"start_offset": 0.0,
-"stream": ExtResource("8_85g3d")
-}],
-"times": PackedFloat32Array(0)
-}
-tracks/0/use_blend = true
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:volume_db")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 6.96667, 13.0667),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [-10.0, -10.0, -80.0]
-}
-
-[sub_resource type="Animation" id="Animation_trceg"]
-resource_name = "stop"
-length = 3.258
-tracks/0/type = "audio"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"clips": [{
-"end_offset": 3.3027,
-"start_offset": 0.0,
-"stream": ExtResource("10_ya4ey")
-}],
-"times": PackedFloat32Array(0)
-}
-tracks/0/use_blend = true
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:volume_db")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [-80.0, -10.0]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_eb6dy"]
-_data = {
-&"RESET": SubResource("Animation_a8y0u"),
-&"running": SubResource("Animation_eb6dy"),
-&"start": SubResource("Animation_ya4ey"),
-&"stop": SubResource("Animation_trceg")
-}
+[sub_resource type="AudioStreamInteractive" id="AudioStreamInteractive_a8y0u"]
+clip_count = 3
+clip_0/name = &"Turn On"
+clip_0/stream = ExtResource("8_85g3d")
+clip_0/auto_advance = 1
+clip_0/next_clip = 1
+clip_1/name = &"Computer Running"
+clip_1/stream = ExtResource("9_choun")
+clip_1/auto_advance = 0
+clip_2/name = &"Turn Off"
+clip_2/stream = ExtResource("10_ya4ey")
+clip_2/auto_advance = 0
 
 [sub_resource type="AudioStreamInteractive" id="AudioStreamInteractive_trceg"]
 clip_count = 2
@@ -278,7 +186,7 @@ _data = {
 &"turn_on": SubResource("Animation_choun")
 }
 
-[node name="Main" type="Control" node_paths=PackedStringArray("available_results", "timer", "accept_dialog", "animation_player", "bg_animation_player", "music_player", "submit_button", "editor_popup_panel", "power_button_container", "control_to_focus_on_start", "connections_editor_panel", "skip_tutorials_checkbox")]
+[node name="Main" type="Control" node_paths=PackedStringArray("available_results", "timer", "accept_dialog", "animation_player", "music_player", "computer_bg_sfx_player", "submit_button", "editor_popup_panel", "power_button_container", "control_to_focus_on_start", "connections_editor_panel", "skip_tutorials_checkbox")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -293,8 +201,8 @@ available_results = NodePath("MainMarginContainer/HBoxContainer/BackendContainer
 timer = NodePath("Timer")
 accept_dialog = NodePath("AcceptDialog")
 animation_player = NodePath("ShutDownTextureRect/AnimationPlayer")
-bg_animation_player = NodePath("BackgroundPlayer/BGAnimationPlayer")
 music_player = NodePath("MusicPlayer")
+computer_bg_sfx_player = NodePath("BackgroundPlayer")
 submit_button = NodePath("MainMarginContainer/HBoxContainer/BackendContainer/SubmitButton")
 editor_popup_panel = NodePath("EditorPopupPanel")
 power_button_container = NodePath("IntroContainer")
@@ -380,12 +288,8 @@ popup_window = true
 dialog_autowrap = true
 
 [node name="BackgroundPlayer" type="AudioStreamPlayer" parent="."]
-volume_db = -10.0
-
-[node name="BGAnimationPlayer" type="AnimationPlayer" parent="BackgroundPlayer"]
-libraries = {
-&"": SubResource("AnimationLibrary_eb6dy")
-}
+stream = SubResource("AudioStreamInteractive_a8y0u")
+volume_db = -15.0
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamInteractive_trceg")

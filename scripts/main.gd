@@ -7,8 +7,8 @@ extends Control
 @export var timer: Timer
 @export var accept_dialog: AcceptDialog
 @export var animation_player: AnimationPlayer
-@export var bg_animation_player: AnimationPlayer
 @export var music_player: AudioStreamPlayer
+@export var computer_bg_sfx_player: AudioStreamPlayer
 @export var submit_button: Button
 @export var editor_popup_panel: PopupPanel
 @export var power_button_container: Container
@@ -29,6 +29,8 @@ var failed: bool = false
 var available_queries: Array[Query]
 var available_humans: Array[Human]
 var music: AudioStreamPlaybackInteractive
+var computer_bg_sfx: AudioStreamPlaybackInteractive
+var computer_bg_sfx_stream: AudioStreamInteractive
 
 @export var loosing_margin:int = 1
 @export var skip_tutorials: bool = false:
@@ -77,6 +79,7 @@ func _ready() -> void:
 		skip_tutorials = false
 	skip_tutorials_checkbox.set_pressed_no_signal(skip_tutorials)
 	
+	computer_bg_sfx_stream = computer_bg_sfx_player.stream
 	power_button_container.visible = true
 	DataManager.set_sample_data(sample_data)
 	data = DataManager.save_data(sample_data)
@@ -111,8 +114,13 @@ func _on_starting() -> void:
 func start() -> void:
 	SignalBus.starting.emit()
 	
+	if not computer_bg_sfx_player.playing:
+		computer_bg_sfx_player.play()
+		if computer_bg_sfx == null:
+			computer_bg_sfx = computer_bg_sfx_player.get_stream_playback()
+		
+	computer_bg_sfx.switch_to_clip_by_name(&"Turn On")
 	
-	bg_animation_player.play("start")
 	animation_player.play("turn_on")
 	await animation_player.animation_finished
 	failed = false
@@ -214,9 +222,14 @@ func calculate_mood(_results: Array[Result]) -> void:
 func reset() -> void:
 	SignalBus.reseting.emit()
 	animation_player.play("shut_down")
-	bg_animation_player.play("stop")
-	#await animation_player.animation_finished
-	await bg_animation_player.animation_finished
+	
+	computer_bg_sfx.switch_to_clip_by_name(&"Turn Off")
+	# Hack to start new game right after the turn off sound is done playing
+	await get_tree().process_frame
+	var wait_time := computer_bg_sfx_stream.get_clip_stream(computer_bg_sfx.get_current_clip_index()).get_length()
+	timer.start(wait_time)
+	await timer.timeout
+	
 	algo_number += 1
 	available_results.clear()
 	start()
