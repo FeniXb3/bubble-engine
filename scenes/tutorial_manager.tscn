@@ -10,10 +10,10 @@ dialog = NodePath("AcceptDialog")
 timer = NodePath("Timer")
 canvas_modulate = NodePath(".")
 visible_material = ExtResource("2_ubejk")
+pitch_bus_name = &"Music"
 
 [node name="AcceptDialog" type="AcceptDialog" parent="."]
 auto_translate_mode = 1
-position = Vector2i(376, 278)
 size = Vector2i(400, 92)
 popup_window = true
 min_size = Vector2i(400, 92)

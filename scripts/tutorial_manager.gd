@@ -13,6 +13,7 @@ extends CanvasModulate
 @export var dialog_margin: float = 20
 @export_group("Audio Pitch Change", "pitch")
 @export var pitch_should_change: bool = true
+@export var pitch_bus_name: = &"Master"
 @export var pitch_gameplay_scale: float = 1.0
 @export var pitch_tutorial_scale:= 0.47
 
@@ -33,7 +34,7 @@ class TutorialStep:
 func _ready() -> void:
 	dialog.visible = false
 	canvas_modulate.color = inactive_color
-	var music_bus_index = AudioServer.get_bus_index("Music")
+	var music_bus_index = AudioServer.get_bus_index(pitch_bus_name)
 	for i in AudioServer.get_bus_effect_count(music_bus_index):
 		var effect := AudioServer.get_bus_effect(music_bus_index, i)
 		if effect is AudioEffectPitchShift:

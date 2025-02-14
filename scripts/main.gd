@@ -149,10 +149,9 @@ func show_dialog(text: String, handler: Callable) -> void:
 func pick_human() -> void:
 	if not music_player.playing:
 		music_player.play()
-		if music == null:
-			music = music_player.get_stream_playback()
-		else:
-			music.switch_to_clip_by_name(&"Main")
+		# It seems new stream playback is return if the player was stopped
+		music = music_player.get_stream_playback()
+		music.switch_to_clip_by_name(&"Main")
 	
 	if available_humans.is_empty():
 		available_humans = data.humans.duplicate()
