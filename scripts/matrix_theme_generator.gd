@@ -29,7 +29,6 @@ func define_theme():
 	var button_style = stylebox_flat({
 		bg_color = button_color,
 		font_color = text_color,
-		border_ = border_width(2),
 	})
 	
 	var button_hover_style = inherit(button_style, {
