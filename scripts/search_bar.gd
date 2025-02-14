@@ -6,6 +6,7 @@ extends Control
 @export var query_field: LineEdit
 @export var input_timer: Timer
 @export var cleaning_timer: Timer
+@export var keyboard_audio_stream_player: AudioStreamPlayer
 
 #@export var flip: bool = true
 @export var current_query: Query
@@ -35,7 +36,10 @@ func show_query(query: Query) -> void:
 
 func _on_timer_timeout() -> void:
 	text_length += 1
+	keyboard_audio_stream_player.play()
+	await get_tree().process_frame
 	query_field.text = current_query.text.substr(0, text_length)
+	
 	
 	if query_field.text == current_query.text:
 		input_timer.stop()
