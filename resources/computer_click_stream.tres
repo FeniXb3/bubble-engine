@@ -1,0 +1,13 @@
+[gd_resource type="AudioStreamInteractive" load_steps=3 format=3 uid="uid://dofkpydgiklmv"]
+
+[ext_resource type="AudioStream" uid="uid://cn0cuxpbaofc8" path="res://sfx/hard_drive_on_click.mp3" id="1_onhkr"]
+[ext_resource type="AudioStream" uid="uid://bohli7qy8qq84" path="res://sfx/hard_drive_off_click.mp3" id="2_001in"]
+
+[resource]
+clip_count = 2
+clip_0/name = &"Turn On"
+clip_0/stream = ExtResource("1_onhkr")
+clip_0/auto_advance = 0
+clip_1/name = &"Turn Off"
+clip_1/stream = ExtResource("2_001in")
+clip_1/auto_advance = 0

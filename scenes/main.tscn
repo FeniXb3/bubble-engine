@@ -1,32 +1,18 @@
-[gd_scene load_steps=23 format=3 uid="uid://dvwpk5124o4es"]
+[gd_scene load_steps=21 format=3 uid="uid://dvwpk5124o4es"]
 
 [ext_resource type="Script" uid="uid://bd400a1w377bh" path="res://scripts/main.gd" id="1_0wfyh"]
 [ext_resource type="Resource" uid="uid://seg4sdlnbehf" path="res://resources/sample_data.tres" id="2_sugp2"]
 [ext_resource type="Resource" uid="uid://dcww28fkwrhvp" path="res://resources/humans/sample_visuals.tres" id="3_o6xl0"]
 [ext_resource type="PackedScene" uid="uid://kogfwa2w7dnr" path="res://scenes/human_interface.tscn" id="4_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://da375min1u6w5" path="res://scenes/data_editor.tscn" id="5_85g3d"]
-[ext_resource type="AudioStream" uid="uid://v4bqj5mumgon" path="res://sfx/hard_drive_on.mp3" id="8_85g3d"]
-[ext_resource type="AudioStream" uid="uid://djyeptxscbxmj" path="res://sfx/hard_drive_running.mp3" id="9_choun"]
+[ext_resource type="AudioStream" uid="uid://f3vkt48hqgww" path="res://resources/hard_drive_stream.tres" id="5_trceg"]
+[ext_resource type="AudioStream" uid="uid://dofkpydgiklmv" path="res://resources/computer_click_stream.tres" id="6_eb6dy"]
 [ext_resource type="AudioStream" uid="uid://bxym5kce4we3e" path="res://music/Bleeping Demo.mp3" id="9_ya4ey"]
 [ext_resource type="Texture2D" uid="uid://dmm16d2oyiic1" path="res://graphics/kenney_game-icons/PNG/Black/1x/power.png" id="10_choun"]
 [ext_resource type="AudioStream" uid="uid://g6767dwmitfk" path="res://music/Mesmerizing Galaxy Loop.mp3" id="10_eb6dy"]
-[ext_resource type="AudioStream" uid="uid://cxno8ky1v7g5k" path="res://sfx/hard_drive_off.mp3" id="10_ya4ey"]
 [ext_resource type="Texture2D" uid="uid://vmd6llc3xtbw" path="res://graphics/kenney_game-icons/PNG/Black/1x/exitLeft.png" id="11_a8y0u"]
 [ext_resource type="PackedScene" uid="uid://dpaj5ntoqqp52" path="res://scenes/connections_editor.tscn" id="11_ya4ey"]
 [ext_resource type="Texture2D" uid="uid://bvts7s7ojgmqp" path="res://graphics/kenney_game-icons/PNG/Black/1x/exitRight.png" id="14_jkv2x"]
-
-[sub_resource type="AudioStreamInteractive" id="AudioStreamInteractive_a8y0u"]
-clip_count = 3
-clip_0/name = &"Turn On"
-clip_0/stream = ExtResource("8_85g3d")
-clip_0/auto_advance = 1
-clip_0/next_clip = 1
-clip_1/name = &"Computer Running"
-clip_1/stream = ExtResource("9_choun")
-clip_1/auto_advance = 0
-clip_2/name = &"Turn Off"
-clip_2/stream = ExtResource("10_ya4ey")
-clip_2/auto_advance = 0
 
 [sub_resource type="AudioStreamInteractive" id="AudioStreamInteractive_trceg"]
 clip_count = 2
@@ -174,7 +160,7 @@ _data = {
 &"turn_on": SubResource("Animation_choun")
 }
 
-[node name="Main" type="Control" node_paths=PackedStringArray("engine_panel", "available_results", "timer", "accept_dialog", "animation_player", "music_player", "computer_bg_sfx_player", "submit_button", "editor_popup_panel", "power_button_container", "control_to_focus_on_start", "connections_editor_panel", "skip_tutorials_checkbox")]
+[node name="Main" type="Control" node_paths=PackedStringArray("engine_panel", "available_results", "timer", "accept_dialog", "animation_player", "music_player", "computer_bg_sfx_player", "submit_button", "editor_popup_panel", "power_button_container", "control_to_focus_on_start", "connections_editor_panel", "skip_tutorials_checkbox", "computer_noise_check_box")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -198,6 +184,9 @@ power_button_container = NodePath("IntroContainer")
 control_to_focus_on_start = NodePath("IntroContainer/PowerButton")
 connections_editor_panel = NodePath("ConnectionsEditorPanel")
 skip_tutorials_checkbox = NodePath("IntroContainer/SkipTutorialCheckBox")
+click_stream = ExtResource("6_eb6dy")
+click_noise_stream = ExtResource("5_trceg")
+computer_noise_check_box = NodePath("IntroContainer/ComputerNoiseCheckBox")
 skip_tutorials = true
 
 [node name="EnginePanel" type="Panel" parent="."]
@@ -296,7 +285,7 @@ popup_window = true
 dialog_autowrap = true
 
 [node name="BackgroundPlayer" type="AudioStreamPlayer" parent="."]
-stream = SubResource("AudioStreamInteractive_a8y0u")
+stream = ExtResource("6_eb6dy")
 volume_db = -15.0
 bus = &"SFX"
 
@@ -411,6 +400,11 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "Skip tutorial"
 
+[node name="ComputerNoiseCheckBox" type="CheckBox" parent="IntroContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Computer noise"
+
 [connection signal="toggled" from="EnginePanel/MainMarginContainer/HBoxContainer/BackendContainer/CheckBox" to="." method="_on_check_box_toggled"]
 [connection signal="pressed" from="EnginePanel/MainMarginContainer/HBoxContainer/BackendContainer/OpenDataEditorButton" to="." method="_on_open_data_editor_button_pressed"]
 [connection signal="multi_selected" from="EnginePanel/MainMarginContainer/HBoxContainer/BackendContainer/AvailableResults" to="." method="_on_available_results_multi_selected"]
@@ -420,3 +414,4 @@ text = "Skip tutorial"
 [connection signal="pressed" from="ConnectionsEditorPanel/HideConnectionsEditorButton" to="." method="_on_hide_connections_editor_button_pressed"]
 [connection signal="pressed" from="IntroContainer/PowerButton" to="." method="_on_power_button_pressed"]
 [connection signal="toggled" from="IntroContainer/SkipTutorialCheckBox" to="." method="_on_skip_tutorial_check_box_toggled"]
+[connection signal="toggled" from="IntroContainer/ComputerNoiseCheckBox" to="." method="_on_computer_noise_check_box_toggled"]

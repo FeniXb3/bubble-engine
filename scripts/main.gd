@@ -16,7 +16,9 @@ extends Control
 @export var control_to_focus_on_start: Control
 @export var connections_editor_panel: Panel
 @export var skip_tutorials_checkbox: CheckBox
-
+@export var click_stream: AudioStream
+@export var click_noise_stream: AudioStream
+@export var computer_noise_check_box: CheckBox
 
 @export var current_human: Human
 @export var current_query: Query
@@ -79,6 +81,7 @@ func _ready() -> void:
 	if not OS.has_feature("debug"):
 		skip_tutorials = false
 	skip_tutorials_checkbox.set_pressed_no_signal(skip_tutorials)
+	computer_noise_check_box.set_pressed_no_signal(computer_bg_sfx_player.stream == click_noise_stream)
 	
 	computer_bg_sfx_stream = computer_bg_sfx_player.stream
 	engine_panel.hide()
@@ -119,8 +122,7 @@ func start() -> void:
 	
 	if not computer_bg_sfx_player.playing:
 		computer_bg_sfx_player.play()
-		if computer_bg_sfx == null:
-			computer_bg_sfx = computer_bg_sfx_player.get_stream_playback()
+		computer_bg_sfx = computer_bg_sfx_player.get_stream_playback()
 		
 	computer_bg_sfx.switch_to_clip_by_name(&"Turn On")
 	
@@ -297,3 +299,7 @@ func _on_show_connections_editor_button_pressed() -> void:
 
 func _on_skip_tutorial_check_box_toggled(toggled_on: bool) -> void:
 	skip_tutorials = toggled_on
+
+func _on_computer_noise_check_box_toggled(toggled_on: bool) -> void:
+	computer_bg_sfx_player.stream = click_noise_stream if toggled_on else click_stream
+	computer_bg_sfx_stream = computer_bg_sfx_player.stream

@@ -1,0 +1,18 @@
+[gd_resource type="AudioStreamInteractive" load_steps=4 format=3 uid="uid://f3vkt48hqgww"]
+
+[ext_resource type="AudioStream" uid="uid://v4bqj5mumgon" path="res://sfx/hard_drive_on.mp3" id="1_h5ibh"]
+[ext_resource type="AudioStream" uid="uid://djyeptxscbxmj" path="res://sfx/hard_drive_running.mp3" id="2_2vs27"]
+[ext_resource type="AudioStream" uid="uid://cxno8ky1v7g5k" path="res://sfx/hard_drive_off.mp3" id="3_yxrpq"]
+
+[resource]
+clip_count = 3
+clip_0/name = &"Turn On"
+clip_0/stream = ExtResource("1_h5ibh")
+clip_0/auto_advance = 1
+clip_0/next_clip = 1
+clip_1/name = &"Computer Running"
+clip_1/stream = ExtResource("2_2vs27")
+clip_1/auto_advance = 0
+clip_2/name = &"Turn Off"
+clip_2/stream = ExtResource("3_yxrpq")
+clip_2/auto_advance = 0
