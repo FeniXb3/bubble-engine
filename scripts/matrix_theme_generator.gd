@@ -4,7 +4,7 @@ extends ProgrammaticTheme
 var background_color := Color("#030303")
 var text_color := Color("#1CA152")
 var button_color := Color("#008529")
-var margin := 10
+var margin := 30
 
 
 func setup():
