@@ -17,8 +17,13 @@ func define_theme():
 	})
 	
 	var panel_style = stylebox_flat({
-		bg_color = background_color.lightened(0.2),
+		bg_color = background_color,
 		font_color = text_color,
+	})
+	
+	var window_style = stylebox_flat({
+		bg_color = button_color,
+		expand_margin_top = 36,
 	})
 	
 	var button_style = stylebox_flat({
@@ -50,4 +55,8 @@ func define_theme():
 	
 	define_style("BoxContainer", {
 		separation = margin
+	})
+	
+	define_style("Window", {
+		embedded_border = window_style,
 	})

@@ -78,6 +78,7 @@ func perform_step(id: String, params: Dictionary = {}) -> void:
 
 func _calculate_position() -> void:
 	dialog.reset_size()
+	var title_size := dialog.get_theme_constant("title_height")
 	var viewport_size := get_viewport_rect().size
 	if current_step.control == null:
 		dialog.initial_position = Window.WINDOW_INITIAL_POSITION_ABSOLUTE
@@ -91,7 +92,9 @@ func _calculate_position() -> void:
 			dialog.position = Vector2i(int(rect.position.x - dialog.size.x - dialog_margin), int(rect.position.y))
 		else:
 			dialog.position = Vector2i(int(right_border + dialog_margin), int(rect.position.y))
-			
+		
+		dialog.position.y += title_size
+		
 		var y_overflow = dialog.position.y + dialog.size.y + dialog_margin - viewport_size.y
 		if y_overflow > 0:
 			dialog.position.y -= int(y_overflow)
