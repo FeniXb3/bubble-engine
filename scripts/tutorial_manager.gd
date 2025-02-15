@@ -59,6 +59,7 @@ func perform_step(id: String, params: Dictionary = {}) -> void:
 	if skip_all_tutorials:
 		return
 	
+	dialog.theme = get_tree().root.theme
 	current_step = steps[id]
 	if not current_step.should_perform:
 		return

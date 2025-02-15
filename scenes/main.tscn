@@ -1,10 +1,12 @@
-[gd_scene load_steps=21 format=3 uid="uid://dvwpk5124o4es"]
+[gd_scene load_steps=23 format=3 uid="uid://dvwpk5124o4es"]
 
 [ext_resource type="Script" uid="uid://bd400a1w377bh" path="res://scripts/main.gd" id="1_0wfyh"]
+[ext_resource type="Theme" uid="uid://cnjtetudthuan" path="res://addons/windows_95_theme/save1.tres" id="1_a8y0u"]
 [ext_resource type="Resource" uid="uid://seg4sdlnbehf" path="res://resources/sample_data.tres" id="2_sugp2"]
 [ext_resource type="Resource" uid="uid://dcww28fkwrhvp" path="res://resources/humans/sample_visuals.tres" id="3_o6xl0"]
 [ext_resource type="PackedScene" uid="uid://kogfwa2w7dnr" path="res://scenes/human_interface.tscn" id="4_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://da375min1u6w5" path="res://scenes/data_editor.tscn" id="5_85g3d"]
+[ext_resource type="Theme" uid="uid://o0wj5sud0fkj" path="res://themes/generated/matrix_theme.tres" id="5_jkv2x"]
 [ext_resource type="AudioStream" uid="uid://f3vkt48hqgww" path="res://resources/hard_drive_stream.tres" id="5_trceg"]
 [ext_resource type="AudioStream" uid="uid://dofkpydgiklmv" path="res://resources/computer_click_stream.tres" id="6_eb6dy"]
 [ext_resource type="AudioStream" uid="uid://bxym5kce4we3e" path="res://music/Bleeping Demo.mp3" id="9_ya4ey"]
@@ -160,7 +162,7 @@ _data = {
 &"turn_on": SubResource("Animation_choun")
 }
 
-[node name="Main" type="Control" node_paths=PackedStringArray("engine_panel", "available_results", "timer", "accept_dialog", "animation_player", "music_player", "computer_bg_sfx_player", "submit_button", "editor_popup_panel", "power_button_container", "control_to_focus_on_start", "connections_editor_panel", "skip_tutorials_checkbox", "computer_noise_check_box")]
+[node name="Main" type="Control" node_paths=PackedStringArray("engine_panel", "available_results", "timer", "accept_dialog", "animation_player", "music_player", "computer_bg_sfx_player", "submit_button", "editor_popup_panel", "power_button_container", "control_to_focus_on_start", "connections_editor_panel", "skip_tutorials_checkbox", "computer_noise_check_box", "theme_option_button")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -171,6 +173,10 @@ script = ExtResource("1_0wfyh")
 data = ExtResource("2_sugp2")
 sample_data = ExtResource("2_sugp2")
 human_visuals = ExtResource("3_o6xl0")
+available_themes = Dictionary[String, Theme]({
+"Neo": ExtResource("5_jkv2x"),
+"Retro": ExtResource("1_a8y0u")
+})
 engine_panel = NodePath("EnginePanel")
 available_results = NodePath("EnginePanel/MainMarginContainer/HBoxContainer/BackendContainer/AvailableResults")
 timer = NodePath("Timer")
@@ -187,6 +193,7 @@ skip_tutorials_checkbox = NodePath("IntroContainer/SkipTutorialCheckBox")
 click_stream = ExtResource("6_eb6dy")
 click_noise_stream = ExtResource("5_trceg")
 computer_noise_check_box = NodePath("IntroContainer/ComputerNoiseCheckBox")
+theme_option_button = NodePath("IntroContainer/ThemeOptionButton")
 skip_tutorials = true
 
 [node name="EnginePanel" type="Panel" parent="."]
@@ -405,6 +412,11 @@ layout_mode = 2
 size_flags_horizontal = 4
 text = "Computer noise"
 
+[node name="ThemeOptionButton" type="OptionButton" parent="IntroContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+selected = 0
+
 [connection signal="toggled" from="EnginePanel/MainMarginContainer/HBoxContainer/BackendContainer/CheckBox" to="." method="_on_check_box_toggled"]
 [connection signal="pressed" from="EnginePanel/MainMarginContainer/HBoxContainer/BackendContainer/OpenDataEditorButton" to="." method="_on_open_data_editor_button_pressed"]
 [connection signal="multi_selected" from="EnginePanel/MainMarginContainer/HBoxContainer/BackendContainer/AvailableResults" to="." method="_on_available_results_multi_selected"]
@@ -415,3 +427,4 @@ text = "Computer noise"
 [connection signal="pressed" from="IntroContainer/PowerButton" to="." method="_on_power_button_pressed"]
 [connection signal="toggled" from="IntroContainer/SkipTutorialCheckBox" to="." method="_on_skip_tutorial_check_box_toggled"]
 [connection signal="toggled" from="IntroContainer/ComputerNoiseCheckBox" to="." method="_on_computer_noise_check_box_toggled"]
+[connection signal="item_selected" from="IntroContainer/ThemeOptionButton" to="." method="_on_theme_option_button_item_selected"]
