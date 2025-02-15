@@ -98,6 +98,9 @@ func _calculate_position() -> void:
 		var y_overflow = dialog.position.y + dialog.size.y + dialog_margin - viewport_size.y
 		if y_overflow > 0:
 			dialog.position.y -= int(y_overflow)
+			
+	if not get_tree().root.is_embedding_subwindows():
+		dialog.position += get_window().position
 
 func _on_accept_dialog_canceled() -> void:
 	_handle_step_performed()
