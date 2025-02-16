@@ -9,12 +9,12 @@
 [ext_resource type="Theme" uid="uid://o0wj5sud0fkj" path="res://themes/generated/matrix_theme.tres" id="5_jkv2x"]
 [ext_resource type="AudioStream" uid="uid://f3vkt48hqgww" path="res://resources/hard_drive_stream.tres" id="5_trceg"]
 [ext_resource type="AudioStream" uid="uid://dofkpydgiklmv" path="res://resources/computer_click_stream.tres" id="6_eb6dy"]
+[ext_resource type="Texture2D" uid="uid://cikqafd1lkxqr" path="res://graphics/kenney_game-icons/PNG/White/1x/exitLeft.png" id="9_jkv2x"]
 [ext_resource type="AudioStream" uid="uid://bxym5kce4we3e" path="res://music/Bleeping Demo.mp3" id="9_ya4ey"]
-[ext_resource type="Texture2D" uid="uid://dmm16d2oyiic1" path="res://graphics/kenney_game-icons/PNG/Black/1x/power.png" id="10_choun"]
 [ext_resource type="AudioStream" uid="uid://g6767dwmitfk" path="res://music/Mesmerizing Galaxy Loop.mp3" id="10_eb6dy"]
-[ext_resource type="Texture2D" uid="uid://vmd6llc3xtbw" path="res://graphics/kenney_game-icons/PNG/Black/1x/exitLeft.png" id="11_a8y0u"]
 [ext_resource type="PackedScene" uid="uid://dpaj5ntoqqp52" path="res://scenes/connections_editor.tscn" id="11_ya4ey"]
-[ext_resource type="Texture2D" uid="uid://bvts7s7ojgmqp" path="res://graphics/kenney_game-icons/PNG/Black/1x/exitRight.png" id="14_jkv2x"]
+[ext_resource type="Texture2D" uid="uid://dmgcd5j3v8mfj" path="res://graphics/kenney_game-icons/PNG/White/1x/exitRight.png" id="14_jbj1t"]
+[ext_resource type="Texture2D" uid="uid://cnqutmyruyri7" path="res://graphics/kenney_game-icons/PNG/White/1x/power.png" id="15_jkv2x"]
 
 [sub_resource type="AudioStreamInteractive" id="AudioStreamInteractive_trceg"]
 clip_count = 2
@@ -279,7 +279,7 @@ offset_top = -29.0
 offset_bottom = 29.0
 grow_horizontal = 0
 grow_vertical = 2
-icon = ExtResource("11_a8y0u")
+icon = ExtResource("9_jkv2x")
 
 [node name="Timer" type="Timer" parent="."]
 one_shot = true
@@ -366,7 +366,7 @@ offset_top = -20.5
 offset_right = 64.0
 offset_bottom = 20.5
 grow_vertical = 2
-icon = ExtResource("14_jkv2x")
+icon = ExtResource("14_jbj1t")
 
 [node name="ShutDownTextureRect" type="TextureRect" parent="."]
 layout_mode = 1
@@ -398,7 +398,7 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "           "
-icon = ExtResource("10_choun")
+icon = ExtResource("15_jkv2x")
 icon_alignment = 1
 
 [node name="SkipTutorialCheckBox" type="CheckBox" parent="IntroContainer"]
