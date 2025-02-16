@@ -12,6 +12,9 @@ var encountered_tags: Array[String] = []
 var encountered_humans: Array[Human] = []
 var encountered_queries: Array[Query] = []
 var encountered_results: Array[Result] = []
+var visible_nodes_extents := Rect2()
+var top_left := Vector2(1234, 1234)
+var bottom_right := Vector2()
 
 
 const POSITIVE_PORT = 0
@@ -28,23 +31,42 @@ func _ready() -> void:
 func _show_submitted_results(results: Array[Result]) -> void:
 	for result in results:
 		_show_result(result)
+		
+func _process(_delta: float) -> void:
+	_update_graph_offset()
 
 func _show_tag(tag: String):
 	if encountered_tags.has(tag):
 		return
-	tags_nodes[tag].position_offset.y = tags_nodes[tag].size.y * encountered_tags.size()
+	var node := tags_nodes[tag]
+	node.position_offset.y = node.size.y * encountered_tags.size()
 	encountered_tags.append(tag)
-	
-	tags_nodes[tag].show()
+	_update_graph_offset(node)
+	node.show()
 	
 func _show_human(human: Human, _index: int = -1):
 	if encountered_humans.has(human):
 		return
 	
-	humans_nodes[human].position_offset.y = humans_nodes[human].size.y * encountered_humans.size()
-	
+	var node := humans_nodes[human]
+	node.position_offset.y = node.size.y * encountered_humans.size()
 	encountered_humans.append(human)
-	humans_nodes[human].show()
+	_update_graph_offset(node)
+	node.show()
+	
+func _update_graph_offset(node: GraphNode = null):
+	if node != null:
+		top_left.x = min(top_left.x, node.position_offset.x)
+		top_left.y = min(top_left.y, node.position_offset.y)
+		bottom_right.x = max(bottom_right.x, node.position_offset.x + node.size.x)
+		bottom_right.y = max(bottom_right.y, node.position_offset.y + node.size.y)
+	
+	var graph_size := graph.size
+	var zoom_vector := graph_size / (bottom_right-top_left)
+	var zoom_value := zoom_vector[zoom_vector.min_axis_index()]
+	var new_scroll_offset := top_left + (bottom_right - top_left) / 2  - graph_size / 2
+	#graph.zoom = min(zoom_value, 1)
+	graph.scroll_offset = new_scroll_offset
 	
 func _show_query(query: Query):
 	if encountered_queries.has(query):
