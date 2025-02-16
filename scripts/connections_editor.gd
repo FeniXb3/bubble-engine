@@ -3,11 +3,15 @@ extends Control
 @export var graph: GraphEdit
 @export var human_node_scene: PackedScene
 @export var tag_node_scene: PackedScene
+@export var query_node_scene: PackedScene
 @export var data: GameData
 @export var initial_nodes_margin: float = 20
 @export var tags_nodes: Dictionary[String, GraphNode]
 @export var humans_nodes: Dictionary[Human, GraphNode]
+@export var queries_nodes: Dictionary[Query, GraphNode]
 @export var add_real_connections: bool = false
+@export var timer: Timer
+
 var encountered_tags: Array[String] = []
 var encountered_humans: Array[Human] = []
 var encountered_queries: Array[Query] = []
@@ -15,6 +19,7 @@ var encountered_results: Array[Result] = []
 var visible_nodes_extents := Rect2()
 var top_left := Vector2(1234, 1234)
 var bottom_right := Vector2()
+var operations_queue: Array[Callable] = []
 
 
 const POSITIVE_PORT = 0
@@ -31,9 +36,16 @@ func _ready() -> void:
 func _show_submitted_results(results: Array[Result]) -> void:
 	for result in results:
 		_show_result(result)
-		
-func _process(_delta: float) -> void:
-	_update_graph_offset()
+
+#func _enqueue():
+	
+
+#func _process(_delta: float) -> void:
+	#_update_graph_offset()
+	
+func _show_node(node: GraphNode):
+	_update_graph_offset(node)
+	node.show()
 
 func _show_tag(tag: String):
 	if encountered_tags.has(tag):
@@ -41,8 +53,7 @@ func _show_tag(tag: String):
 	var node := tags_nodes[tag]
 	node.position_offset.y = node.size.y * encountered_tags.size()
 	encountered_tags.append(tag)
-	_update_graph_offset(node)
-	node.show()
+	operations_queue.append(_show_node.bind(node))
 	
 func _show_human(human: Human, _index: int = -1):
 	if encountered_humans.has(human):
@@ -51,8 +62,8 @@ func _show_human(human: Human, _index: int = -1):
 	var node := humans_nodes[human]
 	node.position_offset.y = node.size.y * encountered_humans.size()
 	encountered_humans.append(human)
-	_update_graph_offset(node)
-	node.show()
+	
+	operations_queue.append(_show_node.bind(node))
 	
 func _update_graph_offset(node: GraphNode = null):
 	if node != null:
@@ -61,21 +72,31 @@ func _update_graph_offset(node: GraphNode = null):
 		bottom_right.x = max(bottom_right.x, node.position_offset.x + node.size.x)
 		bottom_right.y = max(bottom_right.y, node.position_offset.y + node.size.y)
 	
+	var margin := Vector2(0, 0)
 	var graph_size := graph.size
-	var zoom_vector := graph_size / (bottom_right-top_left)
+	var zoom_vector := graph_size / ((bottom_right+margin)-(top_left-margin))
 	var zoom_value := zoom_vector[zoom_vector.min_axis_index()]
-	var new_scroll_offset := top_left + (bottom_right - top_left) / 2  - graph_size / 2
-	#graph.zoom = min(zoom_value, 1)
+	var nodes_center := (bottom_right+margin - (top_left-margin)) / 2
+	var graph_center := graph.size/2
+	var new_scroll_offset := top_left + nodes_center - graph_center
+	# To make it easier, reset zoom to 100% before setting scroll offset.
+	# The engine will take care to zoom out around current center of graph.
+	graph.zoom = 1
 	graph.scroll_offset = new_scroll_offset
+	graph.zoom = min(zoom_value - 0.2, 1)
 	
 func _show_query(query: Query):
 	if encountered_queries.has(query):
 		return
 	
 	encountered_queries.append(query)
+	var node := queries_nodes[query]
+	node.position_offset.y = node.size.y * encountered_queries.size()
+	operations_queue.append(_show_node.bind(node))
+	
 	for tag in query.positive_tags:
 		_show_tag(tag)
-	#queries_nodes[query].show()
+		
 	
 func _show_result(result: Result):
 	if encountered_results.has(result):
@@ -109,6 +130,16 @@ func add_nodes() -> void:
 		humans_nodes.set(human, node)
 		node.hide()
 		
+		for j in human.queries.size():
+			var query := human.queries[j]
+			var query_node := query_node_scene.instantiate() as GraphNode
+			query_node.title = query.text
+			query_node.position_offset = Vector2(700, (query_node.size.y + initial_nodes_margin) * i)
+			query_node.set_meta("query", query)
+			graph.add_child(query_node)
+			queries_nodes.set(query, query_node)
+			query_node.hide()
+			
 		if add_real_connections:
 			for positive_tag in human.positive_tags:
 				var tag_node := tags_nodes[positive_tag]
@@ -121,3 +152,10 @@ func _on_graph_edit_connection_request(from_node: StringName, from_port: int, to
 
 func _on_graph_edit_disconnection_request(from_node: StringName, from_port: int, to_node: StringName, to_port: int) -> void:
 	graph.disconnect_node(from_node, from_port, to_node, to_port)
+
+
+func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
+	while not operations_queue.is_empty():
+		timer.start()
+		await timer.timeout
+		operations_queue.pop_front().call()

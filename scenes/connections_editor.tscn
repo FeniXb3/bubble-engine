@@ -1,11 +1,12 @@
-[gd_scene load_steps=5 format=3 uid="uid://dpaj5ntoqqp52"]
+[gd_scene load_steps=6 format=3 uid="uid://dpaj5ntoqqp52"]
 
 [ext_resource type="Script" uid="uid://n2xjqdfyv3na" path="res://scripts/connections_editor.gd" id="1_x4c2y"]
 [ext_resource type="Resource" uid="uid://seg4sdlnbehf" path="res://resources/sample_data.tres" id="2_lbwjx"]
 [ext_resource type="PackedScene" uid="uid://cdrxmtub6oqfa" path="res://scenes/tag_graph_node.tscn" id="4_6hbta"]
+[ext_resource type="PackedScene" uid="uid://bjmb4cihga2cm" path="res://scenes/query_graph_node.tscn" id="4_oxiay"]
 [ext_resource type="PackedScene" uid="uid://djc6vdp8drxlj" path="res://scenes/human_graph_node.tscn" id="4_wpfui"]
 
-[node name="ConnectionsEditor" type="Control" node_paths=PackedStringArray("graph")]
+[node name="ConnectionsEditor" type="Control" node_paths=PackedStringArray("graph", "timer")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -16,7 +17,9 @@ script = ExtResource("1_x4c2y")
 graph = NodePath("GraphEdit")
 human_node_scene = ExtResource("4_wpfui")
 tag_node_scene = ExtResource("4_6hbta")
+query_node_scene = ExtResource("4_oxiay")
 data = ExtResource("2_lbwjx")
+timer = NodePath("Timer")
 
 [node name="GraphEdit" type="GraphEdit" parent="."]
 layout_mode = 1
@@ -33,5 +36,13 @@ show_zoom_buttons = false
 show_grid_buttons = false
 show_arrange_button = false
 
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(1111, 324)
+scale = Vector2(2.1, 31)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.25
+
 [connection signal="connection_request" from="GraphEdit" to="." method="_on_graph_edit_connection_request"]
 [connection signal="disconnection_request" from="GraphEdit" to="." method="_on_graph_edit_disconnection_request"]
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
