@@ -6,6 +6,7 @@ extends Control
 @export var query_node_scene: PackedScene
 @export var data: GameData
 @export var initial_nodes_margin: float = 20
+@export var zoom_margin := 0.9
 @export var tags_nodes: Dictionary[String, GraphNode]
 @export var humans_nodes: Dictionary[Human, GraphNode]
 @export var queries_nodes: Dictionary[Query, GraphNode]
@@ -72,18 +73,18 @@ func _update_graph_offset(node: GraphNode = null):
 		bottom_right.x = max(bottom_right.x, node.position_offset.x + node.size.x)
 		bottom_right.y = max(bottom_right.y, node.position_offset.y + node.size.y)
 	
-	var margin := Vector2(0, 0)
 	var graph_size := graph.size
-	var zoom_vector := graph_size / ((bottom_right+margin)-(top_left-margin))
-	var zoom_value := zoom_vector[zoom_vector.min_axis_index()]
-	var nodes_center := (bottom_right+margin - (top_left-margin)) / 2
-	var graph_center := graph.size/2
+	var zoom_vector := graph_size / (bottom_right - top_left)
+	var zoom_value := minf(zoom_vector[zoom_vector.min_axis_index()] * zoom_margin, 1)
+	var nodes_center := (bottom_right - top_left) / 2
+	var graph_center := graph.size / 2
 	var new_scroll_offset := top_left + nodes_center - graph_center
+	
 	# To make it easier, reset zoom to 100% before setting scroll offset.
 	# The engine will take care to zoom out around current center of graph.
 	graph.zoom = 1
 	graph.scroll_offset = new_scroll_offset
-	graph.zoom = min(zoom_value - 0.2, 1)
+	graph.zoom = zoom_value
 	
 func _show_query(query: Query):
 	if encountered_queries.has(query):
