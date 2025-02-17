@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://bn6owxtcthrsl"]
+
+[ext_resource type="AudioStream" uid="uid://dofkpydgiklmv" path="res://resources/computer_click_stream.tres" id="1_3qmqw"]
+
+[node name="BackgroundSfxPlayer" type="AudioStreamPlayer"]
+stream = ExtResource("1_3qmqw")
+volume_db = -15.0
+bus = &"SFX"

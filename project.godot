@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 SignalBus="*res://scripts/signal_bus.gd"
 TutorialManager="*res://scenes/tutorial_manager.tscn"
+BackgroundSfxPlayer="*res://scenes/background_sfx_player.tscn"
 
 [display]
 

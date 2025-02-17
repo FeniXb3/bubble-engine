@@ -2,7 +2,6 @@ extends Control
 @export var data: GameData
 @export var sample_data: GameData
 @export var human_visuals: HumanVisuals
-@export var available_themes: Dictionary[String, Theme]
 
 @export var engine_panel: Panel
 @export var available_results: ItemList
@@ -10,17 +9,12 @@ extends Control
 @export var accept_dialog: AcceptDialog
 @export var animation_player: AnimationPlayer
 @export var music_player: AudioStreamPlayer
-@export var computer_bg_sfx_player: AudioStreamPlayer
 @export var submit_button: Button
 @export var editor_popup_panel: PopupPanel
+@export var options_popup_panel: PopupPanel
 @export var power_button_container: Container
 @export var control_to_focus_on_start: Control
 @export var connections_editor_panel: Panel
-@export var skip_tutorials_checkbox: CheckBox
-@export var click_stream: AudioStream
-@export var click_noise_stream: AudioStream
-@export var computer_noise_check_box: CheckBox
-@export var theme_option_button: OptionButton
 
 
 @export var current_human: Human
@@ -36,16 +30,8 @@ var available_queries: Array[Query]
 var available_humans: Array[Human]
 var music: AudioStreamPlaybackInteractive
 var computer_bg_sfx: AudioStreamPlaybackInteractive
-var computer_bg_sfx_stream: AudioStreamInteractive
 
 @export var loosing_margin:int = 1
-@export var skip_tutorials: bool = false:
-	set(value):
-		skip_tutorials = value
-		if TutorialManager.skip_all_tutorials == skip_tutorials:
-			return
-			
-		TutorialManager.skip_all_tutorials = skip_tutorials
 
 func get_related_results(query: Query) -> Array[Result]:
 	var query_tags := query.negative_tags + query.positive_tags
@@ -81,17 +67,6 @@ func generate_word(chars, length):
 	return word
 	
 func _ready() -> void:
-	for theme_name in available_themes:
-		var new_item_index := theme_option_button.item_count
-		theme_option_button.add_item(theme_name)
-		theme_option_button.set_item_metadata(new_item_index, available_themes[theme_name])
-	
-	if not OS.has_feature("debug"):
-		skip_tutorials = false
-	skip_tutorials_checkbox.set_pressed_no_signal(skip_tutorials)
-	computer_noise_check_box.set_pressed_no_signal(computer_bg_sfx_player.stream == click_noise_stream)
-	
-	computer_bg_sfx_stream = computer_bg_sfx_player.stream
 	engine_panel.hide()
 	connections_editor_panel.hide()
 	power_button_container.show()
@@ -121,16 +96,19 @@ func _ready() -> void:
 	control_to_focus_on_start.grab_focus()
 	connections_editor_panel.hide()
 	
-	
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_cancel"):
+		options_popup_panel.show()
+
 func _on_starting() -> void:
 	available_results.clear()
 	
 func start() -> void:
 	SignalBus.starting.emit()
 	
-	if not computer_bg_sfx_player.playing:
-		computer_bg_sfx_player.play()
-		computer_bg_sfx = computer_bg_sfx_player.get_stream_playback()
+	if not BackgroundSfxPlayer.playing:
+		BackgroundSfxPlayer.play()
+		computer_bg_sfx = BackgroundSfxPlayer.get_stream_playback()
 		
 	computer_bg_sfx.switch_to_clip_by_name(&"Turn On")
 	
@@ -239,7 +217,7 @@ func reset() -> void:
 	computer_bg_sfx.switch_to_clip_by_name(&"Turn Off")
 	# Hack to start new game right after the turn off sound is done playing
 	await get_tree().process_frame
-	var wait_time := computer_bg_sfx_stream.get_clip_stream(computer_bg_sfx.get_current_clip_index()).get_length()
+	var wait_time = BackgroundSfxPlayer.stream.get_clip_stream(computer_bg_sfx.get_current_clip_index()).get_length()
 	timer.start(wait_time)
 	await timer.timeout
 	
@@ -305,14 +283,9 @@ func _on_show_connections_editor_button_pressed() -> void:
 	tween.tween_property(connections_editor_panel, "position:x", 0, 0.5)
 
 
-func _on_skip_tutorial_check_box_toggled(toggled_on: bool) -> void:
-	skip_tutorials = toggled_on
-
-func _on_computer_noise_check_box_toggled(toggled_on: bool) -> void:
-	computer_bg_sfx_player.stream = click_noise_stream if toggled_on else click_stream
-	computer_bg_sfx_stream = computer_bg_sfx_player.stream
+func _on_close_options_button_pressed() -> void:
+	options_popup_panel.hide()
 
 
-func _on_theme_option_button_item_selected(index: int) -> void:
-	var selected_theme: Theme = theme_option_button.get_item_metadata(index)
-	get_tree().root.theme = selected_theme
+func _on_show_options_button_pressed() -> void:
+	options_popup_panel.show()

@@ -1,0 +1,54 @@
+[gd_scene load_steps=6 format=3 uid="uid://d4e7qjkl7oy8r"]
+
+[ext_resource type="Script" uid="uid://dfvmyflil6kmh" path="res://scenes/options_menu.gd" id="1_liyum"]
+[ext_resource type="Theme" uid="uid://o0wj5sud0fkj" path="res://themes/generated/matrix_theme.tres" id="2_hm4m4"]
+[ext_resource type="Theme" uid="uid://cnjtetudthuan" path="res://addons/windows_95_theme/save1.tres" id="3_lfjc7"]
+[ext_resource type="AudioStream" uid="uid://dofkpydgiklmv" path="res://resources/computer_click_stream.tres" id="4_3xsyx"]
+[ext_resource type="AudioStream" uid="uid://f3vkt48hqgww" path="res://resources/hard_drive_stream.tres" id="5_dhn0l"]
+
+[node name="OptionsMenu" type="Control" node_paths=PackedStringArray("computer_noise_check_box", "skip_tutorials_checkbox", "theme_option_button")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_liyum")
+available_themes = Dictionary[String, Theme]({
+"Neo": ExtResource("2_hm4m4"),
+"Retro": ExtResource("3_lfjc7")
+})
+click_stream = ExtResource("4_3xsyx")
+click_noise_stream = ExtResource("5_dhn0l")
+skip_tutorials = true
+computer_noise_check_box = NodePath("VBoxContainer/ComputerNoiseCheckBox")
+skip_tutorials_checkbox = NodePath("VBoxContainer/SkipTutorialCheckBox")
+theme_option_button = NodePath("VBoxContainer/ThemeOptionButton")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="SkipTutorialCheckBox" type="CheckBox" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Skip tutorial"
+
+[node name="ComputerNoiseCheckBox" type="CheckBox" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Computer noise"
+
+[node name="ThemeOptionButton" type="OptionButton" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[connection signal="toggled" from="VBoxContainer/SkipTutorialCheckBox" to="." method="_on_skip_tutorial_check_box_toggled"]
+[connection signal="toggled" from="VBoxContainer/ComputerNoiseCheckBox" to="." method="_on_computer_noise_check_box_toggled"]
+[connection signal="item_selected" from="VBoxContainer/ThemeOptionButton" to="." method="_on_theme_option_button_item_selected"]
