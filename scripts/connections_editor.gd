@@ -23,7 +23,7 @@ var top_left := Vector2(1234, 1234)
 var bottom_right := Vector2()
 var operations_queue: Array[Callable] = []
 var nodes_to_show: Array[GraphNode] = []
-
+var selected_node: GraphNode
 
 const POSITIVE_PORT = 0
 const NEGATIVE_PORT = 1
@@ -181,3 +181,12 @@ func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
 		var node := nodes_to_show.pop_front() as GraphNode
 		await _show_node(node).finished
 		
+
+
+func _on_graph_edit_end_node_move() -> void:
+	_update_graph_offset(selected_node)
+
+
+func _on_graph_edit_node_selected(node: Node) -> void:
+	if node is GraphNode:
+		selected_node = node
