@@ -12,6 +12,7 @@ extends Control
 @export var queries_nodes: Dictionary[Query, GraphNode]
 @export var add_real_connections: bool = false
 @export var timer: Timer
+@export var animation_duration: float = 0.25
 
 var encountered_tags: Array[String] = []
 var encountered_humans: Array[Human] = []
@@ -21,6 +22,7 @@ var visible_nodes_extents := Rect2()
 var top_left := Vector2(1234, 1234)
 var bottom_right := Vector2()
 var operations_queue: Array[Callable] = []
+var nodes_to_show: Array[GraphNode] = []
 
 
 const POSITIVE_PORT = 0
@@ -38,15 +40,12 @@ func _show_submitted_results(results: Array[Result]) -> void:
 	for result in results:
 		_show_result(result)
 
-#func _enqueue():
-	
-
-#func _process(_delta: float) -> void:
-	#_update_graph_offset()
-	
-func _show_node(node: GraphNode):
+func _show_node(node: GraphNode) -> Tween:
 	_update_graph_offset(node)
 	node.show()
+	var tween := node.create_tween()
+	tween.tween_property(node, "modulate:a", 1.0, animation_duration).from(0.0)
+	return tween
 
 func _show_tag(tag: String):
 	if encountered_tags.has(tag):
@@ -54,7 +53,7 @@ func _show_tag(tag: String):
 	var node := tags_nodes[tag]
 	node.position_offset.y = node.size.y * encountered_tags.size()
 	encountered_tags.append(tag)
-	operations_queue.append(_show_node.bind(node))
+	operations_queue.append(_include_in_graph_update.bind(node))
 	
 func _show_human(human: Human, _index: int = -1):
 	if encountered_humans.has(human):
@@ -64,7 +63,11 @@ func _show_human(human: Human, _index: int = -1):
 	node.position_offset.y = node.size.y * encountered_humans.size()
 	encountered_humans.append(human)
 	
-	operations_queue.append(_show_node.bind(node))
+	operations_queue.append(_include_in_graph_update.bind(node))
+	
+func _include_in_graph_update(node: GraphNode) -> void:
+	_update_graph_offset(node)
+	nodes_to_show.append(node)
 	
 func _update_graph_offset(node: GraphNode = null):
 	if node != null:
@@ -72,7 +75,8 @@ func _update_graph_offset(node: GraphNode = null):
 		top_left.y = min(top_left.y, node.position_offset.y)
 		bottom_right.x = max(bottom_right.x, node.position_offset.x + node.size.x)
 		bottom_right.y = max(bottom_right.y, node.position_offset.y + node.size.y)
-	
+
+func _update_visible_rect() -> Tween:
 	var graph_size := graph.size
 	var zoom_vector := graph_size / (bottom_right - top_left)
 	var zoom_value := minf(zoom_vector[zoom_vector.min_axis_index()] * zoom_margin, 1)
@@ -90,8 +94,10 @@ func _update_graph_offset(node: GraphNode = null):
 	var zoomed_scroll_offset := graph.scroll_offset
 	
 	var tween := create_tween().set_parallel()
-	tween.tween_property(graph, "zoom", zoom_value, 0.25).from(last_zoom)
-	tween.tween_property(graph, "scroll_offset", zoomed_scroll_offset, 0.25).from(last_offset)
+	tween.tween_property(graph, "zoom", zoom_value, animation_duration).from(last_zoom)
+	tween.tween_property(graph, "scroll_offset", zoomed_scroll_offset, animation_duration).from(last_offset)
+	
+	return tween
 	
 func _show_query(query: Query):
 	if encountered_queries.has(query):
@@ -100,7 +106,7 @@ func _show_query(query: Query):
 	encountered_queries.append(query)
 	var node := queries_nodes[query]
 	node.position_offset.y = node.size.y * encountered_queries.size()
-	operations_queue.append(_show_node.bind(node))
+	operations_queue.append(_include_in_graph_update.bind(node))
 	
 	for tag in query.positive_tags:
 		_show_tag(tag)
@@ -127,6 +133,7 @@ func add_nodes() -> void:
 		graph.add_child(node)
 		tags_nodes.set(tag, node)
 		node.hide()
+		node.modulate.a = 0
 		
 	for i in data.humans.size():
 		var human := data.humans[i]
@@ -137,6 +144,7 @@ func add_nodes() -> void:
 		graph.add_child(node)
 		humans_nodes.set(human, node)
 		node.hide()
+		node.modulate.a = 0
 		
 		for j in human.queries.size():
 			var query := human.queries[j]
@@ -147,6 +155,7 @@ func add_nodes() -> void:
 			graph.add_child(query_node)
 			queries_nodes.set(query, query_node)
 			query_node.hide()
+			query_node.modulate.a = 0
 			
 		if add_real_connections:
 			for positive_tag in human.positive_tags:
@@ -164,6 +173,11 @@ func _on_graph_edit_disconnection_request(from_node: StringName, from_port: int,
 
 func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
 	while not operations_queue.is_empty():
-		timer.start()
-		await timer.timeout
 		operations_queue.pop_front().call()
+	
+	await _update_visible_rect().finished
+	
+	while not nodes_to_show.is_empty():
+		var node := nodes_to_show.pop_front() as GraphNode
+		await _show_node(node).finished
+		

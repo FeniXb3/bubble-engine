@@ -20,6 +20,7 @@ tag_node_scene = ExtResource("4_6hbta")
 query_node_scene = ExtResource("4_oxiay")
 data = ExtResource("2_lbwjx")
 timer = NodePath("Timer")
+animation_duration = 0.5
 
 [node name="GraphEdit" type="GraphEdit" parent="."]
 layout_mode = 1
