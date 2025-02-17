@@ -31,6 +31,7 @@ grow_vertical = 2
 show_grid = false
 snapping_enabled = false
 right_disconnects = true
+minimap_size = Vector2(160, 90)
 show_zoom_label = true
 show_zoom_buttons = false
 show_grid_buttons = false
