@@ -82,9 +82,16 @@ func _update_graph_offset(node: GraphNode = null):
 	
 	# To make it easier, reset zoom to 100% before setting scroll offset.
 	# The engine will take care to zoom out around current center of graph.
+	var last_offset := graph.scroll_offset
+	var last_zoom := graph.zoom
 	graph.zoom = 1
 	graph.scroll_offset = new_scroll_offset
 	graph.zoom = zoom_value
+	var zoomed_scroll_offset := graph.scroll_offset
+	
+	var tween := create_tween().set_parallel()
+	tween.tween_property(graph, "zoom", zoom_value, 0.25).from(last_zoom)
+	tween.tween_property(graph, "scroll_offset", zoomed_scroll_offset, 0.25).from(last_offset)
 	
 func _show_query(query: Query):
 	if encountered_queries.has(query):
