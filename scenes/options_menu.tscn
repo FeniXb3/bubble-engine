@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://d4e7qjkl7oy8r"]
+[gd_scene load_steps=7 format=3 uid="uid://d4e7qjkl7oy8r"]
 
 [ext_resource type="Script" uid="uid://dfvmyflil6kmh" path="res://scenes/options_menu.gd" id="1_liyum"]
 [ext_resource type="Theme" uid="uid://o0wj5sud0fkj" path="res://themes/generated/matrix_theme.tres" id="2_hm4m4"]
 [ext_resource type="Theme" uid="uid://cnjtetudthuan" path="res://addons/windows_95_theme/save1.tres" id="3_lfjc7"]
 [ext_resource type="AudioStream" uid="uid://dofkpydgiklmv" path="res://resources/computer_click_stream.tres" id="4_3xsyx"]
 [ext_resource type="AudioStream" uid="uid://f3vkt48hqgww" path="res://resources/hard_drive_stream.tres" id="5_dhn0l"]
+[ext_resource type="PackedScene" uid="uid://cnpe63hphlaph" path="res://scenes/focus_setter.tscn" id="6_dhn0l"]
 
 [node name="OptionsMenu" type="Control" node_paths=PackedStringArray("computer_noise_check_box", "skip_tutorials_checkbox", "theme_option_button")]
 layout_mode = 3
@@ -48,6 +49,9 @@ text = "Computer noise"
 [node name="ThemeOptionButton" type="OptionButton" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
+
+[node name="FocusSetter" parent="." node_paths=PackedStringArray("target_control") instance=ExtResource("6_dhn0l")]
+target_control = NodePath("../VBoxContainer/SkipTutorialCheckBox")
 
 [connection signal="toggled" from="VBoxContainer/SkipTutorialCheckBox" to="." method="_on_skip_tutorial_check_box_toggled"]
 [connection signal="toggled" from="VBoxContainer/ComputerNoiseCheckBox" to="." method="_on_computer_noise_check_box_toggled"]

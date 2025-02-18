@@ -1,9 +1,35 @@
-[gd_scene load_steps=5 format=3 uid="uid://da375min1u6w5"]
+[gd_scene load_steps=17 format=3 uid="uid://da375min1u6w5"]
 
 [ext_resource type="Script" uid="uid://tedxtq4b2g31" path="res://scripts/data_editor.gd" id="1_o8t3j"]
 [ext_resource type="Texture2D" uid="uid://cqoqid4x5nmkw" path="res://addons/windows_95_theme/plus.png" id="3_i70uo"]
 [ext_resource type="Resource" uid="uid://dcww28fkwrhvp" path="res://resources/humans/sample_visuals.tres" id="3_txbwn"]
 [ext_resource type="Texture2D" uid="uid://bor14ncoefmbi" path="res://addons/windows_95_theme/minus.png" id="4_i70uo"]
+[ext_resource type="AudioStream" uid="uid://cg6s4w84pp8ck" path="res://sfx/Single Keys/keypress-001.wav" id="5_h0xvl"]
+[ext_resource type="AudioStream" uid="uid://djxgc7h3veyb5" path="res://sfx/Single Keys/keypress-002.wav" id="6_dkc0l"]
+[ext_resource type="AudioStream" uid="uid://bm4x0tdmar7g2" path="res://sfx/Single Keys/keypress-003.wav" id="7_dv2w0"]
+[ext_resource type="AudioStream" uid="uid://c0i1m4s3r3qxp" path="res://sfx/Single Keys/keypress-004.wav" id="8_2ovvm"]
+[ext_resource type="AudioStream" uid="uid://dw3d584joqb0v" path="res://sfx/Single Keys/keypress-005.wav" id="9_yqfgd"]
+[ext_resource type="AudioStream" uid="uid://dnrt3vh8g3t50" path="res://sfx/Single Keys/keypress-006.wav" id="10_1oir7"]
+[ext_resource type="AudioStream" uid="uid://c87s1r64qwftj" path="res://sfx/Single Keys/keypress-007.wav" id="11_xs84a"]
+[ext_resource type="AudioStream" uid="uid://cxytqdn1pq1u6" path="res://sfx/Single Keys/keypress-008.wav" id="12_lqgrn"]
+[ext_resource type="AudioStream" uid="uid://b66omqh3p7m6f" path="res://sfx/Single Keys/keypress-009.wav" id="13_6p045"]
+[ext_resource type="AudioStream" uid="uid://by7eqpod7vs4" path="res://sfx/Single Keys/keypress-010.wav" id="14_xexw4"]
+[ext_resource type="PackedScene" uid="uid://cnpe63hphlaph" path="res://scenes/focus_setter.tscn" id="15_dkc0l"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_40xgy"]
+random_pitch = 1.1
+random_volume_offset_db = 5.0
+streams_count = 10
+stream_0/stream = ExtResource("5_h0xvl")
+stream_1/stream = ExtResource("6_dkc0l")
+stream_2/stream = ExtResource("7_dv2w0")
+stream_3/stream = ExtResource("8_2ovvm")
+stream_4/stream = ExtResource("9_yqfgd")
+stream_5/stream = ExtResource("10_1oir7")
+stream_6/stream = ExtResource("11_xs84a")
+stream_7/stream = ExtResource("12_lqgrn")
+stream_8/stream = ExtResource("13_6p045")
+stream_9/stream = ExtResource("14_xexw4")
 
 [node name="DataEditor" type="Control" node_paths=PackedStringArray("tree", "save_dialog", "load_dialog", "save_button", "discard_button")]
 layout_mode = 3
@@ -97,6 +123,13 @@ ok_button_text = "Open"
 file_mode = 0
 access = 2
 filters = PackedStringArray("*.tres")
+
+[node name="KeyboardAudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_40xgy")
+bus = &"SFX"
+
+[node name="FocusSetter" parent="." node_paths=PackedStringArray("target_control") instance=ExtResource("15_dkc0l")]
+target_control = NodePath("../PanelContainer/VBoxContainer/TopHBoxContainer/NewDataButton")
 
 [connection signal="pressed" from="PanelContainer/VBoxContainer/TopHBoxContainer/NewDataButton" to="." method="_on_new_data_button_pressed"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/TopHBoxContainer/LoadButton" to="." method="_on_load_button_pressed"]

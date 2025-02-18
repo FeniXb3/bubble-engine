@@ -13,7 +13,6 @@ extends Control
 @export var editor_popup_panel: PopupPanel
 @export var options_popup_panel: PopupPanel
 @export var power_button_container: Container
-@export var control_to_focus_on_start: Control
 @export var connections_editor_panel: Panel
 
 
@@ -93,7 +92,6 @@ func _ready() -> void:
 	TutorialManager.register_step("select_results", "Click on the list to pick one or more results fitting their information bubble. When you're done, press Submit button.", available_results)
 	TutorialManager.register_step("mood_retrieved", "Use previously stored mood triggered by the results to learn this human's preferences.", available_results)
 	animation_player.play("RESET")
-	control_to_focus_on_start.grab_focus()
 	connections_editor_panel.hide()
 	
 func _input(event: InputEvent) -> void:
@@ -268,6 +266,7 @@ func _on_power_button_pressed() -> void:
 
 
 func _on_hide_connections_editor_button_pressed() -> void:
+	engine_panel.show()
 	music.switch_to_clip_by_name(&"Main")
 	var tween: Tween = get_tree().create_tween()
 	tween.tween_property(connections_editor_panel, "position:x", connections_editor_panel.size.x, 0.5)
@@ -281,6 +280,8 @@ func _on_show_connections_editor_button_pressed() -> void:
 	
 	var tween: Tween = get_tree().create_tween()
 	tween.tween_property(connections_editor_panel, "position:x", 0, 0.5)
+	await tween.finished
+	engine_panel.hide()
 
 
 func _on_close_options_button_pressed() -> void:
@@ -289,3 +290,7 @@ func _on_close_options_button_pressed() -> void:
 
 func _on_show_options_button_pressed() -> void:
 	options_popup_panel.show()
+
+
+func _on_cancel_button_pressed() -> void:
+	editor_popup_panel.hide()

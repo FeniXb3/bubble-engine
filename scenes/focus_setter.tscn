@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cnpe63hphlaph"]
+
+[ext_resource type="Script" uid="uid://bmvslo2c4724v" path="res://scripts/focus_setter.gd" id="1_hkcgd"]
+
+[node name="FocusSetter" type="Node"]
+script = ExtResource("1_hkcgd")
