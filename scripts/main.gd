@@ -10,10 +10,11 @@ extends Control
 @export var animation_player: AnimationPlayer
 @export var music_player: AudioStreamPlayer
 @export var submit_button: Button
-@export var editor_popup_panel: PopupPanel
-@export var options_popup_panel: PopupPanel
+@export var editor_panel: Control
+@export var options_panel: Control
 @export var power_button_container: Container
 @export var connections_editor_panel: Panel
+@export var last_intro_container_visibility := false
 
 
 @export var current_human: Human
@@ -95,7 +96,12 @@ func _ready() -> void:
 	
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
-		options_popup_panel.show()
+		if editor_panel.visible:
+			_on_cancel_button_pressed()
+		elif options_panel.visible:
+			_on_close_options_button_pressed()
+		elif not options_panel.visible:
+			_on_show_options_button_pressed()
 
 func _on_starting() -> void:
 	available_results.clear()
@@ -245,19 +251,21 @@ func _on_available_results_multi_selected(_index: int, _selected: bool) -> void:
 func _on_close_editor_button_pressed() -> void:
 	data = DataManager.data
 	available_humans = data.humans.duplicate()
-	editor_popup_panel.hide()
+	editor_panel.hide()
 	
 	start()
 	
 
 
 func _on_open_data_editor_button_pressed() -> void:
-	editor_popup_panel.popup()
+	editor_panel.show()
+	options_panel.hide()
 
 
 func _on_power_button_pressed() -> void:
 	engine_panel.show()
 	power_button_container.hide()
+	last_intro_container_visibility = false
 	start()
 
 
@@ -281,12 +289,23 @@ func _on_show_connections_editor_button_pressed() -> void:
 
 
 func _on_close_options_button_pressed() -> void:
-	options_popup_panel.hide()
+	if last_intro_container_visibility:
+		power_button_container.show()
+	else:
+		engine_panel.show()
+		
+
+	options_panel.hide()
 
 
 func _on_show_options_button_pressed() -> void:
-	options_popup_panel.show()
+	options_panel.show()
+	engine_panel.hide()
+	if power_button_container.visible:
+		last_intro_container_visibility = true
+		power_button_container.hide()
 
 
 func _on_cancel_button_pressed() -> void:
-	editor_popup_panel.hide()
+	options_panel.show()
+	editor_panel.hide()

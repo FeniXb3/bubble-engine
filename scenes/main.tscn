@@ -160,7 +160,7 @@ _data = {
 &"turn_on": SubResource("Animation_choun")
 }
 
-[node name="Main" type="Control" node_paths=PackedStringArray("engine_panel", "available_results", "timer", "accept_dialog", "animation_player", "music_player", "submit_button", "editor_popup_panel", "options_popup_panel", "power_button_container", "connections_editor_panel")]
+[node name="Main" type="Control" node_paths=PackedStringArray("engine_panel", "available_results", "timer", "accept_dialog", "animation_player", "music_player", "submit_button", "editor_panel", "options_panel", "power_button_container", "connections_editor_panel")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -178,8 +178,8 @@ accept_dialog = NodePath("AcceptDialog")
 animation_player = NodePath("ShutDownTextureRect/AnimationPlayer")
 music_player = NodePath("MusicPlayer")
 submit_button = NodePath("EnginePanel/MainMarginContainer/HBoxContainer/BackendContainer/SubmitButton")
-editor_popup_panel = NodePath("EditorPopupPanel")
-options_popup_panel = NodePath("OptionsPopupPanel")
+editor_panel = NodePath("EditorPanel")
+options_panel = NodePath("OptionsPanel")
 power_button_container = NodePath("IntroContainer")
 connections_editor_panel = NodePath("ConnectionsEditorPanel")
 
@@ -281,72 +281,6 @@ dialog_autowrap = true
 stream = SubResource("AudioStreamInteractive_trceg")
 bus = &"Music"
 
-[node name="EditorPopupPanel" type="PopupPanel" parent="."]
-initial_position = 1
-size = Vector2i(1152, 648)
-
-[node name="VBoxContainer" type="VBoxContainer" parent="EditorPopupPanel"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 4.0
-offset_top = 4.0
-offset_right = -4.0
-offset_bottom = -4.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-alignment = 1
-
-[node name="DataEditor" parent="EditorPopupPanel/VBoxContainer" instance=ExtResource("5_85g3d")]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="HBoxContainer" type="HBoxContainer" parent="EditorPopupPanel/VBoxContainer"]
-layout_mode = 2
-alignment = 1
-
-[node name="CloseEditorButton" type="Button" parent="EditorPopupPanel/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-text = "Restart with this data"
-
-[node name="CancelButton" type="Button" parent="EditorPopupPanel/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-text = "Cancel"
-
-[node name="OptionsPopupPanel" type="PopupPanel" parent="."]
-auto_translate_mode = 1
-initial_position = 1
-size = Vector2i(1152, 648)
-
-[node name="VBoxContainer" type="VBoxContainer" parent="OptionsPopupPanel"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 4.0
-offset_top = 4.0
-offset_right = -4.0
-offset_bottom = -4.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-alignment = 1
-
-[node name="OptionsMenu" parent="OptionsPopupPanel/VBoxContainer" instance=ExtResource("14_dp3eg")]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="OpenDataEditorButton" type="Button" parent="OptionsPopupPanel/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-text = "Open data editor"
-
-[node name="CloseOptionsButton" type="Button" parent="OptionsPopupPanel/VBoxContainer"]
-layout_mode = 2
-text = "Close"
-
 [node name="ConnectionsEditorPanel" type="Panel" parent="."]
 layout_mode = 1
 anchors_preset = 15
@@ -433,14 +367,87 @@ text = "Options"
 target_control = NodePath("../PowerButton")
 mode = 1
 
+[node name="FocusSetter2" parent="IntroContainer" node_paths=PackedStringArray("target_control") instance=ExtResource("13_trceg")]
+target_control = NodePath("../PowerButton")
+
+[node name="OptionsPanel" type="Panel" parent="."]
+auto_translate_mode = 1
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="OptionsPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="OptionsMenu" parent="OptionsPanel/VBoxContainer" instance=ExtResource("14_dp3eg")]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="OpenDataEditorButton" type="Button" parent="OptionsPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Open data editor"
+
+[node name="CloseOptionsButton" type="Button" parent="OptionsPanel/VBoxContainer"]
+layout_mode = 2
+text = "Close"
+
+[node name="EditorPanel" type="Panel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="EditorPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="DataEditor" parent="EditorPanel/VBoxContainer" instance=ExtResource("5_85g3d")]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="EditorPanel/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="CloseEditorButton" type="Button" parent="EditorPanel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Restart with this data"
+
+[node name="CancelButton" type="Button" parent="EditorPanel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Cancel"
+
 [connection signal="toggled" from="EnginePanel/MainMarginContainer/HBoxContainer/BackendContainer/CheckBox" to="." method="_on_check_box_toggled"]
 [connection signal="multi_selected" from="EnginePanel/MainMarginContainer/HBoxContainer/BackendContainer/AvailableResults" to="." method="_on_available_results_multi_selected"]
 [connection signal="pressed" from="EnginePanel/MainMarginContainer/HBoxContainer/BackendContainer/SubmitButton" to="." method="_on_submit_button_pressed"]
 [connection signal="pressed" from="EnginePanel/ShowConnectionsEditorButton" to="." method="_on_show_connections_editor_button_pressed"]
-[connection signal="pressed" from="EditorPopupPanel/VBoxContainer/HBoxContainer/CloseEditorButton" to="." method="_on_close_editor_button_pressed"]
-[connection signal="pressed" from="EditorPopupPanel/VBoxContainer/HBoxContainer/CancelButton" to="." method="_on_cancel_button_pressed"]
-[connection signal="pressed" from="OptionsPopupPanel/VBoxContainer/OpenDataEditorButton" to="." method="_on_open_data_editor_button_pressed"]
-[connection signal="pressed" from="OptionsPopupPanel/VBoxContainer/CloseOptionsButton" to="." method="_on_close_options_button_pressed"]
 [connection signal="pressed" from="ConnectionsEditorPanel/HideConnectionsEditorButton" to="." method="_on_hide_connections_editor_button_pressed"]
 [connection signal="pressed" from="IntroContainer/PowerButton" to="." method="_on_power_button_pressed"]
 [connection signal="pressed" from="IntroContainer/ShowOptionsButton" to="." method="_on_show_options_button_pressed"]
+[connection signal="pressed" from="OptionsPanel/VBoxContainer/OpenDataEditorButton" to="." method="_on_open_data_editor_button_pressed"]
+[connection signal="pressed" from="OptionsPanel/VBoxContainer/CloseOptionsButton" to="." method="_on_close_options_button_pressed"]
+[connection signal="pressed" from="EditorPanel/VBoxContainer/HBoxContainer/CloseEditorButton" to="." method="_on_close_editor_button_pressed"]
+[connection signal="pressed" from="EditorPanel/VBoxContainer/HBoxContainer/CancelButton" to="." method="_on_cancel_button_pressed"]
