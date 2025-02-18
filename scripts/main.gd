@@ -28,7 +28,6 @@ var failed: bool = false
 var available_queries: Array[Query]
 var available_humans: Array[Human]
 var music: AudioStreamPlaybackInteractive
-var computer_bg_sfx: AudioStreamPlaybackInteractive
 
 @export var loosing_margin:int = 1
 
@@ -104,11 +103,7 @@ func _on_starting() -> void:
 func start() -> void:
 	SignalBus.starting.emit()
 	
-	if not BackgroundSfxPlayer.playing:
-		BackgroundSfxPlayer.play()
-		computer_bg_sfx = BackgroundSfxPlayer.get_stream_playback()
-		
-	computer_bg_sfx.switch_to_clip_by_name(&"Turn On")
+	BackgroundSfxPlayer.play_clip_safely(&"Turn On")
 	
 	animation_player.play("turn_on")
 	await animation_player.animation_finished
@@ -212,10 +207,11 @@ func reset() -> void:
 	animation_player.play("shut_down")
 	music_player.stop()
 	
-	computer_bg_sfx.switch_to_clip_by_name(&"Turn Off")
+	BackgroundSfxPlayer.play_clip_safely(&"Turn Off")
 	# Hack to start new game right after the turn off sound is done playing
 	await get_tree().process_frame
-	var wait_time = BackgroundSfxPlayer.stream.get_clip_stream(computer_bg_sfx.get_current_clip_index()).get_length()
+	var current_clip_index: int = BackgroundSfxPlayer.get_stream_playback().get_current_clip_index()
+	var wait_time: float = BackgroundSfxPlayer.stream.get_clip_stream(current_clip_index).get_length()
 	timer.start(wait_time)
 	await timer.timeout
 	

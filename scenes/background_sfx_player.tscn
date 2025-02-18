@@ -1,8 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://bn6owxtcthrsl"]
+[gd_scene load_steps=3 format=3 uid="uid://bn6owxtcthrsl"]
 
 [ext_resource type="AudioStream" uid="uid://dofkpydgiklmv" path="res://resources/computer_click_stream.tres" id="1_3qmqw"]
+[ext_resource type="Script" uid="uid://dqjgfxbil37vc" path="res://scripts/background_sfx_player.gd" id="2_agagd"]
 
 [node name="BackgroundSfxPlayer" type="AudioStreamPlayer"]
 stream = ExtResource("1_3qmqw")
 volume_db = -15.0
 bus = &"SFX"
+script = ExtResource("2_agagd")
