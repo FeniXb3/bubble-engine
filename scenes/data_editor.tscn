@@ -1,9 +1,9 @@
 [gd_scene load_steps=17 format=3 uid="uid://da375min1u6w5"]
 
 [ext_resource type="Script" uid="uid://tedxtq4b2g31" path="res://scripts/data_editor.gd" id="1_o8t3j"]
-[ext_resource type="Texture2D" uid="uid://cqoqid4x5nmkw" path="res://addons/windows_95_theme/plus.png" id="3_i70uo"]
+[ext_resource type="Texture2D" uid="uid://dyhps6fewvj7c" path="res://graphics/kenney_game-icons/PNG/White/1x/plus.png" id="3_dkc0l"]
 [ext_resource type="Resource" uid="uid://dcww28fkwrhvp" path="res://resources/humans/sample_visuals.tres" id="3_txbwn"]
-[ext_resource type="Texture2D" uid="uid://bor14ncoefmbi" path="res://addons/windows_95_theme/minus.png" id="4_i70uo"]
+[ext_resource type="Texture2D" uid="uid://cgd6244pn6ta0" path="res://graphics/kenney_game-icons/PNG/White/1x/minus.png" id="4_dv2w0"]
 [ext_resource type="AudioStream" uid="uid://cg6s4w84pp8ck" path="res://sfx/Single Keys/keypress-001.wav" id="5_h0xvl"]
 [ext_resource type="AudioStream" uid="uid://djxgc7h3veyb5" path="res://sfx/Single Keys/keypress-002.wav" id="6_dkc0l"]
 [ext_resource type="AudioStream" uid="uid://bm4x0tdmar7g2" path="res://sfx/Single Keys/keypress-003.wav" id="7_dv2w0"]
@@ -46,8 +46,8 @@ save_button = NodePath("PanelContainer/VBoxContainer/HBoxContainer/SaveButton")
 discard_button = NodePath("PanelContainer/VBoxContainer/HBoxContainer/DiscardChangesButton")
 human_visuals = ExtResource("3_txbwn")
 add_empty_element = false
-add_texture = ExtResource("3_i70uo")
-remove_texture = ExtResource("4_i70uo")
+add_texture = ExtResource("3_dkc0l")
+remove_texture = ExtResource("4_dv2w0")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 1
@@ -135,6 +135,7 @@ target_control = NodePath("../PanelContainer/VBoxContainer/TopHBoxContainer/NewD
 [connection signal="pressed" from="PanelContainer/VBoxContainer/TopHBoxContainer/LoadButton" to="." method="_on_load_button_pressed"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/TopHBoxContainer/LoadDefaultsButton" to="." method="_on_load_defaults_button_pressed"]
 [connection signal="button_clicked" from="PanelContainer/VBoxContainer/Tree" to="." method="_on_tree_button_clicked"]
+[connection signal="gui_input" from="PanelContainer/VBoxContainer/Tree" to="." method="_on_tree_gui_input"]
 [connection signal="item_edited" from="PanelContainer/VBoxContainer/Tree" to="." method="_on_tree_item_edited"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/HBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/HBoxContainer/SaveAsButton" to="." method="_on_save_as_button_pressed"]

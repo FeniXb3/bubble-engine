@@ -312,3 +312,15 @@ func _on_new_data_button_pressed() -> void:
 	game_data = DataManager.data
 	modified = false
 	populate_tree()
+
+
+func _on_tree_gui_input(event: InputEvent) -> void:
+	if not event.is_action_pressed("ui_accept"):
+		return
+	if tree.get_selected_column() != BUTTON_COLUMN:
+		return
+	
+	var item := tree.get_selected()
+	var metadata = item.get_metadata(BUTTON_COLUMN)
+	if metadata is Callable:
+		metadata.call()
