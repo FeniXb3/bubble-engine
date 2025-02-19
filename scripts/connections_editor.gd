@@ -51,7 +51,7 @@ func _show_tag(tag: String):
 	if encountered_tags.has(tag):
 		return
 	var node := tags_nodes[tag]
-	node.position_offset.y = node.size.y * encountered_tags.size()
+	node.position_offset.y = (node.size.y + initial_nodes_margin) * encountered_tags.size()
 	encountered_tags.append(tag)
 	operations_queue.append(_include_in_graph_update.bind(node))
 	
@@ -60,7 +60,7 @@ func _show_human(human: Human, _index: int = -1):
 		return
 	
 	var node := humans_nodes[human]
-	node.position_offset.y = node.size.y * encountered_humans.size()
+	node.position_offset.y = (node.size.y + initial_nodes_margin) * encountered_humans.size()
 	encountered_humans.append(human)
 	
 	operations_queue.append(_include_in_graph_update.bind(node))
@@ -105,7 +105,7 @@ func _show_query(query: Query):
 	
 	encountered_queries.append(query)
 	var node := queries_nodes[query]
-	node.position_offset.y = node.size.y * encountered_queries.size()
+	node.position_offset.y = (node.size.y + initial_nodes_margin) * encountered_queries.size()
 	operations_queue.append(_include_in_graph_update.bind(node))
 	
 	for tag in query.positive_tags:
