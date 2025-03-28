@@ -1,6 +1,8 @@
-[gd_scene format=3 uid="uid://djc6vdp8drxlj"]
+[gd_scene load_steps=2 format=3 uid="uid://djc6vdp8drxlj"]
 
-[node name="HumanGraphNode" type="GraphNode"]
+[ext_resource type="Script" uid="uid://bo2v3wifqbujq" path="res://scripts/data_graph_node.gd" id="1_jeg48"]
+
+[node name="HumanGraphNode" type="GraphNode" node_paths=PackedStringArray("text_label")]
 offset_left = 135.0
 offset_top = 163.0
 offset_right = 268.0
@@ -35,15 +37,20 @@ slot/2/right_type = 1
 slot/2/right_color = Color(1, 0.582963, 0.0513805, 1)
 slot/2/right_icon = null
 slot/2/draw_stylebox = true
+script = ExtResource("1_jeg48")
+text_label = NodePath("NameLabel")
 metadata/positive_port = 0
 
 [node name="NameLabel" type="Label" parent="."]
 layout_mode = 2
+horizontal_alignment = 2
 
 [node name="PositiveLabel" type="Label" parent="."]
 layout_mode = 2
 text = "positive"
+horizontal_alignment = 2
 
 [node name="NegativeLabel" type="Label" parent="."]
 layout_mode = 2
 text = "negative"
+horizontal_alignment = 2

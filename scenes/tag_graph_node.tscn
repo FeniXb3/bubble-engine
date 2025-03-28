@@ -1,6 +1,8 @@
-[gd_scene format=3 uid="uid://cdrxmtub6oqfa"]
+[gd_scene load_steps=2 format=3 uid="uid://cdrxmtub6oqfa"]
 
-[node name="TagGraphNode" type="GraphNode"]
+[ext_resource type="Script" uid="uid://bo2v3wifqbujq" path="res://scripts/data_graph_node.gd" id="1_n34cd"]
+
+[node name="TagGraphNode" type="GraphNode" node_paths=PackedStringArray("text_label")]
 offset_left = 376.0
 offset_top = 300.0
 offset_right = 509.0
@@ -26,6 +28,8 @@ slot/1/right_type = 0
 slot/1/right_color = Color(1, 1, 1, 1)
 slot/1/right_icon = null
 slot/1/draw_stylebox = true
+script = ExtResource("1_n34cd")
+text_label = NodePath("ConnectionLabel")
 
 [node name="ConnectionLabel" type="Label" parent="."]
 layout_mode = 2

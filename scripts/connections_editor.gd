@@ -6,6 +6,7 @@ extends Control
 @export var query_node_scene: PackedScene
 @export var data: GameData
 @export var initial_nodes_margin: float = 20
+@export var columns_separation: float =  400
 @export var zoom_margin := 0.9
 @export var tags_nodes: Dictionary[String, GraphNode]
 @export var humans_nodes: Dictionary[Human, GraphNode]
@@ -27,6 +28,11 @@ var selected_node: GraphNode
 
 const POSITIVE_PORT = 0
 const NEGATIVE_PORT = 1
+
+const HUMANS_COLUMN = 0
+const QUERIES_COLUMN = 1
+const TAGS_COLUMN  = 2
+const RESULTS_COLUMN = 3
 
 func _ready() -> void:
 	add_nodes()
@@ -123,40 +129,27 @@ func _show_result(result: Result):
 		_show_tag(tag)
 	#results_nodes[result].show()
 
+func add_graph_node(node_scene: PackedScene, node_data, nodes_dictionary: Dictionary, index: int, column: int, text_getter: Callable) -> DataGraphNode:
+	var node := node_scene.instantiate() as DataGraphNode
+	node.setup(index, text_getter.call(), column * columns_separation, initial_nodes_margin, node_data)
+	graph.add_child(node)
+	nodes_dictionary.set(node_data, node)
+
+	return node
+
 func add_nodes() -> void:
 	for i in data.tags.size():
 		var tag := data.tags[i]
-		var node := tag_node_scene.instantiate() as GraphNode
-		node.title = tag
-		node.position_offset = Vector2(400, (node.size.y + initial_nodes_margin) * i)
-		node.set_meta("tag", tag)
-		graph.add_child(node)
-		tags_nodes.set(tag, node)
-		node.hide()
-		node.modulate.a = 0
+		add_graph_node(tag_node_scene, tag, tags_nodes, i, TAGS_COLUMN, func(): return tag)
 		
 	for i in data.humans.size():
 		var human := data.humans[i]
-		var node := human_node_scene.instantiate() as GraphNode
-		node.title = human.name
-		node.position_offset = Vector2(0, (node.size.y + initial_nodes_margin) * i)
-		node.set_meta("human", human)
-		graph.add_child(node)
-		humans_nodes.set(human, node)
-		node.hide()
-		node.modulate.a = 0
+		var node := add_graph_node(human_node_scene, human, humans_nodes, i, HUMANS_COLUMN, func(): return human.name)
 		
 		for j in human.queries.size():
 			var query := human.queries[j]
-			var query_node := query_node_scene.instantiate() as GraphNode
-			query_node.title = query.text
-			query_node.position_offset = Vector2(700, (query_node.size.y + initial_nodes_margin) * i)
-			query_node.set_meta("query", query)
-			graph.add_child(query_node)
-			queries_nodes.set(query, query_node)
-			query_node.hide()
-			query_node.modulate.a = 0
-			
+			add_graph_node(query_node_scene, query, queries_nodes, j, QUERIES_COLUMN, func(): return query.text)
+
 		if add_real_connections:
 			for positive_tag in human.positive_tags:
 				var tag_node := tags_nodes[positive_tag]
