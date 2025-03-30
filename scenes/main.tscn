@@ -1,8 +1,9 @@
-[gd_scene load_steps=21 format=3 uid="uid://dvwpk5124o4es"]
+[gd_scene load_steps=22 format=3 uid="uid://dvwpk5124o4es"]
 
 [ext_resource type="Script" uid="uid://bd400a1w377bh" path="res://scripts/main.gd" id="1_0wfyh"]
 [ext_resource type="Resource" uid="uid://seg4sdlnbehf" path="res://resources/sample_data.tres" id="2_sugp2"]
 [ext_resource type="Resource" uid="uid://dcww28fkwrhvp" path="res://resources/humans/sample_visuals.tres" id="3_o6xl0"]
+[ext_resource type="Resource" uid="uid://rl583qaxgao7" path="res://resources/automation.tres" id="4_a8y0u"]
 [ext_resource type="PackedScene" uid="uid://kogfwa2w7dnr" path="res://scenes/human_interface.tscn" id="4_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://da375min1u6w5" path="res://scenes/data_editor.tscn" id="5_85g3d"]
 [ext_resource type="Texture2D" uid="uid://cikqafd1lkxqr" path="res://graphics/kenney_game-icons/PNG/White/1x/exitLeft.png" id="9_jkv2x"]
@@ -171,6 +172,7 @@ script = ExtResource("1_0wfyh")
 data = ExtResource("2_sugp2")
 sample_data = ExtResource("2_sugp2")
 human_visuals = ExtResource("3_o6xl0")
+automation = ExtResource("4_a8y0u")
 engine_panel = NodePath("EnginePanel")
 available_results = NodePath("EnginePanel/MainMarginContainer/HBoxContainer/BackendContainer/AvailableResults")
 timer = NodePath("Timer")

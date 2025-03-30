@@ -15,3 +15,4 @@ signal starting
 signal reseting
 signal human_encountered(human: Human)
 signal tag_encountered(tag: String)
+signal results_shown(results: Array[Result])

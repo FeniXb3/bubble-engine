@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://jkpmsgeau8y6"]
+
+[ext_resource type="Script" uid="uid://ct5odds02ondx" path="res://scripts/automation_handler.gd" id="1_apiyj"]
+[ext_resource type="Resource" uid="uid://rl583qaxgao7" path="res://resources/automation.tres" id="2_mgsyr"]
+
+[node name="AutomationHandler" type="Node"]
+script = ExtResource("1_apiyj")
+is_automating = true
+automation = ExtResource("2_mgsyr")

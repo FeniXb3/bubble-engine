@@ -5,6 +5,7 @@ extends Control
 @export var tag_node_scene: PackedScene
 @export var query_node_scene: PackedScene
 @export var data: GameData
+@export var automation: Automation
 @export var initial_nodes_margin: float = 20
 @export var columns_separation: float =  400
 @export var zoom_margin := 0.9
@@ -24,7 +25,6 @@ var bottom_right := Vector2()
 var operations_queue: Array[Callable] = []
 var nodes_to_show: Array[GraphNode] = []
 var selected_node: GraphNode
-var automation: Dictionary = {}
 
 const POSITIVE_PORT = 1
 const NEGATIVE_PORT = 2
@@ -157,7 +157,7 @@ func _on_graph_edit_connection_request(from_node: StringName, from_port: int, to
 	var to_data = graph.get_node(NodePath(to_node)).get_meta("data")
 	
 	if from_data is Human and to_data is String:
-		var  tags = automation.get_or_add(from_data, {"positive": [], "negative": []})
+		var  tags = automation.connections.get_or_add(from_data, {"positive": [], "negative": []})
 		match from_port:
 			POSITIVE_PORT:
 				tags["positive"].append(to_data)
@@ -172,7 +172,7 @@ func _on_graph_edit_disconnection_request(from_node: StringName, from_port: int,
 	var to_data = graph.get_node(NodePath(to_node)).get_meta("data")
 	
 	if from_data is Human and to_data is String:
-		var  tags = automation.get_or_add(from_data, {"positive": [], "negative": []})
+		var  tags = automation.connections.get_or_add(from_data, {"positive": [], "negative": []})
 		match from_port:
 			POSITIVE_PORT:
 				tags["positive"].erase(to_data)

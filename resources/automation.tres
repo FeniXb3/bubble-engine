@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="Automation" load_steps=3 format=3 uid="uid://rl583qaxgao7"]
+
+[ext_resource type="Script" uid="uid://b6f4d3ixd3l5n" path="res://scripts/resources/human.gd" id="1_pbhxe"]
+[ext_resource type="Script" uid="uid://c0dbpsu43wlp4" path="res://scripts/resources/automation.gd" id="2_udlct"]
+
+[resource]
+script = ExtResource("2_udlct")
+connections = Dictionary[ExtResource("1_pbhxe"), Variant]({})
+metadata/_custom_type_script = "uid://c0dbpsu43wlp4"

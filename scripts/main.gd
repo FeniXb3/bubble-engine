@@ -2,6 +2,7 @@ extends Control
 @export var data: GameData
 @export var sample_data: GameData
 @export var human_visuals: HumanVisuals
+@export var automation: Automation
 
 @export var engine_panel: Panel
 @export var available_results: ItemList
@@ -57,6 +58,7 @@ func show_results() -> void:
 		
 	await TutorialManager.perform_step("select_results")
 	available_results.grab_focus()
+	SignalBus.results_shown.emit(results)
 
 func generate_word(chars, length):
 	var word: String = ""

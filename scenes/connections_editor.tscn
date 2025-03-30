@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://dpaj5ntoqqp52"]
+[gd_scene load_steps=7 format=3 uid="uid://dpaj5ntoqqp52"]
 
 [ext_resource type="Script" uid="uid://n2xjqdfyv3na" path="res://scripts/connections_editor.gd" id="1_x4c2y"]
 [ext_resource type="Resource" uid="uid://seg4sdlnbehf" path="res://resources/sample_data.tres" id="2_lbwjx"]
 [ext_resource type="PackedScene" uid="uid://cdrxmtub6oqfa" path="res://scenes/tag_graph_node.tscn" id="4_6hbta"]
 [ext_resource type="PackedScene" uid="uid://bjmb4cihga2cm" path="res://scenes/query_graph_node.tscn" id="4_oxiay"]
 [ext_resource type="PackedScene" uid="uid://djc6vdp8drxlj" path="res://scenes/human_graph_node.tscn" id="4_wpfui"]
+[ext_resource type="Resource" uid="uid://rl583qaxgao7" path="res://resources/automation.tres" id="6_oxiay"]
 
 [node name="ConnectionsEditor" type="Control" node_paths=PackedStringArray("graph", "timer")]
 layout_mode = 3
@@ -19,6 +20,7 @@ human_node_scene = ExtResource("4_wpfui")
 tag_node_scene = ExtResource("4_6hbta")
 query_node_scene = ExtResource("4_oxiay")
 data = ExtResource("2_lbwjx")
+automation = ExtResource("6_oxiay")
 timer = NodePath("Timer")
 animation_duration = 0.5
 
