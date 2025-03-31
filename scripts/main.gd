@@ -81,6 +81,7 @@ func _ready() -> void:
 	SignalBus.results_known.connect(calculate_mood)
 	SignalBus.ready_to_pick_query.connect(pick_query)
 	SignalBus.starting.connect(_on_starting)
+	SignalBus.results_submitted.connect(_on_results_submitted)
 	
 	available_humans = data.humans.duplicate()
 	
@@ -311,3 +312,12 @@ func _on_show_options_button_pressed() -> void:
 func _on_cancel_button_pressed() -> void:
 	options_panel.show()
 	editor_panel.hide()
+
+func _on_results_submitted(results: Array[Result]) -> void:
+	if not AutomationHandler.is_automating:
+		return
+
+	for  i in available_results.item_count:
+		var metadata = available_results.get_item_metadata(i)
+		if results.has(metadata):
+			available_results.select(i, false)
