@@ -7,6 +7,7 @@ extends Resource
 @export var positive_tags: Array[String]
 @export var negative_tags: Array[String]
 @export var past_reactions: Dictionary[Result, int]
+@export var past_queries: Dictionary[Query, int]
 
 func _to_string() -> String:
 	return "{

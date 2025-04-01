@@ -16,7 +16,7 @@ extends Control
 @export var power_button_container: Container
 @export var connections_editor_panel: Panel
 @export var last_intro_container_visibility := false
-
+@export var connections_editor_button: Control
 
 @export var current_human: Human
 @export var current_query: Query
@@ -41,6 +41,9 @@ func filter_result(r: Result, tags: Array[String]) -> bool:
 	return r.positive_tags.any(func(t: String): return tags.has(t)) or r.negative_tags.any(func(t: String): return tags.has(t))
 
 func show_results() -> void:
+	if current_human.past_queries.get_or_add(current_query, 0) > 1:
+		await TutorialManager.perform_step("query_repeated")
+
 	var results := get_related_results(current_query)
 	
 	available_results.clear()
@@ -59,6 +62,16 @@ func show_results() -> void:
 	await TutorialManager.perform_step("select_results")
 	available_results.grab_focus()
 	SignalBus.results_shown.emit(results)
+	
+	if current_human.past_queries.get_or_add(current_query, 0) > 1:
+		if not connections_editor_button.visible:
+			connections_editor_button.modulate.a = 0
+			connections_editor_button.show()
+			var tween: Tween = get_tree().create_tween()
+			tween.tween_property(connections_editor_button, "modulate:a", 1, 0.5)
+			await tween.finished
+
+		await TutorialManager.perform_step("introduce_automation")
 
 func generate_word(chars, length):
 	var word: String = ""
@@ -94,6 +107,8 @@ func _ready() -> void:
 		We gave you enough time to learn how to keep people in they information bubble. We cannot lose more money. Prepare to be deleted.", null, false)
 	TutorialManager.register_step("select_results", "Click on the list to pick one or more results fitting their information bubble. When you're done, press Submit button.", available_results)
 	TutorialManager.register_step("mood_retrieved", "Use previously stored mood triggered by the results to learn this human's preferences.", available_results)
+	TutorialManager.register_step("introduce_automation", "Humans may not remember answers to their questions, but we do.\n
+		\nYour job is to learn from their reactions, make connections and automate filtering process.", connections_editor_button)
 	animation_player.play("RESET")
 	connections_editor_panel.hide()
 	
@@ -169,6 +184,7 @@ func pick_query() -> void:
 	current_query = available_queries.pick_random()
 	available_queries.erase(current_query)
 	
+	current_human.past_queries[current_query] = current_human.past_queries.get_or_add(current_query, 0) + 1
 	SignalBus.query_picked.emit(current_query)
 
 func _on_submit_button_pressed() -> void:

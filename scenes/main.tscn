@@ -161,7 +161,7 @@ _data = {
 &"turn_on": SubResource("Animation_choun")
 }
 
-[node name="Main" type="Control" node_paths=PackedStringArray("engine_panel", "available_results", "timer", "accept_dialog", "animation_player", "music_player", "submit_button", "editor_panel", "options_panel", "power_button_container", "connections_editor_panel")]
+[node name="Main" type="Control" node_paths=PackedStringArray("engine_panel", "available_results", "timer", "accept_dialog", "animation_player", "music_player", "submit_button", "editor_panel", "options_panel", "power_button_container", "connections_editor_panel", "connections_editor_button")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -184,6 +184,7 @@ editor_panel = NodePath("EditorPanel")
 options_panel = NodePath("OptionsPanel")
 power_button_container = NodePath("IntroContainer")
 connections_editor_panel = NodePath("ConnectionsEditorPanel")
+connections_editor_button = NodePath("EnginePanel/ShowConnectionsEditorButton")
 
 [node name="EnginePanel" type="Panel" parent="."]
 layout_mode = 1
@@ -253,6 +254,7 @@ disabled = true
 text = "SUBMIT"
 
 [node name="ShowConnectionsEditorButton" type="Button" parent="EnginePanel"]
+visible = false
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0

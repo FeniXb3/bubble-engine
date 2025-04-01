@@ -19,6 +19,8 @@ func _ready() -> void:
 	SignalBus.starting.connect(_on_starting)
 	
 	TutorialManager.register_step("incoming_query", "You have incoming query from a human.", self)
+	TutorialManager.register_step("query_repeated", "Wondering why people ask the same questions over and over again?\n
+		We made it so easy for them to find answers, that they don't bother to even remember them for more than a minute. They are now depending on their manual work and, of course, on us.", self)
 
 func _on_starting() -> void:
 	query_field.clear()
