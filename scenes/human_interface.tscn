@@ -39,8 +39,9 @@ size_flags_horizontal = 4
 [node name="SearchBar" parent="Panel/MarginContainer/VBoxContainer" instance=ExtResource("1_f6fq2")]
 custom_minimum_size = Vector2(0, 41)
 layout_mode = 2
+accessibility_name = "Search bar"
 
-[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer"]
+[node name="ResultsLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "RESULTS"
 horizontal_alignment = 1
@@ -48,8 +49,9 @@ horizontal_alignment = 1
 [node name="ItemList" type="ItemList" parent="Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-focus_mode = 0
+focus_mode = 3
 mouse_filter = 2
+accessibility_name = "Results"
 item_count = 1
 icon_scale = 0.5
 item_0/text = "asdfg"
@@ -60,7 +62,7 @@ item_0/selectable = false
 script = ExtResource("2_stup5")
 to_flip = NodePath("../Panel")
 container = NodePath("..")
-metadata/_custom_type_script = ExtResource("2_stup5")
+metadata/_custom_type_script = "uid://cssv6kle72cvy"
 
 [node name="ResultReadingTimer" type="Timer" parent="."]
 wait_time = 0.3

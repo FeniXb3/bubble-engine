@@ -7,6 +7,7 @@ extends Control
 @export var input_timer: Timer
 @export var cleaning_timer: Timer
 @export var keyboard_audio_stream_player: AudioStreamPlayer
+@export var accessibilityLabel: Label
 
 #@export var flip: bool = true
 @export var current_query: Query
@@ -46,6 +47,7 @@ func _on_timer_timeout() -> void:
 	if query_field.text == current_query.text:
 		input_timer.stop()
 		await TutorialManager.perform_step("incoming_query")
+		query_field.queue_accessibility_update()
 		SignalBus.query_submitted.emit()
 
 func clean_query(_mood: int) -> void:

@@ -28,7 +28,7 @@ stream_7/stream = ExtResource("10_oxtlm")
 stream_8/stream = ExtResource("11_b1p2w")
 stream_9/stream = ExtResource("12_g4p5g")
 
-[node name="SearchBar" type="HBoxContainer" node_paths=PackedStringArray("query_field", "input_timer", "cleaning_timer", "keyboard_audio_stream_player")]
+[node name="SearchBar" type="HBoxContainer" node_paths=PackedStringArray("query_field", "input_timer", "cleaning_timer", "keyboard_audio_stream_player", "accessibilityLabel")]
 custom_minimum_size = Vector2(0, 31)
 anchors_preset = -1
 anchor_top = 0.47608
@@ -45,6 +45,7 @@ query_field = NodePath("HBox/LineEdit")
 input_timer = NodePath("InputTimer")
 cleaning_timer = NodePath("CleaningTimer")
 keyboard_audio_stream_player = NodePath("KeyboardAudioStreamPlayer")
+accessibilityLabel = NodePath("SearchBarLabel")
 metadata/_edit_use_anchors_ = true
 
 [node name="HBox" type="HBoxContainer" parent="."]
@@ -56,8 +57,10 @@ alignment = 1
 [node name="LineEdit" type="LineEdit" parent="HBox"]
 layout_mode = 2
 size_flags_horizontal = 3
-focus_mode = 0
+focus_mode = 3
 mouse_filter = 2
+accessibility_name = "Search bar"
+accessibility_live = 1
 placeholder_text = "Search something..."
 context_menu_enabled = false
 emoji_menu_enabled = false
@@ -85,11 +88,19 @@ script = ExtResource("2_pbamf")
 to_flip = NodePath("../HBox")
 container = NodePath("..")
 flip = false
-metadata/_custom_type_script = ExtResource("2_pbamf")
+metadata/_custom_type_script = "uid://cssv6kle72cvy"
 
 [node name="KeyboardAudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamRandomizer_p73c0")
 volume_db = -15.0
 bus = &"SFX"
+
+[node name="SearchBarLabel" type="Label" parent="."]
+visible = false
+layout_mode = 2
+accessibility_name = "Search bar"
+accessibility_live = 1
+text = "RESULTS"
+horizontal_alignment = 1
 
 [connection signal="timeout" from="InputTimer" to="." method="_on_timer_timeout"]

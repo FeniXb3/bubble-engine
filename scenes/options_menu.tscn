@@ -46,9 +46,15 @@ layout_mode = 2
 size_flags_horizontal = 4
 text = "Computer noise"
 
+[node name="ThemeLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Selected theme"
+horizontal_alignment = 1
+
 [node name="ThemeOptionButton" type="OptionButton" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
+accessibility_name = "Selected theme"
 
 [node name="FocusSetter" parent="." node_paths=PackedStringArray("target_control") instance=ExtResource("6_dhn0l")]
 target_control = NodePath("../VBoxContainer/SkipTutorialCheckBox")

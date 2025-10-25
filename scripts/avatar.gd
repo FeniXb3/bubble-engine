@@ -35,4 +35,5 @@ func show_head(human: Human, index: int) -> void:
 func update_face(mood: int) -> void:
 	var t = human_visuals.faces.get(mood)
 	face.texture = t
+	face.accessibility_name = "Human face shows mood " + str(mood)
 	face_updated.emit(t)

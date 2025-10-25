@@ -235,7 +235,7 @@ horizontal_alignment = 1
 layout_mode = 2
 text = "SEE LIKE HUMAN"
 
-[node name="Label" type="Label" parent="EnginePanel/MainMarginContainer/HBoxContainer/BackendContainer"]
+[node name="AvailableResultsLabel" type="Label" parent="EnginePanel/MainMarginContainer/HBoxContainer/BackendContainer"]
 layout_mode = 2
 text = "RESULTS TO FILTER"
 horizontal_alignment = 1
@@ -243,6 +243,7 @@ horizontal_alignment = 1
 [node name="AvailableResults" type="ItemList" parent="EnginePanel/MainMarginContainer/HBoxContainer/BackendContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+accessibility_name = "Results to filter"
 select_mode = 2
 item_count = 2
 item_0/text = "asdfgh"
@@ -354,18 +355,19 @@ grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
-[node name="PowerButton" type="Button" parent="IntroContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-text = "           "
-icon = ExtResource("15_jkv2x")
-icon_alignment = 1
-
 [node name="ShowOptionsButton" type="Button" parent="IntroContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Options"
+
+[node name="PowerButton" type="Button" parent="IntroContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+accessibility_name = "Power On"
+text = "           "
+icon = ExtResource("15_jkv2x")
+icon_alignment = 1
 
 [node name="FocusSetter" parent="IntroContainer" node_paths=PackedStringArray("target_control") instance=ExtResource("13_trceg")]
 target_control = NodePath("../PowerButton")
@@ -449,8 +451,8 @@ text = "Cancel"
 [connection signal="pressed" from="EnginePanel/MainMarginContainer/HBoxContainer/BackendContainer/SubmitButton" to="." method="_on_submit_button_pressed"]
 [connection signal="pressed" from="EnginePanel/ShowConnectionsEditorButton" to="." method="_on_show_connections_editor_button_pressed"]
 [connection signal="pressed" from="ConnectionsEditorPanel/HideConnectionsEditorButton" to="." method="_on_hide_connections_editor_button_pressed"]
-[connection signal="pressed" from="IntroContainer/PowerButton" to="." method="_on_power_button_pressed"]
 [connection signal="pressed" from="IntroContainer/ShowOptionsButton" to="." method="_on_show_options_button_pressed"]
+[connection signal="pressed" from="IntroContainer/PowerButton" to="." method="_on_power_button_pressed"]
 [connection signal="pressed" from="OptionsPanel/VBoxContainer/OpenDataEditorButton" to="." method="_on_open_data_editor_button_pressed"]
 [connection signal="pressed" from="OptionsPanel/VBoxContainer/CloseOptionsButton" to="." method="_on_close_options_button_pressed"]
 [connection signal="pressed" from="EditorPanel/VBoxContainer/HBoxContainer/CloseEditorButton" to="." method="_on_close_editor_button_pressed"]
